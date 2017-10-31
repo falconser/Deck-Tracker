@@ -1,0 +1,15 @@
+*.xcuserstate
+*.xccheckout
+*.xcworkspace/xcuserdata
+*.xcodeproj/xcuserdata
+Pods
+.idea/*
+*.orig
+.DS_Store
+*.hmap
+*.LinkFileList
+*.xcworkspacedata
+*.xcsettings
+*.xcscmblueprint
+*.gcno
+.DS_Store
