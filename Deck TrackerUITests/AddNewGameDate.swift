@@ -11,7 +11,7 @@ import XCTest
 class AddNewGameDate: Utils {
     
     let addNewGameButton = Games().addGameButton
-    let pickDateCell = XCUIApplication().cells.elementBoundByIndex(0)
+    let pickDateCell = XCUIApplication().cells.element(boundBy: 0)
     var year =  -1
     var month = -1
     var day = -1
@@ -24,7 +24,7 @@ class AddNewGameDate: Utils {
     override func setUp() {
         super.setUp()
         app.launch()
-        sleep(1.0)
+        sleep(timer: 1.0)
         addNewGameButton.tap()
         pickDateCell.tap()
         getElementsFromDate()
@@ -42,17 +42,17 @@ class AddNewGameDate: Utils {
     
     func getElementsFromDate() {
         
-        let date = NSDate()
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Day , .Month , .Year], fromDate: date)
+        let date = Date()
+        let calendar = NSCalendar.current
+        let components = calendar.dateComponents([.day, .month, .year], from: date)
         
-        year =  components.year
-        month = components.month
-        day = components.day
+        year =  components.year!
+        month = components.month!
+        day = components.day!
         
-        let dateFormatter: NSDateFormatter = NSDateFormatter()
+        let dateFormatter: DateFormatter = DateFormatter()
         let months = dateFormatter.monthSymbols
-        longMonth = months[month-1] // month - from your date components
+        longMonth = months![month-1] // month - from your date components
     }
     
     

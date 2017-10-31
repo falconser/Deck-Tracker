@@ -16,20 +16,20 @@ class AddNewGame: Utils {
     let newGameTitle = XCUIApplication().navigationBars["Add New Game"]
     let saveButton = XCUIApplication().navigationBars["Add New Game"].buttons["Save"]
     
-    let dateCell = XCUIApplication().cells.elementBoundByIndex(0)
-    let deckCell = XCUIApplication().cells.elementBoundByIndex(1)
-    let opponentCell = XCUIApplication().cells.elementBoundByIndex(2)
+    let dateCell = XCUIApplication().cells.element(boundBy: 0)
+    let deckCell = XCUIApplication().cells.element(boundBy: 1)
+    let opponentCell = XCUIApplication().cells.element(boundBy: 2)
     let coinLabel = XCUIApplication().tables.staticTexts["Started with coin"]
     let coinSwitch = XCUIApplication().tables.switches["Started with coin"]
     let winLabel = XCUIApplication().tables.staticTexts["Did you win ?"]
     let winSwitch = XCUIApplication().tables.switches["Did you win ?"]
-    let tagCell = XCUIApplication().cells.elementBoundByIndex(5)
+    let tagCell = XCUIApplication().cells.element(boundBy: 5)
 
     
     override func setUp() {
         super.setUp()
         app.launch()
-        sleep(1.0)
+        sleep(timer: 1.0)
         addNewGameButton.tap()
     }
     
@@ -76,14 +76,14 @@ class AddNewGame: Utils {
                 app.tables.staticTexts[deckName].tap()
             // If not, create the deck and press it
             } else {
-                Decks().addDeck(deckName, deckClass: deckClass)
+                Decks().addDeck(deckTitle: deckName, deckClass: deckClass)
                 app.tables.staticTexts[deckName].tap()
             }
         }
         
         // Select opponent class
         opponentCell.tap()
-        AddNewGameOpponent().selectOpponent(opponent)
+        AddNewGameOpponent().selectOpponent(opponent: opponent)
         
         // Set coin status
         if coin == true {
@@ -104,7 +104,7 @@ class AddNewGame: Utils {
             if app.tables.staticTexts[tag].exists {
                 app.tables.staticTexts[tag].tap()
             } else {
-                AddNewGameTags().addNewTag(tag)
+                AddNewGameTags().addNewTag(tagName: tag)
                 app.tables.staticTexts[tag].tap()
             }
         }
@@ -116,8 +116,8 @@ class AddNewGame: Utils {
     
     func testAddNewGame() {
         cancelButton.tap()
-        addNewGame("", deckName: "wiejsjs", deckClass: "Paladin",opponent: "Druid", coin: true, win: false, tag: "")
-        sleep(3.0)
+        addNewGame(date: "", deckName: "wiejsjs", deckClass: "Paladin",opponent: "Druid", coin: true, win: false, tag: "")
+        sleep(timer: 3.0)
         
     }
     

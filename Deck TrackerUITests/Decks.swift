@@ -43,7 +43,7 @@ import XCTest
     override func setUp() {
         super.setUp()
         app.launch()
-        sleep(1.0)
+        sleep(timer: 1.0)
         decksTab.tap()
     }
     
@@ -57,17 +57,17 @@ import XCTest
         Settings().resetAll()
         decksTab.tap()
         
-        addDeck("Control Warrior", deckClass: "Warrior")
-        tapDeck("Control Warrior")
-        addDeck("Secrets", deckClass: "Paladin")
-        addDeck("Aggro", deckClass: "Shaman")
-        addDeck("Face Hunter", deckClass: "Hunter")
-        addDeck("Midrange", deckClass: "Druid")
-        tapDeck("Midrange")
-        addDeck("Miracle", deckClass: "Rogue")
-        addDeck("Tempo", deckClass: "Mage")
-        addDeck("Zoo", deckClass: "Warlock")
-        addDeck("Golden Monkey", deckClass: "Priest")
+        addDeck(deckTitle: "Control Warrior", deckClass: "Warrior")
+        tapDeck(deckTitle: "Control Warrior")
+        addDeck(deckTitle: "Secrets", deckClass: "Paladin")
+        addDeck(deckTitle: "Aggro", deckClass: "Shaman")
+        addDeck(deckTitle: "Face Hunter", deckClass: "Hunter")
+        addDeck(deckTitle: "Midrange", deckClass: "Druid")
+        tapDeck(deckTitle: "Midrange")
+        addDeck(deckTitle: "Miracle", deckClass: "Rogue")
+        addDeck(deckTitle: "Tempo", deckClass: "Mage")
+        addDeck(deckTitle: "Zoo", deckClass: "Warlock")
+        addDeck(deckTitle: "Golden Monkey", deckClass: "Priest")
     }
     
     func testCancelButton() {
@@ -137,8 +137,8 @@ import XCTest
         Settings().resetAll()
         decksTab.tap()
         
-        addDeck("Midrange", deckClass: "Druid")
-        addDeck("Midrange", deckClass: "Hunter")
+        addDeck(deckTitle: "Midrange", deckClass: "Druid")
+        addDeck(deckTitle: "Midrange", deckClass: "Hunter")
         
         app.alerts["Deck already exists"].staticTexts["Deck already exists"].exists
         app.alerts["Deck already exists"].staticTexts["Deck name already exists"].exists

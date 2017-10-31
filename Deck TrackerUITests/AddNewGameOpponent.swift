@@ -11,7 +11,7 @@ import XCTest
 class AddNewGameOpponent: Utils {
     
     let addNewGameButton = Games().addGameButton
-    let pickOpponentCell = XCUIApplication().cells.elementBoundByIndex(2)
+    let pickOpponentCell = XCUIApplication().cells.element(boundBy: 2)
     
     let backButton = XCUIApplication().navigationBars["Select Opponent Class"].buttons["Add New Game"]
     let selectDeckTitleScreen = XCUIApplication().navigationBars["Select Opponent Class"].staticTexts["Select Opponent Class"]
@@ -29,7 +29,7 @@ class AddNewGameOpponent: Utils {
     override func setUp() {
         super.setUp()
         app.launch()
-        sleep(1.0)
+        sleep(timer: 1.0)
         addNewGameButton.tap()
         pickOpponentCell.tap()
     }

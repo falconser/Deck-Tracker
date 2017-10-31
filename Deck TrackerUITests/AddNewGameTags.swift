@@ -11,7 +11,7 @@ import XCTest
 class AddNewGameTags: Utils {
     
     let addNewGameButton = Games().addGameButton
-    let tagCell = XCUIApplication().cells.elementBoundByIndex(5)
+    let tagCell = XCUIApplication().cells.element(boundBy: 5)
     
     let backButton = XCUIApplication().navigationBars["Add Tags"].buttons["Add New Game"]
     let selectTagTitleScreen = XCUIApplication().navigationBars["Add Tags"].staticTexts["Add Tags"]
@@ -26,7 +26,7 @@ class AddNewGameTags: Utils {
     override func setUp() {
         super.setUp()
         XCUIApplication().launch()
-        sleep(1.0)
+        sleep(timer: 1.0)
         addNewGameButton.tap()
         tagCell.tap()
     }
@@ -53,9 +53,9 @@ class AddNewGameTags: Utils {
     
     func addNewTag(tagName: String) {
         addTagButton.tap()
-        sleep(1.0)
+        sleep(timer: 1.0)
         alertTextField.tap()
-        sleep(1.0)
+        sleep(timer: 1.0)
         alertTextField.typeText(tagName)
         alertFinishButton.tap()
     }
@@ -66,8 +66,8 @@ class AddNewGameTags: Utils {
         let emptyAlertBody = app.alerts["Tag empty"].staticTexts["Tag cannot be empty"]
         let emptyAlertOkButton = app.buttons["OK"]
         
-        addNewTag("")
-        sleep(1.0)
+        addNewTag(tagName: "")
+        sleep(timer: 1.0)
         XCTAssert(emptyAlertTitle.exists)
         XCTAssert(emptyAlertBody.exists)
         XCTAssert(emptyAlertOkButton.exists)
@@ -87,9 +87,9 @@ class AddNewGameTags: Utils {
         addNewGameButton.tap()
         tagCell.tap()
         
-        addNewTag("Tag already exists")
-        sleep(1.0)
-        addNewTag("Tag already exists")
+        addNewTag(tagName: "Tag already exists")
+        sleep(timer: 1.0)
+        addNewTag(tagName: "Tag already exists")
         
         XCTAssert(alreadyExistsAlertTitle.exists)
         XCTAssert(alreadyExistsAlertBody.exists)

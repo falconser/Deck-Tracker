@@ -10,8 +10,8 @@ import XCTest
 
 class EditGameDate: Utils {
         
-    let editedGame = XCUIApplication().cells.elementBoundByIndex(0)
-    let pickDateCell = XCUIApplication().cells.elementBoundByIndex(0)
+    let editedGame = XCUIApplication().cells.element(boundBy: 0)
+    let pickDateCell = XCUIApplication().cells.element(boundBy: 0)
     var year =  -1
     var month = -1
     var day = -1
@@ -24,9 +24,9 @@ class EditGameDate: Utils {
     override func setUp() {
         super.setUp()
         app.launch()
-        sleep(1.0)
+        sleep(timer: 1.0)
         resetAll()
-        AddNewGame().addNewGame("", deckName: "Edit Date", deckClass: "Priest", opponent: "Warlock", coin: false, win: true, tag: "")
+        AddNewGame().addNewGame(date: "", deckName: "Edit Date", deckClass: "Priest", opponent: "Warlock", coin: false, win: true, tag: "")
         editedGame.tap()
         pickDateCell.tap()
         getElementsFromDate()
@@ -44,17 +44,18 @@ class EditGameDate: Utils {
     
     func getElementsFromDate() {
         
-        let date = NSDate()
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Day , .Month , .Year], fromDate: date)
+        let date = Date()
+        let calendar = NSCalendar.current
         
-        year =  components.year
-        month = components.month
-        day = components.day
+        let components = calendar.dateComponents([.day , .month , .year], from: date)
         
-        let dateFormatter: NSDateFormatter = NSDateFormatter()
+        year =  components.year!
+        month = components.month!
+        day = components.day!
+        
+        let dateFormatter: DateFormatter = DateFormatter()
         let months = dateFormatter.monthSymbols
-        longMonth = months[month-1] // month - from your date components
+        longMonth = months![month-1] // month - from your date components
     }
     
 }

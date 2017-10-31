@@ -66,7 +66,7 @@ class GraphsTests: Utils {
     override func setUp() {
         super.setUp()
         app.launch()
-        sleep(1.0)
+        sleep(timer: 1.0)
         resetAll()
         graphsTab.tap()
     }

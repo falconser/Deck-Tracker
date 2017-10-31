@@ -16,8 +16,9 @@ class SelectDeckWatch: WKInterfaceController {
     @IBOutlet var noDeckLabel: WKInterfaceLabel!
     var deckList:[Deck] = []
     
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
+        
         noDeckLabel.setHidden(true)
         loadData()
         reloadTable()
@@ -37,16 +38,16 @@ class SelectDeckWatch: WKInterfaceController {
     
     
     func loadData() {
-        // Loads data from NSUserDefaults
-        let defaults = NSUserDefaults(suiteName: "group.Decks")!
-        if let dict:[NSDictionary] = defaults.objectForKey("List of decks dictionary") as? [NSDictionary] {
+        // Loads data from UserDefaults
+        let defaults = UserDefaults(suiteName: "group.Decks")!
+        if let dict:[NSDictionary] = defaults.object(forKey: "List of decks dictionary") as? [NSDictionary] {
             extractDictToArrayOfDecks(dict)
         }
         
     }
     
     
-    func extractDictToArrayOfDecks(dict:[NSDictionary]) {
+    func extractDictToArrayOfDecks(_ dict:[NSDictionary]) {
         // Takes the saved dictionary and transforms it into a Deck array
         for i in 0 ..< dict.count {
             let deckName: String = dict[i]["deckName"] as! String
@@ -66,9 +67,9 @@ class SelectDeckWatch: WKInterfaceController {
             noDeckLabel.setHidden(false)
         } else {
             for i in 0 ..< deckList.count {
-                if let row = deckTable.rowControllerAtIndex(i) as? DeckRow {
+                if let row = deckTable.rowController(at:i) as? DeckRow {
                     row.deckLabel.setText(deckList[i].getName())
-                    row.deckLabel.setTextColor(UIColor.blackColor())
+                    row.deckLabel.setTextColor(UIColor.black)
                     
                     // Colors the cells
                     if deckList[i].getClass() == "Warrior" {
@@ -97,22 +98,22 @@ class SelectDeckWatch: WKInterfaceController {
     }
     
     
-    override func table(table: WKInterfaceTable, didSelectRowAtIndex rowIndex: Int) {
+    override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
         // Saves the selected deck and returns to Main View
-        //let row = table.rowControllerAtIndex(rowIndex) as? DeckRow
+        //let row = table.rowController(at:rowIndex) as? DeckRow
         let selectedDeck = deckList[rowIndex]
-        let defaults = NSUserDefaults(suiteName: "group.Decks")!
-        defaults.setInteger(selectedDeck.getID(), forKey: "Selected Deck ID")
-        defaults.setObject(selectedDeck.getName(), forKey: "Selected Deck Name")
-        defaults.setObject(selectedDeck.getClass(), forKey: "Selected Deck Class")
+        let defaults = UserDefaults(suiteName: "group.Decks")!
+        defaults.set(selectedDeck.getID(), forKey: "Selected Deck ID")
+        defaults.set(selectedDeck.getName(), forKey: "Selected Deck Name")
+        defaults.set(selectedDeck.getClass(), forKey: "Selected Deck Class")
         defaults.synchronize()
         WKInterfaceController.openParentApplication(["Save Selected Deck" : ""] , reply: { [](reply, error) -> Void in
             })
-        self.popController()
+        self.pop()
     }
     
     
-    func UIColorFromRGB(rgbValue: UInt) -> UIColor {
+    func UIColorFromRGB(_ rgbValue: UInt) -> UIColor {
         // Converts the color from RGB
         return UIColor(
             red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,

@@ -18,8 +18,8 @@ class SelectTagsWatch: WKInterfaceController {
     var selectedTag:String = ""
     var wasAlreadySelected = false
     
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         
         noTagsLabel.setHidden(true)
         loadData()
@@ -39,13 +39,13 @@ class SelectTagsWatch: WKInterfaceController {
     
     func loadData() {
         // Loads all saved tags and then the already selected by user
-        let defaults = NSUserDefaults(suiteName: "group.Decks")!
-        if let testTags: AnyObject = defaults.objectForKey("All Tags") {
+        let defaults = UserDefaults(suiteName: "group.Decks")!
+        if let testTags = defaults.object(forKey: "All Tags") {
             tagsList = testTags as! [String]
         }
         
-        if let _ = NSUserDefaults.standardUserDefaults().stringForKey("Selected Tag Watch") {
-            selectedTag = NSUserDefaults.standardUserDefaults().stringForKey("Selected Tag Watch") as String!
+        if let _ = UserDefaults.standard.string(forKey:"Selected Tag Watch") {
+            selectedTag = UserDefaults.standard.string(forKey:"Selected Tag Watch") as String!
         }
         //println(tagsList)
         //println("Selected tag: " + String(stringInterpolationSegment: selectedTagsArray))
@@ -60,14 +60,14 @@ class SelectTagsWatch: WKInterfaceController {
         } else {
             // Sets the labels text
             for i in 0 ..< tagsList.count {
-                if let row = tagsTable.rowControllerAtIndex(i) as? TagsRow {
+                if let row = tagsTable.rowController(at:i) as? TagsRow {
                     row.tagLabel.setText(tagsList[i])
                 }
                 // Set background color to the selected tag
                 if tagsList[i] == selectedTag {
-                    if let row = tagsTable.rowControllerAtIndex(i) as? TagsRow {
-                        row.groupTable.setBackgroundColor(UIColor.greenColor())
-                        row.tagLabel.setTextColor(UIColor.blackColor())
+                    if let row = tagsTable.rowController(at:i) as? TagsRow {
+                        row.groupTable.setBackgroundColor(UIColor.green)
+                        row.tagLabel.setTextColor(UIColor.black)
                     }
                 }
             }
@@ -75,9 +75,9 @@ class SelectTagsWatch: WKInterfaceController {
     }
     
     
-    override func table(table: WKInterfaceTable, didSelectRowAtIndex rowIndex: Int) {
+    override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
         // Saves the selected tag and colors the row
-        let row = table.rowControllerAtIndex(rowIndex) as? TagsRow
+        let row = table.rowController(at:rowIndex) as? TagsRow
         
         wasAlreadySelected = false
         
@@ -90,22 +90,22 @@ class SelectTagsWatch: WKInterfaceController {
         
         if wasAlreadySelected == true {
             // If it was already selected then remove the tag from array and color the row
-            row!.groupTable.setBackgroundColor(UIColor.blackColor())
-            row?.tagLabel.setTextColor(UIColor.whiteColor())
+            row!.groupTable.setBackgroundColor(UIColor.black)
+            row?.tagLabel.setTextColor(UIColor.white)
         } else {
             // If it was not already selected then add it to array and color the row
-            row!.groupTable.setBackgroundColor(UIColor.greenColor())
-            row?.tagLabel.setTextColor(UIColor.blackColor())
+            row!.groupTable.setBackgroundColor(UIColor.green)
+            row?.tagLabel.setTextColor(UIColor.black)
         }
         print("Selected Tag: " + selectedTag)
 
         //println(wasAlreadySelected)
         
         // Save selected tag array
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(selectedTag, forKey: "Selected Tag Watch")
+        let defaults = UserDefaults.standard
+        defaults.set(selectedTag, forKey: "Selected Tag Watch")
         defaults.synchronize()
-        self.popController()
+        self.pop()
     }
 
 }

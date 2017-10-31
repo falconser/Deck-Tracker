@@ -22,8 +22,8 @@ class SelectOpponentWatch: WKInterfaceController {
     @IBOutlet var mageButton: WKInterfaceButton!
     @IBOutlet var priestButton: WKInterfaceButton!
     
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         // Configure interface objects here.
     }
 
@@ -38,57 +38,57 @@ class SelectOpponentWatch: WKInterfaceController {
     }
     
     // Saves info for opponent class and returns to Main View
-    @IBAction func warriorButtonPressed() {
-        NSUserDefaults.standardUserDefaults().setObject("Warrior", forKey: "Watch Opponent Class")
-        NSUserDefaults.standardUserDefaults().synchronize()
-        self.popController()
+    @objc @IBAction func warriorButtonPressed() {
+        UserDefaults.standard.set("Warrior", forKey: "Watch Opponent Class")
+        UserDefaults.standard.synchronize()
+        self.pop()
     }
     
-    @IBAction func paladinButtonPressed() {
-        NSUserDefaults.standardUserDefaults().setObject("Paladin", forKey: "Watch Opponent Class")
-        NSUserDefaults.standardUserDefaults().synchronize()
-        self.popController()
+    @objc @IBAction func paladinButtonPressed() {
+        UserDefaults.standard.set("Paladin", forKey: "Watch Opponent Class")
+        UserDefaults.standard.synchronize()
+        self.pop()
     }
     
-    @IBAction func shamanButtonPressed() {
-        NSUserDefaults.standardUserDefaults().setObject("Shaman", forKey: "Watch Opponent Class")
-        NSUserDefaults.standardUserDefaults().synchronize()
-        self.popController()
+    @objc @IBAction func shamanButtonPressed() {
+        UserDefaults.standard.set("Shaman", forKey: "Watch Opponent Class")
+        UserDefaults.standard.synchronize()
+        self.pop()
     }
     
-    @IBAction func hunterButtonPressed() {
-        NSUserDefaults.standardUserDefaults().setObject("Hunter", forKey: "Watch Opponent Class")
-        NSUserDefaults.standardUserDefaults().synchronize()
-        self.popController()
+    @objc @IBAction func hunterButtonPressed() {
+        UserDefaults.standard.set("Hunter", forKey: "Watch Opponent Class")
+        UserDefaults.standard.synchronize()
+        self.pop()
     }
     
-    @IBAction func druidButtonPressed() {
-        NSUserDefaults.standardUserDefaults().setObject("Druid", forKey: "Watch Opponent Class")
-        NSUserDefaults.standardUserDefaults().synchronize()
-        self.popController()
+    @objc @IBAction func druidButtonPressed() {
+        UserDefaults.standard.set("Druid", forKey: "Watch Opponent Class")
+        UserDefaults.standard.synchronize()
+        self.pop()
     }
     
-    @IBAction func rogueButtonPressed() {
-        NSUserDefaults.standardUserDefaults().setObject("Rogue", forKey: "Watch Opponent Class")
-        NSUserDefaults.standardUserDefaults().synchronize()
-        self.popController()
+    @objc @IBAction func rogueButtonPressed() {
+        UserDefaults.standard.set("Rogue", forKey: "Watch Opponent Class")
+        UserDefaults.standard.synchronize()
+        self.pop()
     }
     
-    @IBAction func warlockButtonPressed() {
-        NSUserDefaults.standardUserDefaults().setObject("Warlock", forKey: "Watch Opponent Class")
-        NSUserDefaults.standardUserDefaults().synchronize()
-        self.popController()
+    @objc @IBAction func warlockButtonPressed() {
+        UserDefaults.standard.set("Warlock", forKey: "Watch Opponent Class")
+        UserDefaults.standard.synchronize()
+        self.pop()
     }
     
-    @IBAction func mageButtonPressed() {
-        NSUserDefaults.standardUserDefaults().setObject("Mage", forKey: "Watch Opponent Class")
-        NSUserDefaults.standardUserDefaults().synchronize()
-        self.popController()
+    @objc @IBAction func mageButtonPressed() {
+        UserDefaults.standard.set("Mage", forKey: "Watch Opponent Class")
+        UserDefaults.standard.synchronize()
+        self.pop()
     }
     
-    @IBAction func priestButtonPressed() {
-        NSUserDefaults.standardUserDefaults().setObject("Priest", forKey: "Watch Opponent Class")
-        NSUserDefaults.standardUserDefaults().synchronize()
-        self.popController()
+    @objc @IBAction func priestButtonPressed() {
+        UserDefaults.standard.set("Priest", forKey: "Watch Opponent Class")
+        UserDefaults.standard.synchronize()
+        self.pop()
     }
 }

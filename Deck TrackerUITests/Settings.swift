@@ -12,9 +12,9 @@ class Settings: Utils {
     
     let settingsButton = XCUIApplication().navigationBars["Games List"].buttons["More Info"]
     let settingsTitle = XCUIApplication().navigationBars["Settings"]
-    let settingsLabel = XCUIApplication().tables.childrenMatchingType(.Other).elementBoundByIndex(0).otherElements["SETTINGS"]
+    let settingsLabel = XCUIApplication().tables.children(matching: .other).element(boundBy: 0).otherElements["SETTINGS"]
     let resetAllButton = XCUIApplication().buttons["Reset All"]
-    let aboutLabel = XCUIApplication().tables.childrenMatchingType(.Other).elementBoundByIndex(1).otherElements["ABOUT"]
+    let aboutLabel = XCUIApplication().tables.children(matching: .other).element(boundBy: 1).otherElements["ABOUT"]
     let aboutButton = XCUIApplication().tables.staticTexts["About"]
     let backButton = XCUIApplication().navigationBars["Settings"].buttons["Games List"]
     
@@ -28,7 +28,7 @@ class Settings: Utils {
     override func setUp() {
         super.setUp()
         app.launch()
-        sleep(1.0)
+        sleep(timer: 1.0)
         settingsButton.tap()
     }
         
@@ -57,13 +57,13 @@ class Settings: Utils {
         // Add a new deck and check it appears
         Decks().decksTab.tap()
         XCTAssert(app.tables.cells.count == 0)
-        Decks().addDeck("Reset", deckClass: "Druid")
+        Decks().addDeck(deckTitle: "Reset", deckClass: "Druid")
         XCTAssert(app.tables.cells.count == 1)
         
         // Add a new game and check it appears
         Games().gamesTab.tap()
         XCTAssert(app.tables.cells.count == 0)
-        AddNewGame().addNewGame("", deckName: "Reset", deckClass: "Druid", opponent: "Druid", coin: false, win: true, tag: "")
+        AddNewGame().addNewGame(date: "", deckName: "Reset", deckClass: "Druid", opponent: "Druid", coin: false, win: true, tag: "")
         print(app.tables.cells.count)
         XCTAssert(app.tables.cells.count == 1)
 
@@ -71,7 +71,7 @@ class Settings: Utils {
         AddNewGame().addNewGameButton.tap()
         AddNewGame().tagCell.tap()
         XCTAssert(app.tables.cells.count == 0)
-        AddNewGameTags().addNewTag("reset stuff")
+        AddNewGameTags().addNewTag(tagName: "reset stuff")
         XCTAssert(app.tables.cells.count == 1)
         AddNewGameTags().backButton.tap()
         AddNewGame().cancelButton.tap()
@@ -94,13 +94,13 @@ class Settings: Utils {
         // Add a new deck and check it appears
         Decks().decksTab.tap()
         XCTAssert(app.tables.cells.count == 0)
-        Decks().addDeck("Reset", deckClass: "Druid")
+        Decks().addDeck(deckTitle: "Reset", deckClass: "Druid")
         XCTAssert(app.tables.cells.count == 1)
         
         // Add a new game and check it appears
         Games().gamesTab.tap()
         XCTAssert(app.tables.cells.count == 0)
-        AddNewGame().addNewGame("", deckName: "Reset", deckClass: "Druid", opponent: "Druid", coin: false, win: true, tag: "")
+        AddNewGame().addNewGame(date: "", deckName: "Reset", deckClass: "Druid", opponent: "Druid", coin: false, win: true, tag: "")
         print(app.tables.cells.count)
         XCTAssert(app.tables.cells.count == 1)
         
@@ -108,7 +108,7 @@ class Settings: Utils {
         AddNewGame().addNewGameButton.tap()
         AddNewGame().tagCell.tap()
         XCTAssert(app.tables.cells.count == 0)
-        AddNewGameTags().addNewTag("reset stuff")
+        AddNewGameTags().addNewTag(tagName: "reset stuff")
         XCTAssert(app.tables.cells.count == 1)
         AddNewGameTags().backButton.tap()
         AddNewGame().cancelButton.tap()
@@ -132,13 +132,13 @@ class Settings: Utils {
         // Add a new deck and check it appears
         Decks().decksTab.tap()
         XCTAssert(app.tables.cells.count == 0)
-        Decks().addDeck("Reset", deckClass: "Druid")
+        Decks().addDeck(deckTitle: "Reset", deckClass: "Druid")
         XCTAssert(app.tables.cells.count == 1)
         
         // Add a new game and check it appears
         Games().gamesTab.tap()
         XCTAssert(app.tables.cells.count == 0)
-        AddNewGame().addNewGame("", deckName: "Reset", deckClass: "Druid", opponent: "Druid", coin: false, win: true, tag: "")
+        AddNewGame().addNewGame(date: "", deckName: "Reset", deckClass: "Druid", opponent: "Druid", coin: false, win: true, tag: "")
         print(app.tables.cells.count)
         XCTAssert(app.tables.cells.count == 1)
         
@@ -146,7 +146,7 @@ class Settings: Utils {
         AddNewGame().addNewGameButton.tap()
         AddNewGame().tagCell.tap()
         XCTAssert(app.tables.cells.count == 0)
-        AddNewGameTags().addNewTag("reset stuff")
+        AddNewGameTags().addNewTag(tagName: "reset stuff")
         XCTAssert(app.tables.cells.count == 1)
         AddNewGameTags().backButton.tap()
         AddNewGame().cancelButton.tap()

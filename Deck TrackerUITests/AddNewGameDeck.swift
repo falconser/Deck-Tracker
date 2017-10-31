@@ -11,7 +11,7 @@ import XCTest
 class AddNewGameDeck: Utils {
     
     let addNewGameButton = Games().addGameButton
-    let pickDeckCell = XCUIApplication().cells.elementBoundByIndex(1)
+    let pickDeckCell = XCUIApplication().cells.element(boundBy: 1)
     
     let backButton = XCUIApplication().navigationBars["Decks"].buttons["Add New Game"]
     let selectDeckTitleScreen = XCUIApplication().navigationBars["Decks"].staticTexts["Decks"]
@@ -21,7 +21,7 @@ class AddNewGameDeck: Utils {
     override func setUp() {
         super.setUp()
         XCUIApplication().launch()
-        sleep(1.0)
+        sleep(timer: 1.0)
         addNewGameButton.tap()
         pickDeckCell.tap()
     }
@@ -40,10 +40,10 @@ class AddNewGameDeck: Utils {
     }
     
     func testAddDeck() {
-        Decks().addDeck("From Add Game", deckClass: "Druid")
-        Decks().tapDeck("From Add Game")
+        Decks().addDeck(deckTitle: "From Add Game", deckClass: "Druid")
+        Decks().tapDeck(deckTitle: "From Add Game")
         
-        let deckName = app.cells.elementBoundByIndex(1).staticTexts["Your deck: From Add Game"]
+        let deckName = app.cells.element(boundBy: 1).staticTexts["Your deck: From Add Game"]
         XCTAssert(deckName.exists)
     }
     

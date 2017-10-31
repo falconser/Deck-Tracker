@@ -13,15 +13,15 @@ class Utils: XCTestCase {
     let app = XCUIApplication()
     
     func sleep(timer: Double) {
-        NSThread.sleepForTimeInterval(timer)
+        Thread.sleep(forTimeInterval: timer)
     }
     
     func dateToday() -> String {
         // Get today's date as a String
-        let now = NSDate()
-        let formatter = NSDateFormatter()
-        formatter.dateStyle = NSDateFormatterStyle.ShortStyle
-        let dateString = formatter.stringFromDate(now)
+        let now = Date()
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        let dateString = formatter.string(from: now)
         return dateString
     }
     

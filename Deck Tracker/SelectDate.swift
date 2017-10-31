@@ -24,7 +24,7 @@ class SelectDate: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func datePickerChanged(sender: UIDatePicker) {
+    @objc @IBAction func datePickerChanged(_ sender:UIDatePicker) {
         let newDate = datePicker.date
         dateToString(newDate)
         saveDate(newDate)
@@ -32,30 +32,25 @@ class SelectDate: UIViewController {
     }
     
     // Returns the date as String
-    func dateToString(date:NSDate) -> String {
-        let formatter = NSDateFormatter()
-        formatter.dateStyle = NSDateFormatterStyle.ShortStyle
-        let dateString = formatter.stringFromDate(date)
+    @discardableResult
+    func dateToString(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        let dateString = formatter.string(from: date)
         return dateString
     }
     
-    // Saves the selected date in NSUserDefaults
-    func saveDate(date:NSDate) {
-        let defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(date, forKey: "Saved Date")
+    // Saves the selected date in UserDefaults
+    func saveDate(_ date: Date) {
+        let defaults: UserDefaults = UserDefaults.standard
+        defaults.set(date, forKey: "Saved Date")
         defaults.synchronize()
     }
     
     // Reads the saved date
-    func readDate() -> NSDate {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let date:NSDate = defaults.objectForKey("Saved Date") as? NSDate {
-            //println("Date retrieved")
-            return date
-        }
-        else {
-            //println("Switched to today's date.")
-            return NSDate()
-        }
+    @discardableResult
+    func readDate() -> Date {
+        let defaults = UserDefaults.standard
+        return defaults.object(forKey: "Saved Date") as? Date ?? Date()
     }
 }

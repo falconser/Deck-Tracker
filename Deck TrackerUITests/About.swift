@@ -23,7 +23,7 @@ class About: Utils {
     override func setUp() {
         super.setUp()
         app.launch()
-        sleep(1.0)
+        sleep(timer: 1.0)
         app.navigationBars["Games List"].buttons["More Info"].tap()
         app.tables.staticTexts["About"].tap()
     }
@@ -39,8 +39,10 @@ class About: Utils {
     }
     
     func testPressBackButton() {
+        sleep(timer: 1.0)
         elementsOnScreen()
         backButton.tap()
+        sleep(timer: 1.0)
         XCTAssert(settingsTitle.exists, "After pressing back from About the screen should be the Settings Screen")
     }
     

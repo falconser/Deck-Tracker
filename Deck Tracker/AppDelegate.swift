@@ -16,20 +16,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var deckListForPhone:[NSDictionary] = []
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         
         // Crashlytics
         Fabric.with([Crashlytics()])
         
         // Initialize the data structure and print it to the console at app launch
-        Data.sharedInstance.printDeckData()
-        Data.sharedInstance.printGameData() 
+        TrackerData.sharedInstance.printDeckData()
+        TrackerData.sharedInstance.printGameData() 
         
         // Show page UI for graphs
         let pageControl = UIPageControl.appearance()
-        pageControl.pageIndicatorTintColor = UIColor.lightGrayColor()
-        pageControl.currentPageIndicatorTintColor = UIColor.blackColor()
-        pageControl.backgroundColor = UIColor.whiteColor()
+        pageControl.pageIndicatorTintColor = UIColor.lightGray
+        pageControl.currentPageIndicatorTintColor = UIColor.black
+        pageControl.backgroundColor = UIColor.white
         
         // Show tab 2 at startup
         if let tabBarController = self.window!.rootViewController as? UITabBarController {
@@ -40,13 +40,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // Executes the code when the watch sends a request
-    func application(application: UIApplication, handleWatchKitExtensionRequest userInfo: [NSObject : AnyObject]?, reply: (([NSObject : AnyObject]?) -> Void)) {
-        
-        let infoFromWatch: NSDictionary = userInfo!
+    public func application(_ application: UIApplication, handleWatchKitExtensionRequest userInfo: [AnyHashable : Any]?, reply: @escaping ([AnyHashable : Any]?) -> Void) {
+
+        let infoFromWatch = userInfo!
         print(infoFromWatch)
 
         // Depending on what screen this function is called do stuff
-        if let _: AnyObject = infoFromWatch["Save New Game"] {
+        if nil != infoFromWatch["Save New Game"] {
             saveGameFromWatch()
         } else  {
             saveSelectedDeckFromWatch()
@@ -55,12 +55,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func saveGameFromWatch() {
         // Fetches the saved dictionary
-        let defaults = NSUserDefaults(suiteName: "group.Decks")!
-        let dict: NSDictionary = defaults.objectForKey("Add Game Watch") as! NSDictionary
+        let defaults = UserDefaults(suiteName: "group.Decks")!
+        let dict: NSDictionary = defaults.object(forKey: "Add Game Watch") as! NSDictionary
         
         // Gets the values needed from the dictionary and adds a New Game
         let gameID = AddGame().newGameGetID()
-        let date = NSDate()
+        let date = Date()
         let playerDeckName = dict["selectedDeckName"] as! String
         let playerDeckClass = dict["selectedDeckClass"] as! String
         let opponentClass = dict["watchOpponentClass"] as! String
@@ -69,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let tag = dict["watchSelectedTag"] as! String
         
         let newGame = Game(newID: gameID, newDate: date, newPlayerDeckName: playerDeckName, newPlayerDeckClass: playerDeckClass, newOpponentDeck: opponentClass, newCoin: coin, newWin: win, newTag: tag)
-        Data.sharedInstance.addGame(newGame)
+        TrackerData.sharedInstance.addGame(newGame)
         
         // Crashlytics custom events
         var winString = ""
@@ -85,7 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             tagString = tag
         }
-        Answers.logCustomEventWithName("New game added",
+        Answers.logCustomEvent(withName: "New game added",
             customAttributes: [
                 "Deck Name": playerDeckName,
                 "Deck Class": playerDeckClass,
@@ -96,34 +96,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ])
         
         // Posts a notification for another screen (Games List)
-        NSNotificationCenter.defaultCenter().postNotificationName("GameAdded", object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "GameAdded"), object: nil)
     }
     
     func saveSelectedDeckFromWatch() {
         // Posts a notification for another screen (Decks List)
-        NSNotificationCenter.defaultCenter().postNotificationName("DeckSelected", object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "DeckSelected"), object: nil)
     }
 
 
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
 
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 }
