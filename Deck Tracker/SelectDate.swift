@@ -12,44 +12,21 @@ class SelectDate: UIViewController {
     
     @IBOutlet var datePicker: UIDatePicker!
     
-    let defaults = UserDefaults.standard
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    var didChangeDate: ((Date) -> Void)?
+    var selectedDate: Date = Date() {
+        didSet {
+            if let didChangeDate = didChangeDate {
+                didChangeDate(selectedDate)
+            }
+        }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        datePicker.setDate(selectedDate, animated: false)
     }
     
     @objc @IBAction func datePickerChanged(_ sender:UIDatePicker) {
-        let newDate = datePicker.date
-        dateToString(newDate)
-        saveDate(newDate)
-        readDate()
-    }
-    
-    // Returns the date as String
-    @discardableResult
-    func dateToString(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        let dateString = formatter.string(from: date)
-        return dateString
-    }
-    
-    // Saves the selected date in UserDefaults
-    func saveDate(_ date: Date) {
-        defaults.set(date, forKey: "Saved Date")
-        defaults.synchronize()
-    }
-    
-    // Reads the saved date
-    @discardableResult
-    func readDate() -> Date {
-        return defaults.object(forKey: "Saved Date") as? Date ?? Date()
+        selectedDate = datePicker.date
     }
 }

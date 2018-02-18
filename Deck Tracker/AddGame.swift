@@ -103,7 +103,6 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     
     @objc @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
         // Remove the selected date and selected opponent class from UserDefaults and dismissed the screen
-        defaults.removeObject(forKey: "Saved Date")
         defaults.removeObject(forKey: "Selected Tag")
         defaults.synchronize()
         self.dismiss(animated:true, completion: {})
@@ -120,7 +119,7 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
         // Removes the selected date, opponent class and selected tag from UserDefaults and sends all the info to the Game List
         // Gets all the atributes for a new Game
         let newGameID = newGameGetID()
-        let newGameDate = SelectDate().readDate()
+        let newGameDate = game.date
         
         // Gets the selected deck name
         var newGamePlayerDeckName = ""
@@ -172,7 +171,6 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
         }
         
         // Deletes the date, opponent class and selected tag so the user needs to select again
-        defaults.removeObject(forKey: "Saved Date")
         defaults.removeObject(forKey: "Selected Tag")
         defaults.synchronize()
     }
@@ -201,6 +199,12 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
             selectOpponent.selectedClass = game.opponentClass
             selectOpponent.onSelectionUpdate = { [weak self] (selectedClass: Class?) in
                 self?.game.opponentClass = selectedClass ?? .Unknown
+            }
+        }
+        else if let selectDate = segue.destination as? SelectDate {
+            selectDate.selectedDate = game.date
+            selectDate.didChangeDate = { [weak self] (date: Date) in
+                self?.game.date = date
             }
         }
     }
