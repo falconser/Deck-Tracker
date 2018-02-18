@@ -75,8 +75,8 @@ class TagsGraphsCollectionView: UICollectionViewController {
         
         // Set games without tag as tag:None
         for game in filteredGames {
-            if game.getTag() == "" {
-                game.setNewTag("None")
+            if game.tag == "" {
+                game.tag = "None"
             }
             //print(game.getTag())
         }
@@ -89,7 +89,7 @@ class TagsGraphsCollectionView: UICollectionViewController {
         var allTags:[String] = []
         
         for game in filteredGames {
-            allTags.append(game.getTag())
+            allTags.append(game.tag)
         }
         
         
@@ -110,7 +110,7 @@ class TagsGraphsCollectionView: UICollectionViewController {
             filteredGamesAndTags = []
             
             for game in filteredGames {
-                if filteredTags[i] == game.getTag() {
+                if filteredTags[i] == game.tag {
                     filteredGamesAndTags.append(game)
                 }
             }

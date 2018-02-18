@@ -56,75 +56,12 @@ class Game : NSObject, NSCoding {
         aCoder.encode(tag, forKey: "tag")
     }
     
-    // Returns deck name
-    func getPlayerDeckName() -> String {
-        return playerDeckName
-
-    }
-    
-    // Returns deck class
-    func getPlayerDeckClass() -> String {
-        return playerDeckClass
-    }
-    
-    // Returns opponent class
-    func getOpponentDeck() -> String {
-        return opponentDeck
-    }
-    
     // Returns Date in String format
     func getDate() -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
         let dateString = formatter.string(from: date)
         return dateString
-    }
-    
-    // Gets the Date
-    func getDate() -> Date {
-        return date
-    }
-
-    // Returns true/false if user played first
-    func getCoin() -> Bool {
-        if coin == true {
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    // Returns true/false if user won
-    func getWin() -> Bool {
-        if win == true {
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    // Returns won/lost String if user won
-    func getWinString() -> String {
-        if win == true {
-            return "WON"
-        } else {
-            return "LOST"
-        }
-    }
-
-    // Returns the ID
-    func getID() -> Int {
-        return id
-    }
-    
-    // Returns the tag
-    func getTag() -> String {
-        return tag
-    }
-    
-    // Sets the tag
-    func setNewTag(_ newTag:String) {
-        tag = newTag
     }
     
     // Returns a string containing all the proprierties of the object

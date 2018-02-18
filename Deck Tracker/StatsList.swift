@@ -49,13 +49,13 @@ class StatsList: UIViewController, UINavigationBarDelegate, UITableViewDelegate,
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:GamesCell = tableView.dequeueReusableCell(withIdentifier:"Cell") as! GamesCell
         cell.dateLabel.text = gamesList[indexPath.row].getDate()
-        let playerImage = gamesList[indexPath.row].getPlayerDeckClass()
+        let playerImage = gamesList[indexPath.row].playerDeckClass
         let playerImageName = getImage(playerImage)
         cell.playerImage.image = UIImage(named: playerImageName)
-        let opponentImage = gamesList[indexPath.row].getOpponentDeck()
+        let opponentImage = gamesList[indexPath.row].opponentDeck
         let opponentImageName = getImage(opponentImage)
         cell.opponentImage.image = UIImage(named: opponentImageName)
-        cell.winLabel.text = gamesList[indexPath.row].getWinString()
+        cell.winLabel.text = gamesList[indexPath.row].win ? "WON" : "LOSS"
         return cell
     }
     

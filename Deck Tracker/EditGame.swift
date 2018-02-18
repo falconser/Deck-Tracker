@@ -78,7 +78,7 @@ class EditGame: UITableViewController, UINavigationBarDelegate {
         if let editedDeckName = UserDefaults(suiteName: "group.Decks")!.string(forKey:"Edited Deck Name") {
             playerDeckLabel.text = "Your deck: " + editedDeckName
         } else {
-            let savedPlayedDeck = selectedGame.getPlayerDeckName()
+            let savedPlayedDeck = selectedGame.playerDeckName
             playerDeckLabel.text = "Your deck: " + savedPlayedDeck
         }
 
@@ -89,28 +89,25 @@ class EditGame: UITableViewController, UINavigationBarDelegate {
         if let editedOpponentClass = defaults.string(forKey:"Edited Opponent Class") {
             opponentDeckLabel.text = "Opponent's Class: " + editedOpponentClass
         } else {
-            let savedOpponentDeck = selectedGame.getOpponentDeck()
-            opponentDeckLabel.text = "Opponent's Class: " + savedOpponentDeck
+            opponentDeckLabel.text = "Opponent's Class: " + selectedGame.opponentDeck
         }
 
     }
     
     // Puts the coin status
     func putSavedCoinStatusOnSwitch() {
-        let savedCoin = selectedGame.getCoin()
-        coinSwitch.setOn(savedCoin, animated: true)
+        coinSwitch.setOn(selectedGame.coin, animated: true)
     }
     
     // Puts the win status
     func putSavedWinStatusOnSwitch() {
-        let savedWin = selectedGame.getWin()
-        winSwitch.setOn(savedWin, animated: true)
+        winSwitch.setOn(selectedGame.win, animated: true)
     }
     
     // Puts the selected tag
     func putSavedTagOnLabel() {
         
-        selectedTag = selectedGame.getTag()
+        selectedTag = selectedGame.tag
         //print("Selected Tag Edit Screen with default tags: " + String(stringInterpolationSegment: selectedTags))
         if let _ = defaults.string(forKey:"Edited Selected Tag") {
             selectedTag = defaults.string(forKey:"Edited Selected Tag") as String!
@@ -142,7 +139,7 @@ class EditGame: UITableViewController, UINavigationBarDelegate {
     
     // Puts edited deck name on label
     func putSelectedPlayerDeckOnLabel() {
-        let savedDeck = selectedGame.getPlayerDeckName()
+        let savedDeck = selectedGame.playerDeckName
         let editedDeck = defaults.string(forKey:"Edited Deck Name")
         if editedDeck == nil {
             playerDeckLabel.text = "Your deck: " + savedDeck
@@ -153,7 +150,7 @@ class EditGame: UITableViewController, UINavigationBarDelegate {
     
     // Puts edited opponent class on label
     func putSelectedOpponentClassOnLabel() {
-        let savedOpponentClass = selectedGame.getOpponentDeck()
+        let savedOpponentClass = selectedGame.opponentDeck
         //println(savedOpponentClass)
         let editedOpponentClass = defaults.string(forKey:"Edited Opponent Class")
         //println(editedOpponentClass)
@@ -188,26 +185,26 @@ class EditGame: UITableViewController, UINavigationBarDelegate {
     @objc @IBAction func saveButtonPressed(_ sender:UIBarButtonItem) {
         
         // Get required atributes to create a new Game
-        let editedID = selectedGame.getID()
+        let editedID = selectedGame.id
         
         var editedDate = EditDate.sharedInstance.readDate()
         if editedDate == nil {
-            editedDate = selectedGame.getDate()
+            editedDate = selectedGame.date
         }
         
         var editedPlayerDeckName = UserDefaults(suiteName: "group.Decks")!.string(forKey:"Edited Deck Name")
         if editedPlayerDeckName == nil {
-            editedPlayerDeckName = selectedGame.getPlayerDeckName()
+            editedPlayerDeckName = selectedGame.playerDeckName
         }
         
         var editedPlayerDeckClass = UserDefaults(suiteName: "group.Decks")!.string(forKey:"Edited Deck Class") as String?
         if editedPlayerDeckClass == nil {
-            editedPlayerDeckClass = selectedGame.getPlayerDeckClass()
+            editedPlayerDeckClass = selectedGame.playerDeckClass
         }
         
         var editedOpponentClass = defaults.string(forKey:"Edited Opponent Class")
         if editedOpponentClass == nil {
-            editedOpponentClass = selectedGame.getOpponentDeck()
+            editedOpponentClass = selectedGame.opponentDeck
         }
         
         let editedCoin = coinSwitch.isOn

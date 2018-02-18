@@ -95,7 +95,7 @@ class GraphsCollectionView: UICollectionViewController {
         
         
         for game in filteredGames {
-            if game.getWin() == true {
+            if game.win {
                 wonGames += 1
             } else {
                 lostGames += 1

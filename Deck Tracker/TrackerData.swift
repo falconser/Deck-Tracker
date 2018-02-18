@@ -168,7 +168,7 @@ public class TrackerData: NSObject {
     // Replaces a game from the array
     func editGame (_ id:Int, oldGame:Game, newGame:Game) {
         for i in 0 ..< listOfGames.count {
-            if listOfGames[i].getID() == id {
+            if listOfGames[i].id == id {
                 listOfGames.remove(at: i)
                 listOfGames.insert(newGame, at: i)
                 listOfGames.sort { $0.date.compare($1.date) == .orderedDescending }
@@ -180,7 +180,7 @@ public class TrackerData: NSObject {
     
     // Deletes all games associated with a certain deck
     func deleteAllGamesAssociatedWithADeck( deckName: String) {
-        listOfGames = listOfGames.filter { $0.getPlayerDeckName() != deckName }
+        listOfGames = listOfGames.filter { $0.playerDeckName != deckName }
         saveGame()
     }
     
@@ -200,7 +200,7 @@ public class TrackerData: NSObject {
         if deckName == selectedDeckName {
             filteredGames = []
             for i in 0 ..< dateArray.count {
-                if deckName == dateArray[i].getPlayerDeckName() {
+                if deckName == dateArray[i].playerDeckName {
                     filteredGames.append(dateArray[i])
                 }
             }
@@ -240,7 +240,7 @@ public class TrackerData: NSObject {
             for i in 0 ..< listOfGames.count {
                 let today = Date()
                 let lastWeek = today.addingTimeInterval(-24 * 60 * 60 * 7)
-                if listOfGames[i].getDate().compare(lastWeek) == .orderedDescending {
+                if listOfGames[i].date.compare(lastWeek) == .orderedDescending {
                     dateArray.append(listOfGames[i])
                 }
             }
@@ -250,7 +250,7 @@ public class TrackerData: NSObject {
             for i in 0 ..< listOfGames.count {
                 let today = Date()
                 let lastMonth = today.addingTimeInterval(-24 * 60 * 60 * 30)
-                if listOfGames[i].getDate().compare(lastMonth) == .orderedDescending {
+                if listOfGames[i].date.compare(lastMonth) == .orderedDescending {
                     dateArray.append(listOfGames[i])
                 }
             }
@@ -281,7 +281,7 @@ public class TrackerData: NSObject {
         // If current deck is selected
         if deck == selectedDeckName {
             for i in 0 ..< filteredGamesByDate.count {
-                if deck == filteredGamesByDate[i].getPlayerDeckName() {
+                if deck == filteredGamesByDate[i].playerDeckName {
                     filteredGamesBySelectedDeck.append(filteredGamesByDate[i])
                 }
             }
@@ -293,7 +293,7 @@ public class TrackerData: NSObject {
         for game in filteredGamesBySelectedDeck {
             if opponent == "All" {
                 filteredGamesByOpponent = filteredGamesBySelectedDeck
-            } else if opponent == game.getOpponentDeck() {
+            } else if opponent == game.opponentDeck {
                 filteredGamesByOpponent.append(game)
             }
         }
