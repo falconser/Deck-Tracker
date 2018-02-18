@@ -11,57 +11,43 @@ import Foundation
 
 class Deck : NSObject, NSCoding {
     
-    var deckName:String
-    var deckClass:String
-    var deckID:Int
+    private(set) var name:String
+    private(set) var deckID:Int
+    private(set) var heroClass: Class
     
     // Initialize a Deck object with arguments
-    init (newDeckID:Int, newDeckName:String, newDeckClass:String) {
-        self.deckName = newDeckName
-        self.deckClass = newDeckClass
-        self.deckID = newDeckID
+    init (deckID:Int, name:String, heroClass:String) {
+        self.name = name
+        self.heroClass = .init(heroClass)
+        self.deckID = deckID
     }
     
     // Encode and decode so we can store this object in UserDefaults
     required init?(coder aDecoder: NSCoder) {
-        deckName = aDecoder.decodeObject(forKey: "deckName") as! String
-        deckClass = aDecoder.decodeObject(forKey: "deckClass") as! String
+        name = aDecoder.decodeObject(forKey: "deckName") as! String
+        let deckClassString = aDecoder.decodeObject(forKey: "deckClass") as! String
+        heroClass = .init(deckClassString)
         deckID = aDecoder.decodeInteger(forKey: "deckID")
     }
     
     
     func encode(with coder: NSCoder) {
-        coder.encode(deckName, forKey: "deckName")
-        coder.encode(deckClass, forKey: "deckClass")
+        coder.encode(name, forKey: "deckName")
+        coder.encode(heroClass.rawValue, forKey: "deckClass")
         coder.encode(deckID, forKey: "deckID")
     }
     
-    // Returns deck name
-    func getName() -> String {
-        return deckName
-    }
-    
-    // Returns deck class
-    func getClass() -> String {
-        return deckClass
-    }
-    
-    // Returns deck id
-    func getID() -> Int {
-        return deckID
-    }
-                            
     // Returns a string containing all the proprierties of the object
     func toString() -> String {
         let deckIDString = String(deckID)
-        return ("Deck ID: " + deckIDString + " ,name: " + deckName + " ,class : " + deckClass)
+        return ("Deck ID: " + deckIDString + " ,name: " + name + " ,class : " + heroClass.rawValue)
     }
     
     // Returns a dictionary with all properties in it
     func getDict() -> NSMutableDictionary {
         let dict = NSMutableDictionary()
-        dict.setValue(self.deckName, forKey: "deckName")
-        dict.setValue(self.deckClass, forKey: "deckClass")
+        dict.setValue(self.name, forKey: "deckName")
+        dict.setValue(self.heroClass.rawValue, forKey: "deckClass")
         dict.setValue(self.deckID, forKey: "deckID")
         return dict
     }

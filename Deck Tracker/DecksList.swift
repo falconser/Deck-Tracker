@@ -43,10 +43,8 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     // Populates the table with data
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:CustomCell = tableView.dequeueReusableCell(withIdentifier:"Cell") as! CustomCell
-        cell.customLabel.text = decksList[indexPath.row].getName()
-        let image = decksList[indexPath.row].getClass()
-        let imageName = getImage(image)
-        cell.customImage.image = UIImage(named: imageName)
+        cell.customLabel.text = decksList[indexPath.row].name
+        cell.customImage.image = decksList[indexPath.row].heroClass.smallIcon()
         // If there is a selected deck put a checkmark on it
         if indexPath.row == indexOfSelectedDeck {
             cell.accessoryType = UITableViewCellAccessoryType.checkmark
@@ -72,7 +70,7 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     // Saves the selected deck ID in UserDefaults
     func saveSelectedDeckID(_ deck : Deck) {
         let defaults = UserDefaults(suiteName: "group.Decks")!
-        defaults.set(deck.getID(), forKey: "Selected Deck ID")
+        defaults.set(deck.deckID, forKey: "Selected Deck ID")
         defaults.synchronize()
     }
     
@@ -86,17 +84,17 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     // Saves the selected deck name in UserDefaults and iCloud
     func saveSelectedDeckName(_ deck: Deck) {
         let defaults: UserDefaults = UserDefaults(suiteName: "group.Decks")!
-        defaults.set(deck.getName(), forKey: "Selected Deck Name")
+        defaults.set(deck.name, forKey: "Selected Deck Name")
         defaults.synchronize()
         
-        iCloudKeyStore.set(deck.getName(), forKey: "iCloud Selected Deck Name")
+        iCloudKeyStore.set(deck.name, forKey: "iCloud Selected Deck Name")
         iCloudKeyStore.synchronize()
     }
     
     // Saves the selected deck class
     func saveSelectedDeckClass(_ deck: Deck) {
         let defaults = UserDefaults(suiteName: "group.Decks")!
-        defaults.set(deck.getClass(), forKey: "Selected Deck Class")
+        defaults.set(deck.heroClass.rawValue, forKey: "Selected Deck Class")
         defaults.synchronize()
     }
     
@@ -153,7 +151,7 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                 NSLog("Yes Pressed")
                 
                 // Delete the games
-                let deckName = self.decksList[index].getName()
+                let deckName = self.decksList[index].name
                 TrackerData.sharedInstance.deleteAllGamesAssociatedWithADeck(deckName: deckName)
                 
                 // Delete the deck
@@ -182,32 +180,6 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         }
     }
     
-    // Returns the image depeding on the deck class
-    func getImage (_ str:String) -> String {
-        
-        if str == "Warrior" {
-            return "WarriorSmall"
-        } else if str == "Paladin" {
-            return "PaladinSmall"
-        } else if str == "Shaman" {
-            return "ShamanSmall"
-        } else if str == "Druid" {
-            return "DruidSmall"
-        } else if str == "Rogue" {
-            return "RogueSmall"
-        } else if str == "Mage" {
-            return "MageSmall"
-        } else if str == "Warlock" {
-            return "WarlockSmall"
-        } else if str == "Priest" {
-            return "PriestSmall"
-        } else if str == "Hunter" {
-            return "HunterSmall"
-        } else {
-            return ""
-        }
-    }
-    
     @objc func refreshData() {
         readData()
         decksTable.reloadData()
@@ -215,7 +187,7 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         // If there is a deck selected get it's index
         let savedUserDefaults = readSelectedDeckID()
         for i in 0 ..< decksList.count {
-            if savedUserDefaults == decksList[i].getID() {
+            if savedUserDefaults == decksList[i].deckID {
                 indexOfSelectedDeck = i
                 break
             }

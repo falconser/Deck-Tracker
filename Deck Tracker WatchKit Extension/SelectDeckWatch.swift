@@ -53,7 +53,7 @@ class SelectDeckWatch: WKInterfaceController {
             let deckName: String = dict[i]["deckName"] as! String
             let deckClass: String = dict[i]["deckClass"] as! String
             let deckID: Int = dict[i]["deckID"] as! Int
-            let newDeck = Deck(newDeckID: deckID, newDeckName: deckName, newDeckClass: deckClass)
+            let newDeck = Deck(deckID: deckID, name: deckName, heroClass: deckClass)
             deckList.append(newDeck)
         }
     }
@@ -68,33 +68,13 @@ class SelectDeckWatch: WKInterfaceController {
         } else {
             for i in 0 ..< deckList.count {
                 if let row = deckTable.rowController(at:i) as? DeckRow {
-                    row.deckLabel.setText(deckList[i].getName())
+                    let deck = deckList[i]
+                    row.deckLabel.setText(deck.name)
                     row.deckLabel.setTextColor(UIColor.black)
-                    
-                    // Colors the cells
-                    if deckList[i].getClass() == "Warrior" {
-                        row.groupTable.setBackgroundColor(UIColorFromRGB(0xCC0000))
-                    } else if deckList[i].getClass() == "Paladin" {
-                        row.groupTable.setBackgroundColor(UIColorFromRGB(0xCCC333))
-                    } else if deckList[i].getClass() == "Shaman" {
-                        row.groupTable.setBackgroundColor(UIColorFromRGB(0x3366CC))
-                    } else if deckList[i].getClass() == "Hunter" {
-                        row.groupTable.setBackgroundColor(UIColorFromRGB(0x339933))
-                    } else if deckList[i].getClass() == "Druid" {
-                        row.groupTable.setBackgroundColor(UIColorFromRGB(0x990000))
-                    } else if deckList[i].getClass() == "Rogue" {
-                        row.groupTable.setBackgroundColor(UIColorFromRGB(0x666666))
-                    } else if deckList[i].getClass() == "Warlock" {
-                        row.groupTable.setBackgroundColor(UIColorFromRGB(0x9900CC))
-                    } else if deckList[i].getClass() == "Mage" {
-                        row.groupTable.setBackgroundColor(UIColorFromRGB(0x009999))
-                    } else if deckList[i].getClass() == "Priest" {
-                        row.groupTable.setBackgroundColor(UIColorFromRGB(0x999999))
-                    }
+                    row.groupTable.setBackgroundColor(deck.heroClass.color())
                 }
             }
         }
-
     }
     
     
@@ -103,9 +83,9 @@ class SelectDeckWatch: WKInterfaceController {
         //let row = table.rowController(at:rowIndex) as? DeckRow
         let selectedDeck = deckList[rowIndex]
         let defaults = UserDefaults(suiteName: "group.Decks")!
-        defaults.set(selectedDeck.getID(), forKey: "Selected Deck ID")
-        defaults.set(selectedDeck.getName(), forKey: "Selected Deck Name")
-        defaults.set(selectedDeck.getClass(), forKey: "Selected Deck Class")
+        defaults.set(selectedDeck.deckID, forKey: "Selected Deck ID")
+        defaults.set(selectedDeck.name, forKey: "Selected Deck Name")
+        defaults.set(selectedDeck.heroClass.rawValue, forKey: "Selected Deck Class")
         defaults.synchronize()
         WKInterfaceController.openParentApplication(["Save Selected Deck" : ""] , reply: { [](reply, error) -> Void in
             })

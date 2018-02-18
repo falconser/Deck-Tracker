@@ -26,7 +26,7 @@ class EditSelectedDeck: UIViewController, UITableViewDelegate, UITableViewDataSo
         // If there is a deck selected get it's index
         let savedUserDefaults = readEditedDeckID()
         for i in 0 ..< decksList.count {
-            if savedUserDefaults == decksList[i].getID() {
+            if savedUserDefaults == decksList[i].deckID {
                 indexOfSelectedDeck = i
                 break
             }
@@ -47,10 +47,8 @@ class EditSelectedDeck: UIViewController, UITableViewDelegate, UITableViewDataSo
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
         let cell:CustomCell = tableView.dequeueReusableCell(withIdentifier:"Cell") as! CustomCell
-        cell.customLabel.text = decksList[indexPath.row].getName()
-        let image = decksList[indexPath.row].getClass()
-        let imageName = getImage(image)
-        cell.customImage.image = UIImage(named: imageName)
+        cell.customLabel.text = decksList[indexPath.row].name
+        cell.customImage.image = decksList[indexPath.row].heroClass.smallIcon()
         //cell.accessoryType = UITableViewCellAccessoryType.none
         // If there is a selected deck put a checkmark on it
         if indexPath.row == indexOfSelectedDeck {
@@ -79,7 +77,7 @@ class EditSelectedDeck: UIViewController, UITableViewDelegate, UITableViewDataSo
     // Saves the selected deck ID in UserDefaults
     func saveEditedDeckID(_ deck : Deck) {
         let defaults: UserDefaults = UserDefaults.standard
-        defaults.set(deck.getID(), forKey: "Edited Deck ID")
+        defaults.set(deck.deckID, forKey: "Edited Deck ID")
         defaults.synchronize()
     }
     
@@ -94,14 +92,14 @@ class EditSelectedDeck: UIViewController, UITableViewDelegate, UITableViewDataSo
     // Saves the selected deck name in UserDefaults
     func saveEditedDeckName(_ deck: Deck) {
         let defaults: UserDefaults = UserDefaults(suiteName: "group.Decks")!
-        defaults.set(deck.getName(), forKey: "Edited Deck Name")
+        defaults.set(deck.name, forKey: "Edited Deck Name")
         defaults.synchronize()
     }
     
     // Saves the selected deck class
     func saveEditedDeckClass(_ deck: Deck) {
         let defaults: UserDefaults = UserDefaults(suiteName: "group.Decks")!
-        defaults.set(deck.getClass(), forKey: "Edited Deck Class")
+        defaults.set(deck.heroClass.rawValue, forKey: "Edited Deck Class")
         defaults.synchronize()
     }
     
@@ -127,7 +125,7 @@ class EditSelectedDeck: UIViewController, UITableViewDelegate, UITableViewDataSo
         // If there is a deck selected get it's index
         let savedUserDefaults = readEditedDeckID()
         for i in 0 ..< decksList.count {
-            if savedUserDefaults == decksList[i].getID() {
+            if savedUserDefaults == decksList[i].deckID {
                 indexOfSelectedDeck = i
                 break
             }
@@ -151,34 +149,6 @@ class EditSelectedDeck: UIViewController, UITableViewDelegate, UITableViewDataSo
             readData()
             self.decksTable.deleteRows(at: [indexPath], with: .fade)
         }
-    }
-    
-    // Returns the image depeding on the deck class
-    func getImage (_ str:String) -> String {
-        
-        if str == "Warrior" {
-            return "WarriorSmall"
-        } else if str == "Paladin" {
-            return "PaladinSmall"
-        } else if str == "Shaman" {
-            return "ShamanSmall"
-        } else if str == "Druid" {
-            return "DruidSmall"
-        } else if str == "Rogue" {
-            return "RogueSmall"
-        } else if str == "Mage" {
-            return "MageSmall"
-        } else if str == "Warlock" {
-            return "WarlockSmall"
-        } else if str == "Priest" {
-            return "PriestSmall"
-        } else if str == "Hunter" {
-            return "HunterSmall"
-        } else {
-            return ""
-        }
-        
-        
     }
 }
 

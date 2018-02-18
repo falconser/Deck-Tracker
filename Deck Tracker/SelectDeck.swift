@@ -24,7 +24,7 @@ class SelectDeck: UITableViewController {
         // If there is a deck selected get it's index
         let savedUserDefaults = readSelectedDeckID()
         for i in 0 ..< decksList.count {
-            if savedUserDefaults == decksList[i].getID() {
+            if savedUserDefaults == decksList[i].deckID {
                 indexOfSelectedDeck = i
                 break
             }
@@ -45,10 +45,8 @@ class SelectDeck: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
         //let cell:CustomCell = tableView.dequeueReusableCell(withIdentifier:"Cell") as! CustomCell
-        cell.textLabel?.text = decksList[indexPath.row].getName()
-        let image = decksList[indexPath.row].getClass()
-        let imageName = getImage(image)
-        cell.imageView?.image = UIImage(named: imageName)
+        cell.textLabel?.text = decksList[indexPath.row].name
+        cell.imageView?.image = decksList[indexPath.row].heroClass.smallIcon()
         //cell.accessoryType = UITableViewCellAccessoryType.none
         // If there is a selected deck put a checkmark on it
         if indexPath.row == indexOfSelectedDeck {
@@ -77,7 +75,7 @@ class SelectDeck: UITableViewController {
     // Saves the selected deck ID in UserDefaults
     func saveSelectedDeckID(_ deck : Deck) {
         let defaults = UserDefaults(suiteName: "group.Decks")!
-        defaults.set(deck.getID(), forKey: "Selected Deck ID")
+        defaults.set(deck.deckID, forKey: "Selected Deck ID")
         defaults.synchronize()
     }
     
@@ -92,10 +90,10 @@ class SelectDeck: UITableViewController {
     // Saves the selected deck name in UserDefaults
     func saveSelectedDeckName(_ deck: Deck) {
         let defaults: UserDefaults = UserDefaults(suiteName: "group.Decks")!
-        defaults.set(deck.getName(), forKey: "Selected Deck Name")
+        defaults.set(deck.name, forKey: "Selected Deck Name")
         defaults.synchronize()
         
-        iCloudKeyStore.set(deck.getName(), forKey: "iCloud Selected Deck Name")
+        iCloudKeyStore.set(deck.name, forKey: "iCloud Selected Deck Name")
         iCloudKeyStore.synchronize()
     }
     
@@ -116,7 +114,7 @@ class SelectDeck: UITableViewController {
     // Saves the selected deck class
     func saveSelectedDeckClass(_ deck: Deck) {
         let defaults: UserDefaults = UserDefaults(suiteName: "group.Decks")!
-        defaults.set(deck.getClass(), forKey: "Selected Deck Class")
+        defaults.set(deck.heroClass.rawValue, forKey: "Selected Deck Class")
         defaults.synchronize()
     }
     
@@ -149,32 +147,6 @@ class SelectDeck: UITableViewController {
             TrackerData.sharedInstance.deleteDeck(index)
             readData()
             self.decksTable.deleteRows(at: [indexPath], with: .fade)
-        }
-    }
-    
-    // Returns the image depeding on the deck class
-    func getImage (_ str:String) -> String {
-        
-        if str == "Warrior" {
-            return "WarriorSmall"
-        } else if str == "Paladin" {
-            return "PaladinSmall"
-        } else if str == "Shaman" {
-            return "ShamanSmall"
-        } else if str == "Druid" {
-            return "DruidSmall"
-        } else if str == "Rogue" {
-            return "RogueSmall"
-        } else if str == "Mage" {
-            return "MageSmall"
-        } else if str == "Warlock" {
-            return "WarlockSmall"
-        } else if str == "Priest" {
-            return "PriestSmall"
-        } else if str == "Hunter" {
-            return "HunterSmall"
-        } else {
-            return ""
         }
     }
 }

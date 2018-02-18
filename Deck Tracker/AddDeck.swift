@@ -62,7 +62,7 @@ class AddDeck: UIViewController, UITextFieldDelegate, UINavigationBarDelegate {
             let deckList = TrackerData.sharedInstance.listOfDecks
             
             for deck in deckList {
-                if deck.deckName.lowercased() == deckName.lowercased() {
+                if deck.name.lowercased() == deckName.lowercased() {
                     deckNameAlreadyExists = true
                 }
             }
@@ -74,7 +74,7 @@ class AddDeck: UIViewController, UITextFieldDelegate, UINavigationBarDelegate {
                 alert.addButton(withTitle: "OK")
                 alert.show()
             } else {
-                let newDeck = Deck(newDeckID: deckID, newDeckName: deckName, newDeckClass: deckSelected)
+                let newDeck = Deck(deckID: deckID, name: deckName, heroClass: deckSelected)
                 //println("Added: " + newDeck.toString())
                 TrackerData.sharedInstance.addDeck(newDeck)
                 self.dismiss(animated:true, completion: {})

@@ -12,16 +12,12 @@
 		6D5960551AFCD45E0039EE47 /* SelectDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5960541AFCD45E0039EE47 /* SelectDeck.swift */; };
 		6D5960571AFCD7880039EE47 /* SelectOpponentClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5960561AFCD7880039EE47 /* SelectOpponentClass.swift */; };
 		6D61AA431AF784E20013EB04 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D61AA421AF784E20013EB04 /* Game.swift */; };
-		6D6B21E71B1F276500B973B8 /* SelectDeckWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6B21E61B1F276500B973B8 /* SelectDeckWatch.swift */; };
 		6D6B21E91B1F281400B973B8 /* DeckRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6B21E81B1F281400B973B8 /* DeckRow.swift */; };
 		6D9538431B09E22400B4ED66 /* Graphs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9538421B09E22400B4ED66 /* Graphs.swift */; };
 		6DB50E1B1B009B1D0000F97B /* GamesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB50E1A1B009B1D0000F97B /* GamesCell.swift */; };
-		6DB67A621B188890000A8E54 /* DeckTrackerWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB67A611B188890000A8E54 /* DeckTrackerWatch.swift */; };
 		6DB67A661B188890000A8E54 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DB67A651B188890000A8E54 /* Images.xcassets */; };
-		6DB67A6A1B188891000A8E54 /* Deck Tracker WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = 6DB67A691B188891000A8E54 /* Deck Tracker WatchKit App.app */; };
 		6DB67A721B188891000A8E54 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DB67A701B188891000A8E54 /* Interface.storyboard */; };
 		6DB67A741B188891000A8E54 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DB67A731B188891000A8E54 /* Images.xcassets */; };
-		6DB67A771B188891000A8E54 /* Deck Tracker WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6DB67A5D1B188890000A8E54 /* Deck Tracker WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6DBB739B1B0209FD00005B5E /* EditGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBB739A1B0209FD00005B5E /* EditGame.swift */; };
 		6DBB739D1B04840000005B5E /* EditDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBB739C1B04840000005B5E /* EditDate.swift */; };
 		6DBB73A51B04C99E00005B5E /* EditSelectedDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBB73A41B04C99E00005B5E /* EditSelectedDeck.swift */; };
@@ -65,23 +61,21 @@
 		8BEDCD4E1BA61C3A0026AEFD /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEDCD4D1BA61C3A0026AEFD /* Settings.swift */; };
 		8BFC2F0D1BDF7D7700A7BD23 /* TagsGraphsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFC2F0C1BDF7D7700A7BD23 /* TagsGraphsCollectionView.swift */; };
 		8BFC2F0F1BDF7E5000A7BD23 /* TagsGraphsCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFC2F0E1BDF7E5000A7BD23 /* TagsGraphsCollectionCell.swift */; };
+		D215539D20399E95000B836C /* Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = D215539C20399E95000B836C /* Class.swift */; };
+		D215539E20399E95000B836C /* Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = D215539C20399E95000B836C /* Class.swift */; };
+		D215539F20399E95000B836C /* Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = D215539C20399E95000B836C /* Class.swift */; };
+		D21553A020399E95000B836C /* Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = D215539C20399E95000B836C /* Class.swift */; };
+		D21553A22039A93C000B836C /* Commons.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21553A12039A93C000B836C /* Commons.swift */; };
+		D21553A62039AA4C000B836C /* Commons.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21553A12039A93C000B836C /* Commons.swift */; };
+		D21553A72039AA4D000B836C /* Commons.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21553A12039A93C000B836C /* Commons.swift */; };
+		D21553A82039AA4E000B836C /* Commons.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21553A12039A93C000B836C /* Commons.swift */; };
+		D21A70FF1FB1111100669E91 /* Deck Tracker WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6DB67A5D1B188890000A8E54 /* Deck Tracker WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D21A71021FB1111100669E91 /* Deck Tracker WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 6DB67A691B188891000A8E54 /* Deck Tracker WatchKit App.app */; };
+		D21A71071FB112DD00669E91 /* DeckTrackerWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB67A611B188890000A8E54 /* DeckTrackerWatch.swift */; };
+		D21A71081FB112F400669E91 /* SelectDeckWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6B21E61B1F276500B973B8 /* SelectDeckWatch.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		6DB67A6B1B188891000A8E54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6DDD447A1AEF87B700A4B5D2 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6DB67A681B188891000A8E54;
-			remoteInfo = "Deck Tracker WatchKit App";
-		};
-		6DB67A751B188891000A8E54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6DDD447A1AEF87B700A4B5D2 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6DB67A5C1B188890000A8E54;
-			remoteInfo = "Deck Tracker WatchKit Extension";
-		};
 		6DDD449A1AEF87B700A4B5D2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6DDD447A1AEF87B700A4B5D2 /* Project object */;
@@ -96,18 +90,43 @@
 			remoteGlobalIDString = 6DDD44811AEF87B700A4B5D2;
 			remoteInfo = "Deck Tracker";
 		};
+		D21A70FD1FB1111100669E91 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6DDD447A1AEF87B700A4B5D2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6DB67A5C1B188890000A8E54;
+			remoteInfo = "Deck Tracker WatchKit Extension";
+		};
+		D21A71001FB1111100669E91 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6DDD447A1AEF87B700A4B5D2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6DB67A681B188891000A8E54;
+			remoteInfo = "Deck Tracker WatchKit App";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		6DB67A7E1B188891000A8E54 /* Embed App Extensions */ = {
+		D21A71031FB1111100669E91 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				6DB67A771B188891000A8E54 /* Deck Tracker WatchKit Extension.appex in Embed App Extensions */,
+				D21A70FF1FB1111100669E91 /* Deck Tracker WatchKit Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D21A71041FB1111100669E91 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				D21A71021FB1111100669E91 /* Deck Tracker WatchKit App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -182,6 +201,8 @@
 		8BFC2F0E1BDF7E5000A7BD23 /* TagsGraphsCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsGraphsCollectionCell.swift; sourceTree = "<group>"; };
 		8BFEA6ED1BE0F091005DBC04 /* Deck TrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Deck TrackerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BFEA6F11BE0F091005DBC04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D215539C20399E95000B836C /* Class.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Class.swift; sourceTree = "<group>"; };
+		D21553A12039A93C000B836C /* Commons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commons.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +248,7 @@
 				6DD844CE1AFA306500CF9C80 /* DecksCell.swift */,
 				6DB50E1A1B009B1D0000F97B /* GamesCell.swift */,
 				8B44AA611BBAC0CD00A8E8B0 /* GraphsCell.swift */,
+				D215539C20399E95000B836C /* Class.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -350,6 +372,7 @@
 				6DDD44891AEF87B700A4B5D2 /* DecksList.swift */,
 				6DDD448B1AEF87B700A4B5D2 /* StatsList.swift */,
 				6D9538421B09E22400B4ED66 /* Graphs.swift */,
+				D21553A12039A93C000B836C /* Commons.swift */,
 				6D2F2B511B4278BD00B267C9 /* Data */,
 				6D2F2B521B4278D300B267C9 /* Decks View */,
 				6D2F2B531B4278E400B267C9 /* Add New Game */,
@@ -459,27 +482,28 @@
 			buildRules = (
 			);
 			dependencies = (
-				6DB67A6C1B188891000A8E54 /* PBXTargetDependency */,
 			);
 			name = "Deck Tracker WatchKit Extension";
 			productName = "Deck Tracker WatchKit Extension";
 			productReference = 6DB67A5D1B188890000A8E54 /* Deck Tracker WatchKit Extension.appex */;
-			productType = "com.apple.product-type.watchkit-extension";
+			productType = "com.apple.product-type.watchkit2-extension";
 		};
 		6DB67A681B188891000A8E54 /* Deck Tracker WatchKit App */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6DB67A7C1B188891000A8E54 /* Build configuration list for PBXNativeTarget "Deck Tracker WatchKit App" */;
 			buildPhases = (
 				6DB67A671B188891000A8E54 /* Resources */,
+				D21A71031FB1111100669E91 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D21A70FE1FB1111100669E91 /* PBXTargetDependency */,
 			);
 			name = "Deck Tracker WatchKit App";
 			productName = "Deck Tracker WatchKit App";
 			productReference = 6DB67A691B188891000A8E54 /* Deck Tracker WatchKit App.app */;
-			productType = "com.apple.product-type.application.watchapp";
+			productType = "com.apple.product-type.application.watchapp2";
 		};
 		6DDD44811AEF87B700A4B5D2 /* Deck Tracker */ = {
 			isa = PBXNativeTarget;
@@ -489,12 +513,12 @@
 				6DDD447F1AEF87B700A4B5D2 /* Frameworks */,
 				6DDD44801AEF87B700A4B5D2 /* Resources */,
 				8B10AFCA1B03107400D33C29 /* ShellScript */,
-				6DB67A7E1B188891000A8E54 /* Embed App Extensions */,
+				D21A71041FB1111100669E91 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				6DB67A761B188891000A8E54 /* PBXTargetDependency */,
+				D21A71011FB1111100669E91 /* PBXTargetDependency */,
 			);
 			name = "Deck Tracker";
 			productName = "Deck Tracker";
@@ -545,12 +569,12 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = "Andrei Joghiu";
 				TargetAttributes = {
 					6DB67A5C1B188890000A8E54 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = N4ZWHQ2X3Z;
+						DevelopmentTeam = DMEPT32WUY;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -562,11 +586,11 @@
 					};
 					6DB67A681B188891000A8E54 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = N4ZWHQ2X3Z;
+						DevelopmentTeam = DMEPT32WUY;
 					};
 					6DDD44811AEF87B700A4B5D2 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = N4ZWHQ2X3Z;
+						DevelopmentTeam = DMEPT32WUY;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -578,7 +602,7 @@
 					};
 					6DDD44981AEF87B700A4B5D2 = {
 						CreatedOnToolsVersion = 6.3.1;
-						TestTargetID = 6DDD44811AEF87B700A4B5D2;
+						LastSwiftMigration = 0920;
 					};
 					8BFEA6EC1BE0F091005DBC04 = {
 						CreatedOnToolsVersion = 7.1;
@@ -614,7 +638,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6DB67A661B188890000A8E54 /* Images.xcassets in Resources */,
-				6DB67A6A1B188891000A8E54 /* Deck Tracker WatchKit App.app in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -675,12 +698,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BD870E51B223042008398B8 /* Deck.swift in Sources */,
-				6DB67A621B188890000A8E54 /* DeckTrackerWatch.swift in Sources */,
 				6DFFCD9D1B1DAC75005218D8 /* SelectOpponentWatch.swift in Sources */,
+				D21553A72039AA4D000B836C /* Commons.swift in Sources */,
 				8B4507CB1B88BBA600B0D12E /* TagsRow.swift in Sources */,
-				6D6B21E71B1F276500B973B8 /* SelectDeckWatch.swift in Sources */,
 				8B4507C91B88B95500B0D12E /* SelectTagsWatch.swift in Sources */,
+				D215539F20399E95000B836C /* Class.swift in Sources */,
 				6D6B21E91B1F281400B973B8 /* DeckRow.swift in Sources */,
+				D21A71071FB112DD00669E91 /* DeckTrackerWatch.swift in Sources */,
+				D21A71081FB112F400669E91 /* SelectDeckWatch.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -696,6 +721,7 @@
 				6DD866691B3D7E0F002E5D82 /* SelectTags.swift in Sources */,
 				6D5960531AFCB2AD0039EE47 /* SelectDate.swift in Sources */,
 				6DDD448C1AEF87B700A4B5D2 /* StatsList.swift in Sources */,
+				D21553A22039A93C000B836C /* Commons.swift in Sources */,
 				6D5960571AFCD7880039EE47 /* SelectOpponentClass.swift in Sources */,
 				6D5960551AFCD45E0039EE47 /* SelectDeck.swift in Sources */,
 				6DBB73A51B04C99E00005B5E /* EditSelectedDeck.swift in Sources */,
@@ -704,6 +730,7 @@
 				6DBB739D1B04840000005B5E /* EditDate.swift in Sources */,
 				6DB50E1B1B009B1D0000F97B /* GamesCell.swift in Sources */,
 				6D9538431B09E22400B4ED66 /* Graphs.swift in Sources */,
+				D215539D20399E95000B836C /* Class.swift in Sources */,
 				6DBB739B1B0209FD00005B5E /* EditGame.swift in Sources */,
 				6DDD44881AEF87B700A4B5D2 /* AppDelegate.swift in Sources */,
 				8BFC2F0D1BDF7D7700A7BD23 /* TagsGraphsCollectionView.swift in Sources */,
@@ -722,6 +749,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D215539E20399E95000B836C /* Class.swift in Sources */,
+				D21553A62039AA4C000B836C /* Commons.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -732,9 +761,11 @@
 				8BE734481C634A59003253A5 /* Settings.swift in Sources */,
 				8BD7B46F1C847BE60017443D /* GraphsTests.swift in Sources */,
 				8B8B539B1C81844E0048126E /* AddNewGame.swift in Sources */,
+				D21553A020399E95000B836C /* Class.swift in Sources */,
 				8B2EB1311CB3A9310042E225 /* AddNewGameTags.swift in Sources */,
 				8BC58F681C8842B100BF1CDE /* TODO.swift in Sources */,
 				8BE7344A1C634D0F003253A5 /* About.swift in Sources */,
+				D21553A82039AA4E000B836C /* Commons.swift in Sources */,
 				8B8365AC1CB28F2400CDE69D /* AddNewGameOpponent.swift in Sources */,
 				8B8365AA1CB2661100CDE69D /* AddNewGameDeck.swift in Sources */,
 				8B878B0E1CB2575900191420 /* AddNewGameDate.swift in Sources */,
@@ -749,16 +780,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		6DB67A6C1B188891000A8E54 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6DB67A681B188891000A8E54 /* Deck Tracker WatchKit App */;
-			targetProxy = 6DB67A6B1B188891000A8E54 /* PBXContainerItemProxy */;
-		};
-		6DB67A761B188891000A8E54 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6DB67A5C1B188890000A8E54 /* Deck Tracker WatchKit Extension */;
-			targetProxy = 6DB67A751B188891000A8E54 /* PBXContainerItemProxy */;
-		};
 		6DDD449B1AEF87B700A4B5D2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 6DDD44811AEF87B700A4B5D2 /* Deck Tracker */;
@@ -768,6 +789,16 @@
 			isa = PBXTargetDependency;
 			target = 6DDD44811AEF87B700A4B5D2 /* Deck Tracker */;
 			targetProxy = 8BFEA6F21BE0F091005DBC04 /* PBXContainerItemProxy */;
+		};
+		D21A70FE1FB1111100669E91 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6DB67A5C1B188890000A8E54 /* Deck Tracker WatchKit Extension */;
+			targetProxy = D21A70FD1FB1111100669E91 /* PBXContainerItemProxy */;
+		};
+		D21A71011FB1111100669E91 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6DB67A681B188891000A8E54 /* Deck Tracker WatchKit App */;
+			targetProxy = D21A71001FB1111100669E91 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -806,17 +837,23 @@
 				CODE_SIGN_ENTITLEMENTS = "Deck Tracker WatchKit Extension/Deck Tracker WatchKit Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = DMEPT32WUY;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Deck Tracker WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.falcon.Deck-Tracker.watchkitapp.watchkitextension";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
 				SWIFT_OBJC_BRIDGING_HEADER = "Deck Tracker/Deck Tracker WatchKit Extension-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -827,50 +864,62 @@
 				CODE_SIGN_ENTITLEMENTS = "Deck Tracker WatchKit Extension/Deck Tracker WatchKit Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = DMEPT32WUY;
 				INFOPLIST_FILE = "Deck Tracker WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.falcon.Deck-Tracker.watchkitapp.watchkitextension";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
 				SWIFT_OBJC_BRIDGING_HEADER = "Deck Tracker/Deck Tracker WatchKit Extension-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
 		6DB67A7A1B188891000A8E54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = DMEPT32WUY;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				IBSC_MODULE = Deck_Tracker_WatchKit_Extension;
 				INFOPLIST_FILE = "Deck Tracker WatchKit App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.falcon.Deck-Tracker.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
 		6DB67A7B1B188891000A8E54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = DMEPT32WUY;
 				IBSC_MODULE = Deck_Tracker_WatchKit_Extension;
 				INFOPLIST_FILE = "Deck Tracker WatchKit App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.falcon.Deck-Tracker.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
@@ -882,19 +931,28 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -927,13 +985,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -952,6 +1018,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.0;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -965,6 +1032,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Deck Tracker/Deck Tracker.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = DMEPT32WUY;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -972,6 +1040,7 @@
 				INFOPLIST_FILE = "Deck Tracker/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.falcon.Deck-Tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Deck Tracker/Deck Tracker-Bridging-Header.h";
@@ -988,6 +1057,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Deck Tracker/Deck Tracker.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = DMEPT32WUY;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -995,6 +1065,7 @@
 				INFOPLIST_FILE = "Deck Tracker/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.falcon.Deck-Tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Deck Tracker/Deck Tracker-Bridging-Header.h";
@@ -1005,7 +1076,8 @@
 		6DDD44A71AEF87B700A4B5D2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1016,23 +1088,27 @@
 				);
 				INFOPLIST_FILE = "Deck TrackerTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.falcon.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Deck Tracker.app/Deck Tracker";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		6DDD44A81AEF87B700A4B5D2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Deck TrackerTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.falcon.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Deck Tracker.app/Deck Tracker";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1040,11 +1116,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = "Deck TrackerUITests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "andrei.joghiu.Deck-TrackerUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.falcon.Deck-TrackerUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_TARGET_NAME = "Deck Tracker";
 				USES_XCTRUNNER = YES;
@@ -1054,10 +1131,11 @@
 		8BFEA6F51BE0F091005DBC04 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Deck TrackerUITests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "andrei.joghiu.Deck-TrackerUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.falcon.Deck-TrackerUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_TARGET_NAME = "Deck Tracker";
 				USES_XCTRUNNER = YES;
