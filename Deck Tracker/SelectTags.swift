@@ -13,8 +13,16 @@ class SelectTags: UITableViewController {
     @IBOutlet var tagsTable: UITableView!
     @IBOutlet var plusButton: UIBarButtonItem!
 
-    var allTags:[String] = []
-    var selectedTag:String = ""
+    var allTags: [String] = []
+    var didChangeTag: ((String) -> Void)?
+    var selectedTag: String = "" {
+        didSet {
+            if let didChangeTag = didChangeTag {
+                didChangeTag(selectedTag)
+            }
+        }
+    }
+    
     // Save to iCloud
     let iCloudKeyStore: NSUbiquitousKeyValueStore = NSUbiquitousKeyValueStore()
     let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
@@ -24,7 +32,7 @@ class SelectTags: UITableViewController {
         super.viewDidLoad()
         readData()
         // Removes the empty rows from view
-        tagsTable.tableFooterView = UIView(frame: CGRect.zero)
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,56 +44,25 @@ class SelectTags: UITableViewController {
         // Return the number of rows in the section.
         return allTags.count
     }
-
     
+    // Configures the cells
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Configures the cells
         let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
-        cell.textLabel?.text = allTags[indexPath.row]
-        let cellLabel = cell.textLabel?.text as String!
-        if cellLabel == selectedTag {
-        cell.accessoryType = UITableViewCellAccessoryType.checkmark
-        }
+        let tag = allTags[indexPath.row]
+        cell.textLabel?.text = tag
+        cell.accessoryType = tag == selectedTag ? .checkmark : .none
         return cell
     }
     
-    
-    
+    // Selects the row and saves the info so we can add a checkmark
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Selects the row and saves the info so we can add a checkmark
         let cell = tableView.cellForRow(at: indexPath)
-        let cellLabel = cell?.textLabel?.text
-        saveSelectedTag(cellLabel!)
+        selectedTag = cell?.textLabel?.text ?? ""
         navigationController?.popViewController(animated: true)
-        
-    }
-    
-    
-    func saveSelectedTag(_ selectedTag:String) {
-        // Saves the selected tag as an array
-        defaults.set(selectedTag, forKey: "Selected Tag")
-        defaults.synchronize()
-        
-        // Saves to iCloud
-        iCloudKeyStore.set(selectedTag, forKey: "iCloud selected tag")
-        iCloudKeyStore.synchronize()
-    }
-    
-    
-    func readSelectedTag() -> String {
-        
-        // Reads from iCloud or local storage
-        if let iCloudTag = iCloudKeyStore.string(forKey: "iCloud selected tag") {
-            selectedTag = iCloudTag
-        } else if let defaultsTag = defaults.string(forKey: "Selected Tag") {
-            selectedTag = defaultsTag
-        }
-        return selectedTag
     }
     
     func readData() {
         allTags = readTags()
-        selectedTag = readSelectedTag()
     }
     
     @objc @IBAction func plusButtonPressed(_ sender:UIBarButtonItem) {
@@ -101,15 +78,10 @@ class SelectTags: UITableViewController {
         
         //3. Grab the value from the text field, and adds it to the array when the user clicks OK.
         alert.addAction(UIAlertAction(title: "Finish", style: .default, handler: { (action) -> Void in
-            let textField = alert.textFields![0].text
-            // Check the tag is not already in the list
-            var tagAlreadyExists = false
+            let tagToAdd = alert.textFields![0].text
             
-            for tag in self.allTags {
-                if tag.lowercased() == textField?.lowercased() {
-                    tagAlreadyExists = true
-                }
-            }
+            // Check the tag is not already in the list
+            let tagAlreadyExists = nil != self.allTags.map { $0.lowercased() }.index{ tagToAdd?.lowercased() == $0 }
             
             if tagAlreadyExists == true {
                 let alert = UIAlertView()
@@ -117,20 +89,20 @@ class SelectTags: UITableViewController {
                 alert.message = "Enter another tag name"
                 alert.addButton(withTitle: "OK")
                 alert.show()
-            } else if textField == "" {
+            } else if tagToAdd == "" {
                 let alert = UIAlertView()
                 alert.title = "Tag empty"
                 alert.message = "Tag cannot be empty"
                 alert.addButton(withTitle: "OK")
                 alert.show()
             } else {
-                self.allTags.append(textField!)
+                self.allTags.append(tagToAdd!)
                 //let sortedtags = sorted(self.allTags, <)
                 self.allTags.sort()
                 //self.allTags = sortedtags
                 self.saveAllTags()
                 self.readTags()
-                self.tagsTable.reloadData()
+                self.tableView.reloadData()
             }
         }))
         
@@ -165,8 +137,8 @@ class SelectTags: UITableViewController {
             let index = indexPath.row
             allTags.remove(at: index)
             saveAllTags()
-            readData()
-            self.tagsTable.deleteRows(at: [indexPath], with: .fade)
+            
+            tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
     

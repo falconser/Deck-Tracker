@@ -33,7 +33,6 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     let iCloudKeyStore: NSUbiquitousKeyValueStore = NSUbiquitousKeyValueStore()
     let defaults = UserDefaults.standard
     
-    var tag: String = ""
     var game = Game()
     
     override func viewDidLoad() {
@@ -49,15 +48,18 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
         putTagLabel()
     }
     
+    // Puts the selected date on the date label
     func putSelectedDateOnLabel() {
-        // Puts the selected date on the date label
         dateCellLabel.text = "Date: " + string(from: game.date)
     }
+
+    // Puts the tags on the Tags Label
+    func putTagLabel() {
+        tagsLabel.text = game.tag.isEmpty ? "Add Tags" : ("Tags: " + game.tag)
+    }
     
-    
+    // Reads the selected deck name from iCloud or UserDefaults
     func readSelectedDeckName() -> String {
-        // Reads the selected deck name from iCloud or UserDefaults
-        
         var name = ""
         if let iCloudName = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name") {
             name = iCloudName
@@ -68,9 +70,8 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
         return name
     }
     
-    
+    // Gets the selected deck from UserDefaults and puts it on the label
     func putSelectedDeckNameOnLabel() {
-        // Gets the selected deck from UserDefaults and puts it on the label
         let selectedDeck = readSelectedDeckName()
         if selectedDeck == "" {
             playerDeckLabel.text = "You need to select a deck first"
@@ -80,9 +81,8 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     }
     
     
+    // Puts opponent's class in UserDefaults
     func putSelectedOpponentClassOnLabel() {
-        // Puts opponent's class in UserDefaults
-
         if case .Unknown = game.opponentClass {
             opponentDeckLabel.text = "Select Opponent's Class"
         }
@@ -102,9 +102,6 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     
     
     @objc @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
-        // Remove the selected date and selected opponent class from UserDefaults and dismissed the screen
-        defaults.removeObject(forKey: "Selected Tag")
-        defaults.synchronize()
         self.dismiss(animated:true, completion: {})
     }
     
@@ -116,7 +113,6 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     }
     
     @objc @IBAction func saveButtonPressed(_ sender:UIBarButtonItem) {
-        // Removes the selected date, opponent class and selected tag from UserDefaults and sends all the info to the Game List
         // Gets all the atributes for a new Game
         let newGameID = newGameGetID()
         let newGameDate = game.date
@@ -133,7 +129,7 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
         let opponentClass = game.opponentClass
         let newGameCoin = coinCellSwitch.isOn
         let newGameWin = winCellSwitch.isOn
-        let newGameTag = tag
+        let newGameTag = game.tag
         let playerDeck = Deck(deckID: -1, name: newGamePlayerDeckName, heroClass: newGamePlayerDeckClass!)
         
         if newGamePlayerDeckName != "" && game.opponentClass != .Unknown {
@@ -169,10 +165,6 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
             }
             alert.show()
         }
-        
-        // Deletes the date, opponent class and selected tag so the user needs to select again
-        defaults.removeObject(forKey: "Selected Tag")
-        defaults.synchronize()
     }
     
     // Gets the ID for a new Game
@@ -188,12 +180,6 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
         return matchesCount
     }
     
-    // Puts the tags on the Tags Label
-    func putTagLabel() {
-        tag = defaults.string(forKey:"Selected Tag") ?? ""
-        tagsLabel.text = tag.isEmpty ? "Add Tags" : ("Tags: " + tag)
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let selectOpponent = segue.destination as? SelectOpponentClass {
             selectOpponent.selectedClass = game.opponentClass
@@ -205,6 +191,12 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
             selectDate.selectedDate = game.date
             selectDate.didChangeDate = { [weak self] (date: Date) in
                 self?.game.date = date
+            }
+        }
+        else if let tagsViewController = segue.destination as? SelectTags {
+            tagsViewController.selectedTag = game.tag
+            tagsViewController.didChangeTag = {[weak self] (tag: String) in
+                self?.game.tag = tag
             }
         }
     }
