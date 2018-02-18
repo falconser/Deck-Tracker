@@ -63,8 +63,8 @@ class TagsGraphsCollectionCell: UICollectionViewCell {
     }
     
     func configure() {
-        bgLayer.strokeColor = UIColorFromRGB(0xC40233).cgColor
-        fgLayer.strokeColor = UIColorFromRGB(0x009F6B).cgColor
+        bgLayer.strokeColor = UIColor(rgbValue:0xC40233).cgColor
+        fgLayer.strokeColor = UIColor(rgbValue:0x009F6B).cgColor
     }
     
     override func layoutSubviews() {
@@ -148,15 +148,4 @@ class TagsGraphsCollectionCell: UICollectionViewCell {
         fgLayer.strokeEnd = toValue
         CATransaction.commit()
     }
-    
-    func UIColorFromRGB(_ rgbValue: UInt) -> UIColor {
-        // Transforms RGB colors to UI Color
-        return UIColor(
-            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-            alpha: CGFloat(1.0)
-        )
-    }
-    
 }

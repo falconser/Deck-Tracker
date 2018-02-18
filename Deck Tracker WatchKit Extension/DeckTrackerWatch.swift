@@ -112,18 +112,6 @@ class DeckTrackerWatch: WKInterfaceController {
         willActivate()
     }
     
-    
-    func UIColorFromRGB(_ rgbValue: UInt) -> UIColor {
-        // Transforms RGB colors to UI Color
-        return UIColor(
-            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-            alpha: CGFloat(1.0)
-        )
-    }
-    
-    
     func setSelectedDeckButton() {
         // Populates the selected deck button
         let defaults = UserDefaults(suiteName: "group.Decks")!
@@ -152,14 +140,14 @@ class DeckTrackerWatch: WKInterfaceController {
     
     func setOpponentClassButtonBackgroundToBlack() {
         // Sets the opponent class button to black
-        selectOpponentButton.setBackgroundColor(UIColorFromRGB(0x333333))
+        selectOpponentButton.setBackgroundColor(UIColor(rgbValue:0x333333))
     }
     
     
     func colorCell (classToBeColored:String, button:WKInterfaceButton, opponent:Bool, deckName:String) {
         // Colors the cell according to the Class specified
         if classToBeColored == "Warrior" {
-            button.setBackgroundColor(UIColorFromRGB(0xCC0000))
+            button.setBackgroundColor(UIColor(rgbValue:0xCC0000))
             let boldFont = UIFont(name: "Helvetica Neue", size: 15.0)!
             let greenColor = UIColor.green
             let attributeDictionary = [NSAttributedStringKey.font: boldFont, NSAttributedStringKey.foregroundColor: greenColor]
@@ -171,7 +159,7 @@ class DeckTrackerWatch: WKInterfaceController {
                 button.setAttributedTitle(attibuteString)
             }
         } else if classToBeColored == "Paladin" {
-            button.setBackgroundColor(UIColorFromRGB(0xCCC333))
+            button.setBackgroundColor(UIColor(rgbValue:0xCCC333))
             let boldFont = UIFont(name: "Helvetica Neue", size: 15.0)!
             let greenColor = UIColor.green
             let attributeDictionary = [NSAttributedStringKey.font: boldFont, NSAttributedStringKey.foregroundColor: greenColor]
@@ -183,7 +171,7 @@ class DeckTrackerWatch: WKInterfaceController {
                 button.setAttributedTitle(attibuteString)
             }
         } else if classToBeColored == "Shaman" {
-            button.setBackgroundColor(UIColorFromRGB(0x3366CC))
+            button.setBackgroundColor(UIColor(rgbValue:0x3366CC))
             let boldFont = UIFont(name: "Helvetica Neue", size: 15.0)!
             let greenColor = UIColor.green
             let attributeDictionary = [NSAttributedStringKey.font: boldFont, NSAttributedStringKey.foregroundColor: greenColor]
@@ -195,7 +183,7 @@ class DeckTrackerWatch: WKInterfaceController {
                 button.setAttributedTitle(attibuteString)
             }
         } else if classToBeColored == "Hunter" {
-            button.setBackgroundColor(UIColorFromRGB(0x339933))
+            button.setBackgroundColor(UIColor(rgbValue:0x339933))
             let boldFont = UIFont(name: "Helvetica Neue", size: 15.0)!
             let greenColor = UIColor.green
             let attributeDictionary = [NSAttributedStringKey.font: boldFont, NSAttributedStringKey.foregroundColor: greenColor]
@@ -207,7 +195,7 @@ class DeckTrackerWatch: WKInterfaceController {
                 button.setAttributedTitle(attibuteString)
             }
         } else if classToBeColored == "Druid" {
-            button.setBackgroundColor(UIColorFromRGB(0x990000))
+            button.setBackgroundColor(UIColor(rgbValue:0x990000))
             let boldFont = UIFont(name: "Helvetica Neue", size: 15.0)!
             let greenColor = UIColor.green
             let attributeDictionary = [NSAttributedStringKey.font: boldFont, NSAttributedStringKey.foregroundColor: greenColor]
@@ -219,7 +207,7 @@ class DeckTrackerWatch: WKInterfaceController {
                 button.setAttributedTitle(attibuteString)
             }
         } else if classToBeColored == "Rogue" {
-            button.setBackgroundColor(UIColorFromRGB(0x666666))
+            button.setBackgroundColor(UIColor(rgbValue:0x666666))
             let boldFont = UIFont(name: "Helvetica Neue", size: 15.0)!
             let greenColor = UIColor.green
             let attributeDictionary = [NSAttributedStringKey.font: boldFont, NSAttributedStringKey.foregroundColor: greenColor]
@@ -231,7 +219,7 @@ class DeckTrackerWatch: WKInterfaceController {
                 button.setAttributedTitle(attibuteString)
             }
         } else if classToBeColored == "Warlock" {
-            button.setBackgroundColor(UIColorFromRGB(0x9900CC))
+            button.setBackgroundColor(UIColor(rgbValue:0x9900CC))
             let boldFont = UIFont(name: "Helvetica Neue", size: 15.0)!
             let greenColor = UIColor.green
             let attributeDictionary = [NSAttributedStringKey.font: boldFont, NSAttributedStringKey.foregroundColor: greenColor]
@@ -243,7 +231,7 @@ class DeckTrackerWatch: WKInterfaceController {
                 button.setAttributedTitle(attibuteString)
             }
         } else if classToBeColored == "Mage" {
-            button.setBackgroundColor(UIColorFromRGB(0x009999))
+            button.setBackgroundColor(UIColor(rgbValue:0x009999))
             let boldFont = UIFont(name: "Helvetica Neue", size: 15.0)!
             let greenColor = UIColor.green
             let attributeDictionary = [NSAttributedStringKey.font: boldFont, NSAttributedStringKey.foregroundColor: greenColor]
@@ -255,7 +243,7 @@ class DeckTrackerWatch: WKInterfaceController {
                 button.setAttributedTitle(attibuteString)
             }
         } else if classToBeColored == "Priest" {
-            button.setBackgroundColor(UIColorFromRGB(0x999999))
+            button.setBackgroundColor(UIColor(rgbValue:0x999999))
             let boldFont = UIFont(name: "Helvetica Neue", size: 15.0)!
             let greenColor = UIColor.green
             let attributeDictionary = [NSAttributedStringKey.font: boldFont, NSAttributedStringKey.foregroundColor: greenColor]
