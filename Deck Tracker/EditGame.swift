@@ -27,7 +27,7 @@ class EditGame: UITableViewController, UINavigationBarDelegate {
 
     var defaults: UserDefaults = UserDefaults.standard
     var selectedGameArray:[Game] = []
-    var selectedGame:Game = Game(newID: 1, newDate: Date(), newPlayerDeckName: "1", newPlayerDeckClass: "1", newOpponentDeck: "1", newCoin: true, newWin: true, newTag: "")
+    var selectedGame:Game = Game(newID: 1, newDate: Date(), playerDeck: Deck(deckID: -1, name: "1", heroClass: "1"), opponentClass: .Warrior, newCoin: true, newWin: true, newTag: "")
     static let sharedInstance = EditGame()
     var selectedTag: String = ""
     
@@ -58,19 +58,17 @@ class EditGame: UITableViewController, UINavigationBarDelegate {
         putSavedTagOnLabel()
     }
     
+    func stringFromDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        return formatter.string(from: date)
+    }
+    
     // Puts saved date on label
     func putSavedDateOnLabel() {
-        let editedDate:Date! = defaults.object(forKey: "Saved Edited Date") as? Date
-        if editedDate != nil {
-            let formatter = DateFormatter()
-            formatter.dateStyle = .short
-            let dateString = formatter.string(from: editedDate)
-            dateLabel.text = "Date: " + dateString
-        } else {
-            let savedDate: String = selectedGame.getDate()
-            dateLabel.text = "Date: " + savedDate
-        }
-
+        let editedDate  = (defaults.object(forKey: "Saved Edited Date") as? Date)
+        let savedDate = selectedGame.date
+        dateLabel.text = "Date: " + stringFromDate(editedDate ?? savedDate)
     }
     
     // Puts selected deck on label
@@ -78,7 +76,7 @@ class EditGame: UITableViewController, UINavigationBarDelegate {
         if let editedDeckName = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Edited Deck Name") {
             playerDeckLabel.text = "Your deck: " + editedDeckName
         } else {
-            let savedPlayedDeck = selectedGame.playerDeckName
+            let savedPlayedDeck = selectedGame.playerDeck.name
             playerDeckLabel.text = "Your deck: " + savedPlayedDeck
         }
 
@@ -89,7 +87,7 @@ class EditGame: UITableViewController, UINavigationBarDelegate {
         if let editedOpponentClass = defaults.string(forKey:"Edited Opponent Class") {
             opponentDeckLabel.text = "Opponent's Class: " + editedOpponentClass
         } else {
-            opponentDeckLabel.text = "Opponent's Class: " + selectedGame.opponentDeck
+            opponentDeckLabel.text = "Opponent's Class: " + selectedGame.opponentClass.rawValue
         }
 
     }
@@ -130,16 +128,13 @@ class EditGame: UITableViewController, UINavigationBarDelegate {
         //println(savedDate)
         //println("Edited Date:")
         //println(editedDate)
-        if editedDate != nil {
-            dateLabel.text = "Date: " + EditDate.sharedInstance.dateToString(editedDate!)
-        } else {
-            dateLabel.text = "Date: " + selectedGame.getDate()
-        }
+        let date = editedDate ?? selectedGame.date
+        dateLabel.text = "Date: " + stringFromDate(date)
     }
     
     // Puts edited deck name on label
     func putSelectedPlayerDeckOnLabel() {
-        let savedDeck = selectedGame.playerDeckName
+        let savedDeck = selectedGame.playerDeck.name
         let editedDeck = defaults.string(forKey:"Edited Deck Name")
         if editedDeck == nil {
             playerDeckLabel.text = "Your deck: " + savedDeck
@@ -150,12 +145,10 @@ class EditGame: UITableViewController, UINavigationBarDelegate {
     
     // Puts edited opponent class on label
     func putSelectedOpponentClassOnLabel() {
-        let savedOpponentClass = selectedGame.opponentDeck
-        //println(savedOpponentClass)
         let editedOpponentClass = defaults.string(forKey:"Edited Opponent Class")
         //println(editedOpponentClass)
         if editedOpponentClass == nil {
-            opponentDeckLabel.text = "Opponent's Class: " + savedOpponentClass
+            opponentDeckLabel.text = "Opponent's Class: " + selectedGame.opponentClass.rawValue
         } else {
             opponentDeckLabel.text = "Opponent's Class: " + editedOpponentClass!
         }
@@ -194,17 +187,17 @@ class EditGame: UITableViewController, UINavigationBarDelegate {
         
         var editedPlayerDeckName = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Edited Deck Name")
         if editedPlayerDeckName == nil {
-            editedPlayerDeckName = selectedGame.playerDeckName
+            editedPlayerDeckName = selectedGame.playerDeck.name
         }
         
         var editedPlayerDeckClass = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Edited Deck Class") as String?
         if editedPlayerDeckClass == nil {
-            editedPlayerDeckClass = selectedGame.playerDeckClass
+            editedPlayerDeckClass = selectedGame.playerDeck.heroClass.rawValue
         }
         
-        var editedOpponentClass = defaults.string(forKey:"Edited Opponent Class")
-        if editedOpponentClass == nil {
-            editedOpponentClass = selectedGame.opponentDeck
+        var editedOpponentClass = selectedGame.opponentClass
+        if let defaultsOpponentsClass = defaults.string(forKey:"Edited Opponent Class") {
+            editedOpponentClass = Class(defaultsOpponentsClass)
         }
         
         let editedCoin = coinSwitch.isOn
@@ -212,9 +205,9 @@ class EditGame: UITableViewController, UINavigationBarDelegate {
         let editedWin = winSwitch.isOn
         
         let editedTag = defaults.string(forKey:"Edited Selected Tag") as String!
-       
+       let playerDeck = Deck(deckID: -1, name: editedPlayerDeckName!, heroClass: editedPlayerDeckClass!)
         // Create a new Game object
-        let editedGame = Game(newID: editedID, newDate: editedDate!, newPlayerDeckName: editedPlayerDeckName!, newPlayerDeckClass: editedPlayerDeckClass!, newOpponentDeck: editedOpponentClass!, newCoin: editedCoin, newWin: editedWin, newTag: editedTag!)
+        let editedGame = Game(newID: editedID, newDate: editedDate!, playerDeck: playerDeck, opponentClass: editedOpponentClass, newCoin: editedCoin, newWin: editedWin, newTag: editedTag!)
         
         TrackerData.sharedInstance.editGame(editedID, oldGame: selectedGame, newGame: editedGame)
         

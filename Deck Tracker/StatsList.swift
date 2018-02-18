@@ -45,17 +45,20 @@ class StatsList: UIViewController, UINavigationBarDelegate, UITableViewDelegate,
         return gamesList.count
     }
     
+    private func stringFromDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        return formatter.string(from: date)
+    }
+    
     // Populates the table with data
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:GamesCell = tableView.dequeueReusableCell(withIdentifier:"Cell") as! GamesCell
-        cell.dateLabel.text = gamesList[indexPath.row].getDate()
-        let playerImage = gamesList[indexPath.row].playerDeckClass
-        let playerImageName = getImage(playerImage)
-        cell.playerImage.image = UIImage(named: playerImageName)
-        let opponentImage = gamesList[indexPath.row].opponentDeck
-        let opponentImageName = getImage(opponentImage)
-        cell.opponentImage.image = UIImage(named: opponentImageName)
-        cell.winLabel.text = gamesList[indexPath.row].win ? "WON" : "LOSS"
+        let game = gamesList[indexPath.row]
+        cell.dateLabel.text = stringFromDate(game.date)
+        cell.playerImage.image = game.playerDeck.heroClass.smallIcon()
+        cell.opponentImage.image = game.opponentClass.smallIcon()
+        cell.winLabel.text = game.win ? "WON" : "LOSS"
         return cell
     }
     

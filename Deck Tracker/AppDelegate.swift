@@ -67,8 +67,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let coin = dict["coin"] as! Bool
         let win = dict["win"] as! Bool
         let tag = dict["watchSelectedTag"] as! String
-        
-        let newGame = Game(newID: gameID, newDate: date, newPlayerDeckName: playerDeckName, newPlayerDeckClass: playerDeckClass, newOpponentDeck: opponentClass, newCoin: coin, newWin: win, newTag: tag)
+        let playerDeck = Deck(deckID: -1, name: playerDeckName, heroClass: playerDeckClass)
+        let newGame = Game(newID: gameID, newDate: date, playerDeck: playerDeck, opponentClass: Class(opponentClass), newCoin: coin, newWin: win, newTag: tag)
         TrackerData.sharedInstance.addGame(newGame)
         
         // Crashlytics custom events

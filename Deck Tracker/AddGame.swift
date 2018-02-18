@@ -143,8 +143,8 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     
     @objc @IBAction func saveButtonPressed(_ sender:UIBarButtonItem) {
         // Removes the selected date, opponent class and selected tag from UserDefaults and sends all the info to the Game List
-        let defaults: UserDefaults = UserDefaults.standard
-
+        let defaults = UserDefaults.standard
+        let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
         
         // Gets all the atributes for a new Game
         let newGameID = newGameGetID()
@@ -152,22 +152,23 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
         
         // Gets the selected deck name
         var newGamePlayerDeckName = ""
-        if let _ = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name") {
-            newGamePlayerDeckName = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name")!
-        } else if let _ = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Selected Deck Name") {
-            newGamePlayerDeckName = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Selected Deck Name")!
+        if let icloudValue = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name") {
+            newGamePlayerDeckName = icloudValue
+        } else if let defaultsValue = groupDefaults?.string(forKey:"Selected Deck Name") {
+            newGamePlayerDeckName = defaultsValue
         }
-        let newGamePlayerDeckClass = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Selected Deck Class") as String?
+        
+        let newGamePlayerDeckClass = groupDefaults?.string(forKey:"Selected Deck Class") as String?
         let newGameOpponentClass = defaults.string(forKey:"Opponent Class") as String?
         let newGameCoin = coinCellSwitch.isOn
         let newGameWin = winCellSwitch.isOn
         let newGameTag = tag
-
+        let playerDeck = Deck(deckID: -1, name: newGamePlayerDeckName, heroClass: newGamePlayerDeckClass!)
         
         if newGamePlayerDeckName != "" && newGameOpponentClass != nil {
             
             // Adds a new game
-            let newGame = Game(newID: newGameID, newDate: newGameDate, newPlayerDeckName: newGamePlayerDeckName, newPlayerDeckClass:newGamePlayerDeckClass! , newOpponentDeck: newGameOpponentClass!, newCoin: newGameCoin, newWin: newGameWin, newTag: newGameTag)
+            let newGame = Game(newID: newGameID, newDate: newGameDate, playerDeck: playerDeck, opponentClass: Class(newGameOpponentClass!), newCoin: newGameCoin, newWin: newGameWin, newTag: newGameTag)
             // Add to Data class file
             TrackerData.sharedInstance.addGame(newGame)
             self.dismiss(animated:true, completion: {})

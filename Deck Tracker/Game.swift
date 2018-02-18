@@ -12,20 +12,18 @@ import Foundation
 class Game : NSObject, NSCoding {
     
     var id:Int
-    var playerDeckName:String
-    var playerDeckClass:String
-    var opponentDeck:String
+    var playerDeck: Deck
+    var opponentClass: Class
     var coin:Bool
     var win:Bool
     var date:Date
     var tag:String
 
     // Initialize an Game object with the following arguments
-    init (newID:Int, newDate:Date, newPlayerDeckName:String, newPlayerDeckClass:String, newOpponentDeck:String, newCoin:Bool, newWin:Bool, newTag:String) {
+    init (newID:Int, newDate:Date, playerDeck:Deck, opponentClass:Class, newCoin:Bool, newWin:Bool, newTag:String) {
         self.id = newID
-        self.playerDeckName = newPlayerDeckName
-        self.playerDeckClass = newPlayerDeckClass
-        self.opponentDeck = newOpponentDeck
+        self.playerDeck = playerDeck
+        self.opponentClass = opponentClass
         self.coin = newCoin
         self.win = newWin
         self.date = newDate
@@ -35,9 +33,22 @@ class Game : NSObject, NSCoding {
     // Encode and decode the object so it can be stored in UserDefaults
     required init?(coder aDecoder: NSCoder) {
         id = aDecoder.decodeInteger(forKey: "id")
-        playerDeckName = aDecoder.decodeObject(forKey: "playerDeckName") as! String
-        playerDeckClass = aDecoder.decodeObject(forKey: "playerDeckClass") as! String
-        opponentDeck = aDecoder.decodeObject(forKey: "opponentDeck") as! String
+        if let playerDeck = aDecoder.decodeObject(forKey: "playerDeck") as? Deck {
+            self.playerDeck = playerDeck
+        }
+        else {
+            let playerDeckName = aDecoder.decodeObject(forKey: "playerDeckName") as! String
+            let playerDeckClass = aDecoder.decodeObject(forKey: "playerDeckClass") as! String
+            self.playerDeck = Deck(deckID: -1, name: playerDeckName, heroClass: playerDeckClass)
+        }
+        
+        if let opponentClassName = aDecoder.decodeObject(forKey: "opponentDeck") as? String {
+            opponentClass = Class(opponentClassName)
+        }
+        else {
+            opponentClass = .Unknown
+        }
+        
         coin = aDecoder.decodeBool(forKey: "coin")
         win = aDecoder.decodeBool(forKey: "win")
         date = aDecoder.decodeObject(forKey: "date") as! Date
@@ -47,30 +58,24 @@ class Game : NSObject, NSCoding {
     
     func encode(with aCoder: NSCoder) {
         aCoder.encode(id, forKey: "id")
-        aCoder.encode(playerDeckName, forKey: "playerDeckName")
-        aCoder.encode(playerDeckClass, forKey: "playerDeckClass")
-        aCoder.encode(opponentDeck, forKey: "opponentDeck")
+        aCoder.encode(playerDeck, forKey: "playerDeck")
+        aCoder.encode(opponentClass.rawValue, forKey: "opponentDeck")
         aCoder.encode(coin, forKey: "coin")
         aCoder.encode(win, forKey: "win")
         aCoder.encode(date, forKey: "date")
         aCoder.encode(tag, forKey: "tag")
     }
     
-    // Returns Date in String format
-    func getDate() -> String {
+    // Returns a string containing all the proprierties of the object
+    func toString() -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
         let dateString = formatter.string(from: date)
-        return dateString
-    }
-    
-    // Returns a string containing all the proprierties of the object
-    func toString() -> String {
         
         let coinString = String(stringInterpolationSegment: coin)
         let winString = String(stringInterpolationSegment: win)
         let idString = String(id)
         
-        return ("Game number: " + idString + ", date: " + getDate() + ", Player Deck Name: " + playerDeckName + ", Opponent Deck: " + opponentDeck + ", Coin: " + coinString + ", Win: " + winString + ", Tag: " + tag)
+        return ("Game number: " + idString + ", date: " + dateString + ", Player Deck Name: " + playerDeck.name + ", Opponent Deck: " + opponentClass.rawValue + ", Coin: " + coinString + ", Win: " + winString + ", Tag: " + tag)
     }
 }
