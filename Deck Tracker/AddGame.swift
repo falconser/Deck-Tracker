@@ -30,13 +30,14 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     @IBOutlet weak var tagsLabel: UILabel!
 
     let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
-    let iCloudKeyStore: NSUbiquitousKeyValueStore = NSUbiquitousKeyValueStore()
-    let defaults = UserDefaults.standard
+    let iCloudKeyStore = NSUbiquitousKeyValueStore()
     
     var game = Game()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        winCellSwitch.addTarget(self, action: #selector(AddGame.didChangeWinValue(sender:)), for: .valueChanged)
+        coinCellSwitch.addTarget(self, action: #selector(AddGame.didChangeCoinValue(sender:)), for: .valueChanged)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,7 +81,6 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
         }
     }
     
-    
     // Puts opponent's class in UserDefaults
     func putSelectedOpponentClassOnLabel() {
         if case .Unknown = game.opponentClass {
@@ -100,11 +100,9 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
         return .topAttached
     }
     
-    
     @objc @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
         self.dismiss(animated:true, completion: {})
     }
-    
     
     func string(from date: Date) -> String {
         let formatter = DateFormatter()
@@ -116,6 +114,10 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
         // Gets all the atributes for a new Game
         let newGameID = newGameGetID()
         let newGameDate = game.date
+        let opponentClass = game.opponentClass
+        let newGameCoin = game.coin
+        let newGameWin = game.win
+        let newGameTag = game.tag
         
         // Gets the selected deck name
         var newGamePlayerDeckName = ""
@@ -124,12 +126,7 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
         } else if let defaultsValue = groupDefaults?.string(forKey:"Selected Deck Name") {
             newGamePlayerDeckName = defaultsValue
         }
-        
         let newGamePlayerDeckClass = groupDefaults?.string(forKey:"Selected Deck Class") as String?
-        let opponentClass = game.opponentClass
-        let newGameCoin = coinCellSwitch.isOn
-        let newGameWin = winCellSwitch.isOn
-        let newGameTag = game.tag
         let playerDeck = Deck(deckID: -1, name: newGamePlayerDeckName, heroClass: newGamePlayerDeckClass!)
         
         if newGamePlayerDeckName != "" && game.opponentClass != .Unknown {
@@ -169,6 +166,8 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     
     // Gets the ID for a new Game
     func newGameGetID () -> Int {
+        let defaults = UserDefaults.standard
+        
         var matchesCount = (iCloudKeyStore.object(forKey: "iCloud Matches Count") as? Int) ?? defaults.integer(forKey:"Matches Count")
         matchesCount += 1
         
@@ -178,6 +177,14 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
         iCloudKeyStore.synchronize()
         
         return matchesCount
+    }
+    
+    @objc func didChangeWinValue(sender: UISwitch) {
+        game.win = sender.isOn
+    }
+    
+    @objc func didChangeCoinValue(sender: UISwitch) {
+        game.coin = sender.isOn
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
