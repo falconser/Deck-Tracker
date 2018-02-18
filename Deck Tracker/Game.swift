@@ -11,14 +11,18 @@ import Foundation
 
 class Game : NSObject, NSCoding {
     
-    var id:Int
+    var id:Int = -1
     var playerDeck: Deck
-    var opponentClass: Class
-    var coin:Bool
-    var win:Bool
-    var date:Date
-    var tag:String
+    var opponentClass: Class = .Unknown
+    var coin:Bool = false
+    var win:Bool = true
+    var date:Date = Date()
+    var tag:String = ""
 
+    override init () {
+        playerDeck = Deck(deckID: -1, name: "", heroClass: "")
+    }
+    
     // Initialize an Game object with the following arguments
     init (newID:Int, newDate:Date, playerDeck:Deck, opponentClass:Class, newCoin:Bool, newWin:Bool, newTag:String) {
         self.id = newID

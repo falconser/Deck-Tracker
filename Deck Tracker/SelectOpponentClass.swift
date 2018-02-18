@@ -12,24 +12,15 @@ class SelectOpponentClass: UITableViewController {
     
     @IBOutlet var opponentClasses: UITableView!
     
-
-    var classes = ["Warrior", "Paladin", "Shaman", "Hunter", "Druid", "Rogue", "Mage", "Warlock", "Priest"]
+    let classes: [Class] = [.Warrior, .Paladin, .Shaman, .Hunter, .Druid, .Rogue, .Mage, .Warlock, .Priest]
+    var onSelectionUpdate: ((Class?) -> Void)?
     
-    let defaults = UserDefaults.standard
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    var selectedClass: Class? {
+        didSet {
+            if let onSelectionUpdate = onSelectionUpdate {
+                onSelectionUpdate(selectedClass)
+            }
+        }
     }
     
     // Gets the number of rows to be displayed in the table
@@ -40,40 +31,24 @@ class SelectOpponentClass: UITableViewController {
     // Populates the table with data
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
-        cell.textLabel?.text = classes[indexPath.row]
+        cell.textLabel?.text = classes[indexPath.row].rawValue
+        cell.accessoryType = classes[indexPath.row] == selectedClass ? .checkmark : .none
         return cell
     }
 
-
+    
     // Selects the row and saves the info so we can add a checkmark
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
-        cell?.accessoryType = UITableViewCellAccessoryType.checkmark
-        let selectedClass = classes[indexPath.row]
-        saveSelectedOpponentClass(selectedClass)
-        readSelectedOpponentClass()
+        cell?.accessoryType = .checkmark
+        
+        selectedClass = classes[indexPath.row]
         navigationController?.popViewController(animated: true)
-        //navigationController?.popToRootViewController(animated: true)
     }
     
     // Deselects the row if you select another
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
-        cell?.accessoryType = UITableViewCellAccessoryType.none
-    }
-    
-    // Saves the selected opponent class in UserDefaults
-    func saveSelectedOpponentClass(_ opponentClass: String) {
-        defaults.set(opponentClass, forKey: "Opponent Class")
-        defaults.synchronize()
-    }
-    
-    // Reads the selected deck ID from UserDefaults
-    @discardableResult
-    func readSelectedOpponentClass() -> String {
-        guard let result = defaults.string(forKey:"Opponent Class") else {
-            return ""
-        }
-        return result
+        cell?.accessoryType = .none
     }
 }

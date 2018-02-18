@@ -34,18 +34,14 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     let defaults = UserDefaults.standard
     
     var tag: String = ""
+    var game = Game()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Puts today date on the date label
-        let today = dateToday()
-        dateCellLabel.text = "Date: " + today
-        putSelectedDeckNameOnLabel()
-        
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         // Populates the rows with data
         putSelectedDateOnLabel()
         putSelectedDeckNameOnLabel()
@@ -55,10 +51,7 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     
     func putSelectedDateOnLabel() {
         // Puts the selected date on the date label
-        let x = SelectDate()
-        let newDate = x.readDate()
-        let newDateString = x.dateToString(newDate)
-        dateCellLabel.text = "Date: " + newDateString
+        dateCellLabel.text = "Date: " + string(from: game.date)
     }
     
     
@@ -89,20 +82,15 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     
     func putSelectedOpponentClassOnLabel() {
         // Puts opponent's class in UserDefaults
-        let selectedOpponentClass = readSelectedOpponentClass()
-        if selectedOpponentClass == "" {
+
+        if case .Unknown = game.opponentClass {
             opponentDeckLabel.text = "Select Opponent's Class"
-        } else {
-            opponentDeckLabel.text = "Opponent's class: " + selectedOpponentClass
+        }
+        else {
+            opponentDeckLabel.text = "Opponent's class: " + game.opponentClass.rawValue
         }
     }
     
-    
-    func readSelectedOpponentClass() -> String {
-        // Reads the selected opponent's class from UserDefaults
-        
-        return defaults.string(forKey:"Opponent Class") ?? ""
-    }
 
     // Have the nav bar show ok.
     // You need to crtl+drag the nav bar to the view controller in storyboard to create a delegate
@@ -116,23 +104,17 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     @objc @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
         // Remove the selected date and selected opponent class from UserDefaults and dismissed the screen
         defaults.removeObject(forKey: "Saved Date")
-        defaults.removeObject(forKey: "Opponent Class")
         defaults.removeObject(forKey: "Selected Tag")
         defaults.synchronize()
         self.dismiss(animated:true, completion: {})
     }
     
     
-    
-    func dateToday() -> String {
-        // Get today's date as a String
-        let now = Date()
+    func string(from date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
-        let dateString = formatter.string(from: now)
-        return dateString
+        return formatter.string(from: date)
     }
-    
     
     @objc @IBAction func saveButtonPressed(_ sender:UIBarButtonItem) {
         // Removes the selected date, opponent class and selected tag from UserDefaults and sends all the info to the Game List
@@ -149,79 +131,48 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
         }
         
         let newGamePlayerDeckClass = groupDefaults?.string(forKey:"Selected Deck Class") as String?
-        let newGameOpponentClass = defaults.string(forKey:"Opponent Class") as String?
+        let opponentClass = game.opponentClass
         let newGameCoin = coinCellSwitch.isOn
         let newGameWin = winCellSwitch.isOn
         let newGameTag = tag
         let playerDeck = Deck(deckID: -1, name: newGamePlayerDeckName, heroClass: newGamePlayerDeckClass!)
         
-        if newGamePlayerDeckName != "" && newGameOpponentClass != nil {
+        if newGamePlayerDeckName != "" && game.opponentClass != .Unknown {
             
             // Adds a new game
-            let newGame = Game(newID: newGameID, newDate: newGameDate, playerDeck: playerDeck, opponentClass: Class(newGameOpponentClass!), newCoin: newGameCoin, newWin: newGameWin, newTag: newGameTag)
+            let newGame = Game(newID: newGameID, newDate: newGameDate, playerDeck: playerDeck, opponentClass: opponentClass, newCoin: newGameCoin, newWin: newGameWin, newTag: newGameTag)
             // Add to Data class file
             TrackerData.sharedInstance.addGame(newGame)
             self.dismiss(animated:true, completion: {})
             
             // Crashlytics custom events
-            var winString = ""
-            if newGameWin == true {
-                winString = "Win"
-            } else {
-                winString = "Loss"
-            }
-            
-            var tagString = ""
-            if newGameTag == "" {
-                tagString = "No tag"
-            } else {
-                tagString = newGameTag
-            }
-            
-            let device = UIDevice.current.model
-            
             Answers.logCustomEvent(withName: "New game added",
                 customAttributes: [
                     "Deck Name": newGamePlayerDeckName,
                     "Deck Class": newGamePlayerDeckClass!,
-                    "Opponent Class": newGameOpponentClass!,
-                    "Win": winString,
-                    "Tag": tagString,
-                    "Added from": device
+                    "Opponent Class": game.opponentClass.rawValue,
+                    "Win": newGameWin ? "Win" : "Loss",
+                    "Tag": newGameTag.isEmpty ? "No tag" : newGameTag,
+                    "Added from": UIDevice.current.model
                 ])
             
         } else {
-            if newGamePlayerDeckName == "" && newGameOpponentClass == nil {
-                let alert = UIAlertView()
-                alert.title = "Missing Info"
-                alert.message = "You need to enter all required info"
-                alert.addButton(withTitle: "OK")
-                alert.show()
-            } else if newGamePlayerDeckName == "" {
-                let alert = UIAlertView()
-                alert.title = "Missing Info"
-                alert.message = "You need to select a deck"
-                alert.addButton(withTitle: "OK")
-                alert.show()
-            } else if newGameOpponentClass == nil {
-                let alert = UIAlertView()
-                alert.title = "Missing Info"
-                alert.message = "You need to select your opponent's class"
-                alert.addButton(withTitle: "OK")
-                alert.show()
-            } else {
-                let alert = UIAlertView()
-                alert.title = "Missing Info"
-                alert.message = "You need to enter all required info"
-                alert.addButton(withTitle: "OK")
-                alert.show()
-            }
+            let alert = UIAlertView()
+            alert.title = "Missing Info"
+            alert.addButton(withTitle: "OK")
 
+            if newGamePlayerDeckName == "" {
+                alert.message = "You need to select a deck"
+            } else if game.opponentClass == .Unknown {
+                alert.message = "You need to select your opponent's class"
+            } else {
+                alert.message = "You need to enter all required info"
+            }
+            alert.show()
         }
         
         // Deletes the date, opponent class and selected tag so the user needs to select again
         defaults.removeObject(forKey: "Saved Date")
-        defaults.removeObject(forKey: "Opponent Class")
         defaults.removeObject(forKey: "Selected Tag")
         defaults.synchronize()
     }
@@ -243,5 +194,14 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     func putTagLabel() {
         tag = defaults.string(forKey:"Selected Tag") ?? ""
         tagsLabel.text = tag.isEmpty ? "Add Tags" : ("Tags: " + tag)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let selectOpponent = segue.destination as? SelectOpponentClass {
+            selectOpponent.selectedClass = game.opponentClass
+            selectOpponent.onSelectionUpdate = { [weak self] (selectedClass: Class?) in
+                self?.game.opponentClass = selectedClass ?? .Unknown
+            }
+        }
     }
 }
