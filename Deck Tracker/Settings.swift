@@ -39,9 +39,9 @@ class Settings: UITableViewController {
             
             // Delete from UserDefaults
             UserDefaults.standard.removeObject(forKey: "List of games")
-            UserDefaults(suiteName: "group.Decks")!.removeObject(forKey: "List of decks")
-            UserDefaults(suiteName: "group.Decks")!.removeObject(forKey: "Selected Deck Name")
-            UserDefaults(suiteName: "group.Decks")!.removeObject(forKey: "All Tags")
+            UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.removeObject(forKey: "List of decks")
+            UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.removeObject(forKey: "Selected Deck Name")
+            UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.removeObject(forKey: "All Tags")
             TrackerData.sharedInstance.listOfGames = []
             TrackerData.sharedInstance.listOfDecks = []
             
@@ -80,8 +80,8 @@ class Settings: UITableViewController {
             
             // Delete from UserDefaults
             UserDefaults.standard.removeObject(forKey: "List of games")
-            UserDefaults(suiteName: "group.Decks")!.removeObject(forKey: "List of decks")
-            UserDefaults(suiteName: "group.Decks")!.removeObject(forKey: "Selected Deck Name")
+            UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.removeObject(forKey: "List of decks")
+            UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.removeObject(forKey: "Selected Deck Name")
             TrackerData.sharedInstance.listOfGames = []
             TrackerData.sharedInstance.listOfDecks = []
             // Sync

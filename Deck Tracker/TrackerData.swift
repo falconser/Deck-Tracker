@@ -122,7 +122,7 @@ public class TrackerData: NSObject {
     // Adds the decks list to UserDefaults
     func saveDeck () {
         let archivedObject = NSKeyedArchiver.archivedData(withRootObject: listOfDecks)
-        let defaults = UserDefaults(suiteName: "group.Decks")!
+        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
         defaults.set(archivedObject, forKey: "List of decks")
         defaults.set(deckListForPhone, forKey: "List of decks dictionary")
         defaults.synchronize()
@@ -134,7 +134,7 @@ public class TrackerData: NSObject {
     
     // Reads the deck data and returns a Deck object
     func readDeckData() -> [Deck]? {
-        let defaults = UserDefaults(suiteName: "group.Decks")!
+        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
         if let iCloudUnarchivedObject = iCloudKeyStore.object(forKey: "iCloud list of decks") as? Data {
             print("iCloud decks loaded")
             return NSKeyedUnarchiver.unarchiveObject(with: iCloudUnarchivedObject) as? [Deck]
@@ -192,8 +192,8 @@ public class TrackerData: NSObject {
         var selectedDeckName = ""
         if let _ = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name") {
             selectedDeckName = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name")!
-        } else if let _ = UserDefaults(suiteName: "group.Decks")!.string(forKey:"Selected Deck Name") {
-            selectedDeckName = UserDefaults(suiteName: "group.Decks")!.string(forKey:"Selected Deck Name")!
+        } else if let _ = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Selected Deck Name") {
+            selectedDeckName = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Selected Deck Name")!
         }
 
         // If current deck is selected
@@ -274,8 +274,8 @@ public class TrackerData: NSObject {
         
         if let _ = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name") {
             selectedDeckName = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name")!
-        } else if let _ = UserDefaults(suiteName: "group.Decks")!.string(forKey:"Selected Deck Name") {
-            selectedDeckName = UserDefaults(suiteName: "group.Decks")!.string(forKey:"Selected Deck Name")!
+        } else if let _ = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Selected Deck Name") {
+            selectedDeckName = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Selected Deck Name")!
         }
         
         // If current deck is selected

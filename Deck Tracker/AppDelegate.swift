@@ -55,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func saveGameFromWatch() {
         // Fetches the saved dictionary
-        let defaults = UserDefaults(suiteName: "group.Decks")!
+        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
         let dict: NSDictionary = defaults.object(forKey: "Add Game Watch") as! NSDictionary
         
         // Gets the values needed from the dictionary and adds a New Game

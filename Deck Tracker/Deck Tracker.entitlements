@@ -18,7 +18,7 @@
 	<string>$(TeamIdentifierPrefix)$(CFBundleIdentifier)</string>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.Decks</string>
+		<string>group.com.falcon.Deck-Tracker.Decks</string>
 	</array>
 </dict>
 </plist>

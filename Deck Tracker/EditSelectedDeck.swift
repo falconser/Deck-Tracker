@@ -91,14 +91,14 @@ class EditSelectedDeck: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     // Saves the selected deck name in UserDefaults
     func saveEditedDeckName(_ deck: Deck) {
-        let defaults: UserDefaults = UserDefaults(suiteName: "group.Decks")!
+        let defaults: UserDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
         defaults.set(deck.name, forKey: "Edited Deck Name")
         defaults.synchronize()
     }
     
     // Saves the selected deck class
     func saveEditedDeckClass(_ deck: Deck) {
-        let defaults: UserDefaults = UserDefaults(suiteName: "group.Decks")!
+        let defaults: UserDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
         defaults.set(deck.heroClass.rawValue, forKey: "Edited Deck Class")
         defaults.synchronize()
     }
@@ -106,7 +106,7 @@ class EditSelectedDeck: UIViewController, UITableViewDelegate, UITableViewDataSo
     // Reads the edited deck name
     @discardableResult
     func readEditedDeckName() -> String {
-        let defaults = UserDefaults(suiteName: "group.Decks")!
+        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
         return defaults.string(forKey:"Edited Deck Name") ?? ""
     }
     

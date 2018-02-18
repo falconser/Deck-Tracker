@@ -39,7 +39,7 @@ class SelectDeckWatch: WKInterfaceController {
     
     func loadData() {
         // Loads data from UserDefaults
-        let defaults = UserDefaults(suiteName: "group.Decks")!
+        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
         if let dict:[NSDictionary] = defaults.object(forKey: "List of decks dictionary") as? [NSDictionary] {
             extractDictToArrayOfDecks(dict)
         }
@@ -82,7 +82,7 @@ class SelectDeckWatch: WKInterfaceController {
         // Saves the selected deck and returns to Main View
         //let row = table.rowController(at:rowIndex) as? DeckRow
         let selectedDeck = deckList[rowIndex]
-        let defaults = UserDefaults(suiteName: "group.Decks")!
+        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
         defaults.set(selectedDeck.deckID, forKey: "Selected Deck ID")
         defaults.set(selectedDeck.name, forKey: "Selected Deck Name")
         defaults.set(selectedDeck.heroClass.rawValue, forKey: "Selected Deck Class")

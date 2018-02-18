@@ -132,7 +132,7 @@ class EditTags: UITableViewController {
     }
     
     func saveAllTags() {
-        let defaults = UserDefaults(suiteName: "group.Decks")!
+        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
         defaults.set(allTags, forKey: "All Tags")
         defaults.synchronize()
         
@@ -142,7 +142,7 @@ class EditTags: UITableViewController {
     }
     @discardableResult
     func readTags() -> [String] {
-        let defaults = UserDefaults(suiteName: "group.Decks")!
+        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
         if let _ = iCloudKeyStore.array(forKey: "iCloud All Tags") {
             allTags = iCloudKeyStore.array(forKey: "iCloud All Tags") as! [String]
         } else if let _ = defaults.array(forKey: "All Tags") {

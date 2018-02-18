@@ -75,7 +75,7 @@ class EditGame: UITableViewController, UINavigationBarDelegate {
     
     // Puts selected deck on label
     func putSavedPlayerDeckOnLabel() {
-        if let editedDeckName = UserDefaults(suiteName: "group.Decks")!.string(forKey:"Edited Deck Name") {
+        if let editedDeckName = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Edited Deck Name") {
             playerDeckLabel.text = "Your deck: " + editedDeckName
         } else {
             let savedPlayedDeck = selectedGame.playerDeckName
@@ -174,7 +174,7 @@ class EditGame: UITableViewController, UINavigationBarDelegate {
         // Remove all edited stats
         UserDefaults.standard.removeObject(forKey: "Selected Game")
         UserDefaults.standard.removeObject(forKey: "Saved Edited Date")
-        UserDefaults(suiteName: "group.Decks")!.removeObject(forKey: "Edited Deck Name")
+        UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.removeObject(forKey: "Edited Deck Name")
         UserDefaults.standard.removeObject(forKey: "Edited Deck Class")
         UserDefaults.standard.removeObject(forKey: "Edited Opponent Class")
         UserDefaults.standard.removeObject(forKey: "Edited Selected Tag")
@@ -192,12 +192,12 @@ class EditGame: UITableViewController, UINavigationBarDelegate {
             editedDate = selectedGame.date
         }
         
-        var editedPlayerDeckName = UserDefaults(suiteName: "group.Decks")!.string(forKey:"Edited Deck Name")
+        var editedPlayerDeckName = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Edited Deck Name")
         if editedPlayerDeckName == nil {
             editedPlayerDeckName = selectedGame.playerDeckName
         }
         
-        var editedPlayerDeckClass = UserDefaults(suiteName: "group.Decks")!.string(forKey:"Edited Deck Class") as String?
+        var editedPlayerDeckClass = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Edited Deck Class") as String?
         if editedPlayerDeckClass == nil {
             editedPlayerDeckClass = selectedGame.playerDeckClass
         }

@@ -39,7 +39,7 @@ class SelectTagsWatch: WKInterfaceController {
     
     func loadData() {
         // Loads all saved tags and then the already selected by user
-        let defaults = UserDefaults(suiteName: "group.Decks")!
+        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
         if let testTags = defaults.object(forKey: "All Tags") {
             tagsList = testTags as! [String]
         }

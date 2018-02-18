@@ -61,7 +61,7 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     
     func readSelectedDeckName() -> String {
         // Reads the selected deck name from iCloud or UserDefaults
-        let defaults = UserDefaults(suiteName: "group.Decks")!
+        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
         var name = ""
         if let _ = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name") {
             name = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name")!
@@ -154,10 +154,10 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
         var newGamePlayerDeckName = ""
         if let _ = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name") {
             newGamePlayerDeckName = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name")!
-        } else if let _ = UserDefaults(suiteName: "group.Decks")!.string(forKey:"Selected Deck Name") {
-            newGamePlayerDeckName = UserDefaults(suiteName: "group.Decks")!.string(forKey:"Selected Deck Name")!
+        } else if let _ = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Selected Deck Name") {
+            newGamePlayerDeckName = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Selected Deck Name")!
         }
-        let newGamePlayerDeckClass = UserDefaults(suiteName: "group.Decks")!.string(forKey:"Selected Deck Class") as String?
+        let newGamePlayerDeckClass = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Selected Deck Class") as String?
         let newGameOpponentClass = defaults.string(forKey:"Opponent Class") as String?
         let newGameCoin = coinCellSwitch.isOn
         let newGameWin = winCellSwitch.isOn

@@ -51,7 +51,7 @@ class DeckTrackerWatch: WKInterfaceController {
     @objc @IBAction func saveButtonPressed() {
         
         // Gathers the data to make the dict to send the info to the phone
-        let defaults = UserDefaults(suiteName: "group.Decks")!
+        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
         let dict = NSMutableDictionary()
         // Gets selected deck and selected class associated with the deck
         if let _ = defaults.string(forKey:"Selected Deck Name") {
@@ -114,7 +114,7 @@ class DeckTrackerWatch: WKInterfaceController {
     
     func setSelectedDeckButton() {
         // Populates the selected deck button
-        let defaults = UserDefaults(suiteName: "group.Decks")!
+        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
         if let _ = defaults.integer(forKey:"Selected Deck ID") as Int! {
             if let selectedDeckName = defaults.string(forKey:"Selected Deck Name") as String! {
                 let selectedDeckClass = defaults.string(forKey:"Selected Deck Class")!
