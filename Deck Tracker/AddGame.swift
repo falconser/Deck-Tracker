@@ -59,21 +59,9 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
         tagsLabel.text = game.tag.isEmpty ? "Add Tags" : ("Tags: " + game.tag)
     }
     
-    // Reads the selected deck name from iCloud or UserDefaults
-    func readSelectedDeckName() -> String {
-        var name = ""
-        if let iCloudName = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name") {
-            name = iCloudName
-        } else if let defaultsName = groupDefaults?.string(forKey:"Selected Deck Name") {
-            name = defaultsName
-        }
-        
-        return name
-    }
-    
     // Gets the selected deck from UserDefaults and puts it on the label
     func putSelectedDeckNameOnLabel() {
-        let selectedDeck = readSelectedDeckName()
+        let selectedDeck = game.playerDeck.name
         if selectedDeck == "" {
             playerDeckLabel.text = "You need to select a deck first"
         } else {
@@ -111,49 +99,12 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     }
     
     @objc @IBAction func saveButtonPressed(_ sender:UIBarButtonItem) {
-        // Gets all the atributes for a new Game
-        let newGameID = newGameGetID()
-        let newGameDate = game.date
-        let opponentClass = game.opponentClass
-        let newGameCoin = game.coin
-        let newGameWin = game.win
-        let newGameTag = game.tag
-        
-        // Gets the selected deck name
-        var newGamePlayerDeckName = ""
-        if let icloudValue = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name") {
-            newGamePlayerDeckName = icloudValue
-        } else if let defaultsValue = groupDefaults?.string(forKey:"Selected Deck Name") {
-            newGamePlayerDeckName = defaultsValue
-        }
-        let newGamePlayerDeckClass = groupDefaults?.string(forKey:"Selected Deck Class") as String?
-        let playerDeck = Deck(deckID: -1, name: newGamePlayerDeckName, heroClass: newGamePlayerDeckClass!)
-        
-        if newGamePlayerDeckName != "" && game.opponentClass != .Unknown {
-            
-            // Adds a new game
-            let newGame = Game(newID: newGameID, newDate: newGameDate, playerDeck: playerDeck, opponentClass: opponentClass, newCoin: newGameCoin, newWin: newGameWin, newTag: newGameTag)
-            // Add to Data class file
-            TrackerData.sharedInstance.addGame(newGame)
-            self.dismiss(animated:true, completion: {})
-            
-            // Crashlytics custom events
-            Answers.logCustomEvent(withName: "New game added",
-                customAttributes: [
-                    "Deck Name": newGamePlayerDeckName,
-                    "Deck Class": newGamePlayerDeckClass!,
-                    "Opponent Class": game.opponentClass.rawValue,
-                    "Win": newGameWin ? "Win" : "Loss",
-                    "Tag": newGameTag.isEmpty ? "No tag" : newGameTag,
-                    "Added from": UIDevice.current.model
-                ])
-            
-        } else {
+        guard game.playerDeck.name.isEmpty == false, game.opponentClass != .Unknown else {
             let alert = UIAlertView()
             alert.title = "Missing Info"
             alert.addButton(withTitle: "OK")
-
-            if newGamePlayerDeckName == "" {
+            
+            if game.playerDeck.name == "" {
                 alert.message = "You need to select a deck"
             } else if game.opponentClass == .Unknown {
                 alert.message = "You need to select your opponent's class"
@@ -161,22 +112,23 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
                 alert.message = "You need to enter all required info"
             }
             alert.show()
+            return
         }
-    }
-    
-    // Gets the ID for a new Game
-    func newGameGetID () -> Int {
-        let defaults = UserDefaults.standard
         
-        var matchesCount = (iCloudKeyStore.object(forKey: "iCloud Matches Count") as? Int) ?? defaults.integer(forKey:"Matches Count")
-        matchesCount += 1
+        // Add to Data class file
+        TrackerData.sharedInstance.addGame(game)
+        self.dismiss(animated:true)
         
-        defaults.set(matchesCount, forKey: "Matches Count");
-        defaults.synchronize()
-        iCloudKeyStore.set(matchesCount, forKey: "iCloud Matches Count")
-        iCloudKeyStore.synchronize()
-        
-        return matchesCount
+        // Crashlytics custom events
+        Answers.logCustomEvent(withName: "New game added",
+                               customAttributes: [
+                                "Deck Name": game.playerDeck.name,
+                                "Deck Class": game.playerDeck.heroClass.rawValue,
+                                "Opponent Class": game.opponentClass.rawValue,
+                                "Win": game.win ? "Win" : "Loss",
+                                "Tag": game.tag.isEmpty ? "No tag" : game.tag,
+                                "Added from": UIDevice.current.model
+            ])
     }
     
     @objc func didChangeWinValue(sender: UISwitch) {

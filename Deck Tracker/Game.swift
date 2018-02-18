@@ -20,7 +20,7 @@ class Game : NSObject, NSCoding {
     var tag:String = ""
 
     override init () {
-        playerDeck = Deck(deckID: -1, name: "", heroClass: "")
+        playerDeck = TrackerData.sharedInstance.activeDeck!
     }
     
     // Initialize an Game object with the following arguments

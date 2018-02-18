@@ -20,9 +20,29 @@ public class TrackerData: NSObject {
     var listOfDecks:[Deck] = []
     var deckListForPhone:[NSDictionary] = []
     
+    var activeDeck: Deck? {
+        didSet {
+            if let activeDeck = activeDeck {
+                groupDefaults?.set(activeDeck.deckID, forKey: "Selected Deck ID")
+                groupDefaults?.set(activeDeck.name, forKey: "Selected Deck Name")
+                groupDefaults?.set(activeDeck.heroClass.rawValue, forKey: "Selected Deck Class")
+            }
+            else {
+                groupDefaults?.removeObject(forKey: "Selected Deck ID")
+                groupDefaults?.removeObject(forKey: "Selected Deck Name")
+                groupDefaults?.removeObject(forKey: "Selected Deck Class")
+            }
+            groupDefaults?.synchronize()
+
+            
+            iCloudKeyStore.set(activeDeck?.name, forKey: "iCloud Selected Deck Name")
+            iCloudKeyStore.synchronize()
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "DeckSelected"), object: self)
+        }
+    }
     // Objects needed to be updated in different functions
     var filteredGames:[Game] = []
-    var coinArray:[Game] = []
     
     // Save to iCloud
     let iCloudKeyStore: NSUbiquitousKeyValueStore = NSUbiquitousKeyValueStore()
@@ -37,25 +57,21 @@ public class TrackerData: NSObject {
         iCloudKeyStore.synchronize()
             
         // Check at first install if the game/deck database is empty
-        if self.readGameData() == nil {
-            print("Game database empty")
-            if (self.readDeckData() == nil) {
-                print("Decks database empty")
-            } else {
-                listOfDecks = self.readDeckData()!
-            }
-        
-        } else if self.readDeckData() == nil {
-            print("Decks database empty")
-            if (self.readGameData() == nil) {
-                print("Game database empty")
-            } else {
-                listOfGames = self.readGameData()!
-            }
-        } else {
-            listOfGames = self.readGameData()!
-            listOfDecks = self.readDeckData()!
+        if let gamesData = readGameData() {
+            listOfGames = gamesData
         }
+        else {
+            print("Game database empty")
+        }
+        
+        if let decksData = readDeckData() {
+            listOfDecks = decksData
+        }
+        else {
+            print("Decks database empty")
+        }
+        
+        activeDeck = readActiveDeck()
     }
     
     @objc func keyValueStoreDidChange(notification: NSNotification) {
@@ -65,8 +81,18 @@ public class TrackerData: NSObject {
         }
     }
     
+    func readActiveDeck() -> Deck? {
+        guard let groupDefaults = groupDefaults else {
+            return nil
+        }
+        
+        let selectedId = groupDefaults.integer(forKey:"Selected Deck ID")
+        return listOfDecks.first { $0.deckID == selectedId }
+    }
+    
     // Adds a game object to the array and save the array in UserDefaults
     func addGame (_ newGame : Game) {
+        newGame.id = listOfGames.count
         listOfGames.append(newGame)
         listOfGames.sort { $0.date.compare($1.date) == .orderedDescending }
         saveGame()
