@@ -25,12 +25,15 @@ class EditGame: UITableViewController, UINavigationBarDelegate {
     @IBOutlet var tagsLabel: UILabel!
     
 
-    var defaults: UserDefaults = UserDefaults.standard
+    let defaults = UserDefaults.standard
+    let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
+
     var selectedGameArray:[Game] = []
     var selectedGame:Game = Game(newID: 1, newDate: Date(), playerDeck: Deck(deckID: -1, name: "1", heroClass: "1"), opponentClass: .Warrior, newCoin: true, newWin: true, newTag: "")
     static let sharedInstance = EditGame()
     var selectedTag: String = ""
-    
+
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,7 +76,7 @@ class EditGame: UITableViewController, UINavigationBarDelegate {
     
     // Puts selected deck on label
     func putSavedPlayerDeckOnLabel() {
-        if let editedDeckName = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Edited Deck Name") {
+        if let editedDeckName = groupDefaults?.string(forKey:"Edited Deck Name") {
             playerDeckLabel.text = "Your deck: " + editedDeckName
         } else {
             let savedPlayedDeck = selectedGame.playerDeck.name
@@ -165,13 +168,13 @@ class EditGame: UITableViewController, UINavigationBarDelegate {
     @objc @IBAction func cancelButtonPressed(_ sender:UIBarButtonItem) {
         
         // Remove all edited stats
-        UserDefaults.standard.removeObject(forKey: "Selected Game")
-        UserDefaults.standard.removeObject(forKey: "Saved Edited Date")
-        UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.removeObject(forKey: "Edited Deck Name")
-        UserDefaults.standard.removeObject(forKey: "Edited Deck Class")
-        UserDefaults.standard.removeObject(forKey: "Edited Opponent Class")
-        UserDefaults.standard.removeObject(forKey: "Edited Selected Tag")
-        UserDefaults.standard.synchronize()
+        defaults.removeObject(forKey: "Selected Game")
+        defaults.removeObject(forKey: "Saved Edited Date")
+        groupDefaults?.removeObject(forKey: "Edited Deck Name")
+        defaults.removeObject(forKey: "Edited Deck Class")
+        defaults.removeObject(forKey: "Edited Opponent Class")
+        defaults.removeObject(forKey: "Edited Selected Tag")
+        defaults.synchronize()
         self.dismiss(animated:true, completion: {});
     }
     
@@ -180,46 +183,32 @@ class EditGame: UITableViewController, UINavigationBarDelegate {
         // Get required atributes to create a new Game
         let editedID = selectedGame.id
         
-        var editedDate = EditDate.sharedInstance.readDate()
-        if editedDate == nil {
-            editedDate = selectedGame.date
-        }
+        let editedDate = EditDate.sharedInstance.readDate() ?? selectedGame.date
         
-        var editedPlayerDeckName = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Edited Deck Name")
-        if editedPlayerDeckName == nil {
-            editedPlayerDeckName = selectedGame.playerDeck.name
-        }
+        let editedPlayerDeckName = groupDefaults?.string(forKey:"Edited Deck Name") ?? selectedGame.playerDeck.name
+        let editedPlayerDeckClass = groupDefaults?.string(forKey:"Edited Deck Class") ?? selectedGame.playerDeck.heroClass.rawValue
         
-        var editedPlayerDeckClass = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Edited Deck Class") as String?
-        if editedPlayerDeckClass == nil {
-            editedPlayerDeckClass = selectedGame.playerDeck.heroClass.rawValue
-        }
-        
-        var editedOpponentClass = selectedGame.opponentClass
-        if let defaultsOpponentsClass = defaults.string(forKey:"Edited Opponent Class") {
-            editedOpponentClass = Class(defaultsOpponentsClass)
-        }
+        let editedOpponentClass = defaults.string(forKey:"Edited Opponent Class").flatMap(Class.init) ?? selectedGame.opponentClass
         
         let editedCoin = coinSwitch.isOn
-        
         let editedWin = winSwitch.isOn
         
         let editedTag = defaults.string(forKey:"Edited Selected Tag") as String!
-       let playerDeck = Deck(deckID: -1, name: editedPlayerDeckName!, heroClass: editedPlayerDeckClass!)
+        let playerDeck = Deck(deckID: -1, name: editedPlayerDeckName, heroClass: editedPlayerDeckClass)
         // Create a new Game object
-        let editedGame = Game(newID: editedID, newDate: editedDate!, playerDeck: playerDeck, opponentClass: editedOpponentClass, newCoin: editedCoin, newWin: editedWin, newTag: editedTag!)
+        let editedGame = Game(newID: editedID, newDate: editedDate, playerDeck: playerDeck, opponentClass: editedOpponentClass, newCoin: editedCoin, newWin: editedWin, newTag: editedTag!)
         
         TrackerData.sharedInstance.editGame(editedID, oldGame: selectedGame, newGame: editedGame)
         
         
         // Remove all edited stats
-        UserDefaults.standard.removeObject(forKey: "Selected Game")
-        UserDefaults.standard.removeObject(forKey: "Saved Edited Date")
-        UserDefaults.standard.removeObject(forKey: "Edited Deck Name")
-        UserDefaults.standard.removeObject(forKey: "Edited Deck Class")
-        UserDefaults.standard.removeObject(forKey: "Edited Opponent Class")
-        UserDefaults.standard.removeObject(forKey: "Edited Selected Tag")
-        UserDefaults.standard.synchronize()
+        defaults.removeObject(forKey: "Selected Game")
+        defaults.removeObject(forKey: "Saved Edited Date")
+        defaults.removeObject(forKey: "Edited Deck Name")
+        defaults.removeObject(forKey: "Edited Deck Class")
+        defaults.removeObject(forKey: "Edited Opponent Class")
+        defaults.removeObject(forKey: "Edited Selected Tag")
+        defaults.synchronize()
         self.dismiss(animated:true, completion: {});
     }
 }

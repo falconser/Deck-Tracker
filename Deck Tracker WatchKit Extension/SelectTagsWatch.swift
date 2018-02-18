@@ -18,6 +18,9 @@ class SelectTagsWatch: WKInterfaceController {
     var selectedTag:String = ""
     var wasAlreadySelected = false
     
+    let defaults = UserDefaults.standard
+    let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
+    
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
@@ -39,13 +42,11 @@ class SelectTagsWatch: WKInterfaceController {
     
     func loadData() {
         // Loads all saved tags and then the already selected by user
-        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
-        if let testTags = defaults.object(forKey: "All Tags") {
-            tagsList = testTags as! [String]
+        if let testTags = groupDefaults?.object(forKey: "All Tags") as? [String] {
+            tagsList = testTags
         }
-        
-        if let _ = UserDefaults.standard.string(forKey:"Selected Tag Watch") {
-            selectedTag = UserDefaults.standard.string(forKey:"Selected Tag Watch") as String!
+        if let defaultsTag = defaults.string(forKey:"Selected Tag Watch") {
+            selectedTag = defaultsTag
         }
         //println(tagsList)
         //println("Selected tag: " + String(stringInterpolationSegment: selectedTagsArray))
@@ -102,7 +103,7 @@ class SelectTagsWatch: WKInterfaceController {
         //println(wasAlreadySelected)
         
         // Save selected tag array
-        let defaults = UserDefaults.standard
+        
         defaults.set(selectedTag, forKey: "Selected Tag Watch")
         defaults.synchronize()
         self.pop()

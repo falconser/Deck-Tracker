@@ -19,6 +19,10 @@ class Graphs: UIViewController {
     var dateIndex = -1
     var deckIndex = -1
     var deckName = ""
+
+    let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
+    let defaults = UserDefaults.standard
+    
     static let sharedInstance = Graphs()
     
     override func viewDidLoad() {
@@ -26,7 +30,7 @@ class Graphs: UIViewController {
         getInitialStatus()
     }
     
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         getInitialStatus()
@@ -41,8 +45,8 @@ class Graphs: UIViewController {
         dateIndex = dateSegment.selectedSegmentIndex
         deckIndex = deckSegment.selectedSegmentIndex
         if deckIndex == 0 {
-            if let _ = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Selected Deck Name") as String! {
-                deckName = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Selected Deck Name") as String!
+            if let defaultsName = groupDefaults?.string(forKey:"Selected Deck Name") {
+                deckName = defaultsName
             } else {
                 deckName = ""
             }
@@ -50,10 +54,10 @@ class Graphs: UIViewController {
             deckName = "All"
         }
         
-        UserDefaults.standard.set(dateIndex, forKey: "Date Index")
-        UserDefaults.standard.set(deckIndex, forKey: "Deck Index")
-        UserDefaults.standard.set(deckName, forKey: "Deck Name")
-        UserDefaults.standard.synchronize()
+        defaults.set(dateIndex, forKey: "Date Index")
+        defaults.set(deckIndex, forKey: "Deck Index")
+        defaults.set(deckName, forKey: "Deck Name")
+        defaults.synchronize()
         
         // Notifies the container that a change occured
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
@@ -75,8 +79,8 @@ class Graphs: UIViewController {
             break
         }
         
-        UserDefaults.standard.set(dateIndex, forKey: "Date Index")
-        UserDefaults.standard.synchronize()
+        defaults.set(dateIndex, forKey: "Date Index")
+        defaults.synchronize()
         //Notifies the container that a change occured
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
 
@@ -87,8 +91,8 @@ class Graphs: UIViewController {
         switch deckSegment.selectedSegmentIndex {
         // Selected deck
         case 0:
-            if let _ = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Selected Deck Name") as String! {
-                deckName = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Selected Deck Name") as String!
+            if let defaultsName = groupDefaults?.string(forKey:"Selected Deck Name") {
+                deckName = defaultsName
             } else {
                 deckName = ""
             }
@@ -99,8 +103,8 @@ class Graphs: UIViewController {
             break
         }
         
-        UserDefaults.standard.set(deckName, forKey: "Deck Name")
-        UserDefaults.standard.synchronize()
+        defaults.set(deckName, forKey: "Deck Name")
+        defaults.synchronize()
         //Notifies the container that a change occured
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
         

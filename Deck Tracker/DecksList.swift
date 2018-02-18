@@ -16,7 +16,8 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     var indexOfSelectedDeck:Int = -1
     
     // Save to iCloud
-    var iCloudKeyStore: NSUbiquitousKeyValueStore = NSUbiquitousKeyValueStore()
+    let iCloudKeyStore = NSUbiquitousKeyValueStore()
+    let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,23 +70,23 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     
     // Saves the selected deck ID in UserDefaults
     func saveSelectedDeckID(_ deck : Deck) {
-        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
-        defaults.set(deck.deckID, forKey: "Selected Deck ID")
-        defaults.synchronize()
+        groupDefaults?.set(deck.deckID, forKey: "Selected Deck ID")
+        groupDefaults?.synchronize()
     }
     
     // Reads the selected deck ID from UserDefaults
     func readSelectedDeckID() -> Int {
-        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
-        let id:Int = defaults.integer(forKey:"Selected Deck ID")
-        return id
+        guard let groupDefaults = groupDefaults else {
+            return -1
+        }
+        
+        return groupDefaults.integer(forKey:"Selected Deck ID")
     }
     
     // Saves the selected deck name in UserDefaults and iCloud
     func saveSelectedDeckName(_ deck: Deck) {
-        let defaults: UserDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
-        defaults.set(deck.name, forKey: "Selected Deck Name")
-        defaults.synchronize()
+        groupDefaults?.set(deck.name, forKey: "Selected Deck Name")
+        groupDefaults?.synchronize()
         
         iCloudKeyStore.set(deck.name, forKey: "iCloud Selected Deck Name")
         iCloudKeyStore.synchronize()
@@ -93,20 +94,19 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     
     // Saves the selected deck class
     func saveSelectedDeckClass(_ deck: Deck) {
-        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
-        defaults.set(deck.heroClass.rawValue, forKey: "Selected Deck Class")
-        defaults.synchronize()
+        
+        groupDefaults?.set(deck.heroClass.rawValue, forKey: "Selected Deck Class")
+        groupDefaults?.synchronize()
     }
     
     // Returns the selected deck name
     func readSelectedDeckName() -> String {
-        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
         var name = ""
         
-        if let _ = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name") {
-            name = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name")!
-        } else if let _ = defaults.string(forKey:"Selected Deck Name") {
-            name = defaults.string(forKey:"Selected Deck Name")!
+        if let iCloudName = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name") {
+            name = iCloudName
+        } else if let defaultsName = groupDefaults?.string(forKey:"Selected Deck Name") {
+            name = defaultsName
         }
         
         return name

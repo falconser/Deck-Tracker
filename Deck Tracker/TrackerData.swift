@@ -25,7 +25,9 @@ public class TrackerData: NSObject {
     var coinArray:[Game] = []
     
     // Save to iCloud
-    var iCloudKeyStore: NSUbiquitousKeyValueStore = NSUbiquitousKeyValueStore()
+    let iCloudKeyStore: NSUbiquitousKeyValueStore = NSUbiquitousKeyValueStore()
+    let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
+    let defaults = UserDefaults.standard
     
     // We initialize the data structure
     override init() {
@@ -73,10 +75,8 @@ public class TrackerData: NSObject {
     // Saves the games array
     func saveGame() {
         let archivedObject = NSKeyedArchiver.archivedData(withRootObject: listOfGames as NSArray)
-        // Writing in UserDefaults
-        UserDefaults.standard.set(archivedObject, forKey: "List of games")
-        // Sync
-        UserDefaults.standard.synchronize()
+        defaults.set(archivedObject, forKey: "List of games")
+        defaults.synchronize()
         
         iCloudKeyStore.set(archivedObject, forKey: "iCloud list of games")
         iCloudKeyStore.synchronize()
@@ -86,7 +86,7 @@ public class TrackerData: NSObject {
     func readGameData() -> [Game]? {
         if let iCloudUnarchivedObject = iCloudKeyStore.object(forKey: "iCloud list of games") as? Data {
             return NSKeyedUnarchiver.unarchiveObject(with: iCloudUnarchivedObject) as? [Game]
-        } else if let unarchivedObject = UserDefaults.standard.object(forKey:"List of games") as? Data {
+        } else if let unarchivedObject = defaults.object(forKey:"List of games") as? Data {
             return NSKeyedUnarchiver.unarchiveObject(with: unarchivedObject) as? [Game]
         } else {
           return nil
@@ -122,10 +122,10 @@ public class TrackerData: NSObject {
     // Adds the decks list to UserDefaults
     func saveDeck () {
         let archivedObject = NSKeyedArchiver.archivedData(withRootObject: listOfDecks)
-        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
-        defaults.set(archivedObject, forKey: "List of decks")
-        defaults.set(deckListForPhone, forKey: "List of decks dictionary")
-        defaults.synchronize()
+        
+        groupDefaults?.set(archivedObject, forKey: "List of decks")
+        groupDefaults?.set(deckListForPhone, forKey: "List of decks dictionary")
+        groupDefaults?.synchronize()
         
         iCloudKeyStore.set(archivedObject, forKey: "iCloud list of decks")
         iCloudKeyStore.set(deckListForPhone, forKey: "iCloud List of decks dictionary")
@@ -134,11 +134,11 @@ public class TrackerData: NSObject {
     
     // Reads the deck data and returns a Deck object
     func readDeckData() -> [Deck]? {
-        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
+        
         if let iCloudUnarchivedObject = iCloudKeyStore.object(forKey: "iCloud list of decks") as? Data {
             print("iCloud decks loaded")
             return NSKeyedUnarchiver.unarchiveObject(with: iCloudUnarchivedObject) as? [Deck]
-        } else if let unarchivedObject = defaults.object(forKey: "List of decks") as? Data {
+        } else if let unarchivedObject = groupDefaults?.object(forKey: "List of decks") as? Data {
             return NSKeyedUnarchiver.unarchiveObject(with: unarchivedObject) as? [Deck]
         } else {
             return nil
@@ -190,10 +190,10 @@ public class TrackerData: NSObject {
         var gamesWon = 0
         var dateArray = getDateArray(date)
         var selectedDeckName = ""
-        if let _ = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name") {
-            selectedDeckName = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name")!
-        } else if let _ = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Selected Deck Name") {
-            selectedDeckName = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Selected Deck Name")!
+        if let iCloudName = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name") {
+            selectedDeckName = iCloudName
+        } else if let defaultsName = groupDefaults?.string(forKey:"Selected Deck Name") {
+            selectedDeckName = defaultsName
         }
 
         // If current deck is selected
@@ -272,10 +272,10 @@ public class TrackerData: NSObject {
         var filteredGamesBySelectedDeck:[Game] = []
         var filteredGamesByOpponent:[Game] = []
         
-        if let _ = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name") {
-            selectedDeckName = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name")!
-        } else if let _ = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Selected Deck Name") {
-            selectedDeckName = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.string(forKey:"Selected Deck Name")!
+        if let iCloudName = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name") {
+            selectedDeckName = iCloudName
+        } else if let defaultsName = groupDefaults?.string(forKey:"Selected Deck Name") {
+            selectedDeckName = defaultsName
         }
         
         // If current deck is selected

@@ -26,9 +26,10 @@ class AddDeck: UIViewController, UITextFieldDelegate, UINavigationBarDelegate {
     @IBOutlet var deckNameTxtField: UITextField!
     
     var deckClass:String = ""
-    var iCloudKeyStore: NSUbiquitousKeyValueStore = NSUbiquitousKeyValueStore()
     var deckID = 0
 
+    let iCloudKeyStore = NSUbiquitousKeyValueStore()
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,19 +112,17 @@ class AddDeck: UIViewController, UITextFieldDelegate, UINavigationBarDelegate {
     
     // Reads the saved Deck ID from iCloud or local storage
     func readDeckID() {
-        if let _ = iCloudKeyStore.object(forKey: "iCloud deck ID") {
-            deckID = iCloudKeyStore.object(forKey: "iCloud deck ID") as! Int
-        } else if let _ = UserDefaults.standard.integer(forKey:"Deck ID") as Int? {
-            deckID = UserDefaults.standard.integer(forKey:"Deck ID")
+        if let iCloudDeckId = iCloudKeyStore.object(forKey: "iCloud deck ID") as? Int {
+            deckID = iCloudDeckId
         } else {
-            deckID = 0
+            deckID = defaults.integer(forKey:"Deck ID")
         }
     }
     
     // Saves the Deck ID to iCloud and Local storage
     func setDeckID() {
-        UserDefaults.standard.set(deckID, forKey: "Deck ID")
-        UserDefaults.standard.synchronize()
+        defaults.set(deckID, forKey: "Deck ID")
+        defaults.synchronize()
         
         iCloudKeyStore.set(deckID, forKey: "iCloud deck ID")
         iCloudKeyStore.synchronize()

@@ -13,6 +13,7 @@ class EditOpponentClass: UITableViewController {
     @IBOutlet var opponentClasses: UITableView!
     var classes = ["Warrior", "Paladin", "Shaman", "Hunter", "Druid", "Rogue", "Mage", "Warlock", "Priest"]
     
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,15 +62,12 @@ class EditOpponentClass: UITableViewController {
     
     // Saves the edited opponent class in UserDefaults
     func saveEditedOpponentClass(_ opponentClass: String) {
-        let defaults: UserDefaults = UserDefaults.standard
         defaults.set(opponentClass, forKey: "Edited Opponent Class")
         defaults.synchronize()
     }
     
     // Reads the selected deck ID from UserDefaults
     func readEditedOpponentClass() -> String {
-        let defaults = UserDefaults.standard
-        let name:String = defaults.string(forKey:"Edited Opponent Class") as String!
-        return name
+        return defaults.string(forKey:"Edited Opponent Class") ?? ""
     }
 }

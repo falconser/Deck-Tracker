@@ -13,17 +13,8 @@ class EditDate: UIViewController {
     @IBOutlet var datePicker: UIDatePicker!
     static let sharedInstance = EditDate()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    let defaults = UserDefaults.standard
 
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     // Saves edited date
     @objc @IBAction func dateChanged(_ sender:UIDatePicker) {
         let newDate = datePicker.date
@@ -34,7 +25,6 @@ class EditDate: UIViewController {
     
     // Saves to UserDefaults
     func saveEditedDate(_ date:Date) {
-        let defaults: UserDefaults = UserDefaults.standard
         defaults.set(date, forKey: "Saved Edited Date")
         defaults.synchronize()
     }
@@ -42,14 +32,7 @@ class EditDate: UIViewController {
     // Reads the edited date
     @discardableResult
     func readDate() -> Date? {
-        let defaults = UserDefaults.standard
-        let date:Date! = defaults.object(forKey: "Saved Edited Date") as? Date
-        //println("Date retrieved")
-        if date != nil {
-          return date
-        } else {
-            return nil
-        }
+        return defaults.object(forKey: "Saved Edited Date") as? Date
     }
     
     // Returns the edited date to String

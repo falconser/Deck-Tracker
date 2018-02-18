@@ -24,6 +24,7 @@ class GraphsCollectionView: UICollectionViewController {
     var gamesLostArray:[Int] = []
     var gamesFilteredByOpponent:[[Game]] = []
     
+    let defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,17 +51,11 @@ class GraphsCollectionView: UICollectionViewController {
     }
     
     func getDateIndex() {
-        dateIndex = UserDefaults.standard.integer(forKey:"Date Index")
-        //print("Date Index is: " + String(dateIndex))
+        dateIndex = defaults.integer(forKey:"Date Index")
     }
     
     func getDeckName() {
-        if let _ =  UserDefaults.standard.string(forKey:"Deck Name") as String! {
-            deckName = UserDefaults.standard.string(forKey:"Deck Name") as String!
-        } else {
-            deckName = ""
-        }
-        //print("Deck Name is: " + deckName)
+        deckName = defaults.string(forKey:"Deck Name") ?? ""
     }
     
     func getStatistics() {
@@ -78,8 +73,8 @@ class GraphsCollectionView: UICollectionViewController {
         // Saves all games in an array filtered by: What the user selected in the buttons + each opponent
         //print(gamesFilteredByOpponent.count)
         //print(gamesFilteredByOpponent)
-        //UserDefaults.standard.set(gamesFilteredByOpponent, forKey: "Games Filtered By Opponent")
-        //UserDefaults.standard.synchronize()
+        //defaults.set(gamesFilteredByOpponent, forKey: "Games Filtered By Opponent")
+        //defaults.synchronize()
     }
     
     func getStatisticsVs(opponent:String) {
@@ -181,7 +176,7 @@ class GraphsCollectionView: UICollectionViewController {
         //Save the index of the selected graph
         let indexOfSelectedGraph = indexPath.row
         //print(indexOfSelectedGraph)
-        UserDefaults.standard.set(indexOfSelectedGraph, forKey: "Index Of Selected Graph")
+        defaults.set(indexOfSelectedGraph, forKey: "Index Of Selected Graph")
         return true
     }
 }

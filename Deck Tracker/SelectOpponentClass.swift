@@ -15,6 +15,7 @@ class SelectOpponentClass: UITableViewController {
 
     var classes = ["Warrior", "Paladin", "Shaman", "Hunter", "Druid", "Rogue", "Mage", "Warlock", "Priest"]
     
+    let defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +64,6 @@ class SelectOpponentClass: UITableViewController {
     
     // Saves the selected opponent class in UserDefaults
     func saveSelectedOpponentClass(_ opponentClass: String) {
-        let defaults: UserDefaults = UserDefaults.standard
         defaults.set(opponentClass, forKey: "Opponent Class")
         defaults.synchronize()
     }
@@ -71,8 +71,9 @@ class SelectOpponentClass: UITableViewController {
     // Reads the selected deck ID from UserDefaults
     @discardableResult
     func readSelectedOpponentClass() -> String {
-        let defaults = UserDefaults.standard
-        let name:String = defaults.string(forKey:"Opponent Class") as String!
-        return name
+        guard let result = defaults.string(forKey:"Opponent Class") else {
+            return ""
+        }
+        return result
     }
 }

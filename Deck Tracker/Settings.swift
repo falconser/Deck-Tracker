@@ -12,7 +12,9 @@ class Settings: UITableViewController {
 
     @IBOutlet weak var resetButton: UIButton!
     
-    var iCloudKeyStore: NSUbiquitousKeyValueStore = NSUbiquitousKeyValueStore()
+    let iCloudKeyStore = NSUbiquitousKeyValueStore()
+    let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,15 +40,15 @@ class Settings: UITableViewController {
             UIAlertAction in
             
             // Delete from UserDefaults
-            UserDefaults.standard.removeObject(forKey: "List of games")
-            UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.removeObject(forKey: "List of decks")
-            UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.removeObject(forKey: "Selected Deck Name")
-            UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.removeObject(forKey: "All Tags")
+            self.defaults.removeObject(forKey: "List of games")
+            self.groupDefaults?.removeObject(forKey: "List of decks")
+            self.groupDefaults?.removeObject(forKey: "Selected Deck Name")
+            self.groupDefaults?.removeObject(forKey: "All Tags")
             TrackerData.sharedInstance.listOfGames = []
             TrackerData.sharedInstance.listOfDecks = []
             
             // Sync
-            UserDefaults.standard.synchronize()
+            self.defaults.synchronize()
             
             // Remove from iCloud as well
             self.iCloudKeyStore.removeObject(forKey: "iCloud list of decks")
@@ -62,10 +64,10 @@ class Settings: UITableViewController {
             UIAlertAction in
             
             // Delete from UserDefaults
-            UserDefaults.standard.removeObject(forKey: "List of games")
+            self.defaults.removeObject(forKey: "List of games")
             TrackerData.sharedInstance.listOfGames = []
             // Sync
-            UserDefaults.standard.synchronize()
+            self.defaults.synchronize()
             
             // Remove from iCloud as well
             self.iCloudKeyStore.removeObject(forKey: "iCloud list of games")
@@ -79,13 +81,13 @@ class Settings: UITableViewController {
             UIAlertAction in
             
             // Delete from UserDefaults
-            UserDefaults.standard.removeObject(forKey: "List of games")
-            UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.removeObject(forKey: "List of decks")
-            UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!.removeObject(forKey: "Selected Deck Name")
+            self.defaults.removeObject(forKey: "List of games")
+            self.groupDefaults?.removeObject(forKey: "List of decks")
+            self.groupDefaults?.removeObject(forKey: "Selected Deck Name")
             TrackerData.sharedInstance.listOfGames = []
             TrackerData.sharedInstance.listOfDecks = []
             // Sync
-            UserDefaults.standard.synchronize()
+            self.defaults.synchronize()
             
             // Remove from iCloud as well
             self.iCloudKeyStore.removeObject(forKey: "iCloud list of decks")

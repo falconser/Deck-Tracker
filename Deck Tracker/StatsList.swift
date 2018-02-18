@@ -13,10 +13,11 @@ class StatsList: UIViewController, UINavigationBarDelegate, UITableViewDelegate,
     @IBOutlet var statsTable: UITableView!
     
     var gamesList:[Game] = []
-    var defaults: UserDefaults = UserDefaults.standard
     var selectedGameArray:[Game] = []
     static let sharedInstance = StatsList()
 
+    let defaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -75,16 +76,14 @@ class StatsList: UIViewController, UINavigationBarDelegate, UITableViewDelegate,
     // Saves in UserDefaults
     func saveSelectedGame() {
         let archivedObject = NSKeyedArchiver.archivedData(withRootObject: selectedGameArray as NSArray)
-        // Writing in UserDefaults
-        UserDefaults.standard.set(archivedObject, forKey: "Selected Game")
-        // Sync
-        UserDefaults.standard.synchronize()
+        defaults.set(archivedObject, forKey: "Selected Game")
+        defaults.synchronize()
     }
     
     // Reads the game data and returns a Game object
     @discardableResult
     func readSelectedGame() -> [Game]? {
-        if let unarchivedObject = UserDefaults.standard.object(forKey:"Selected Game") as? Data {
+        if let unarchivedObject = defaults.object(forKey:"Selected Game") as? Data {
             return NSKeyedUnarchiver.unarchiveObject(with: unarchivedObject) as? [Game]
         }
         return nil

@@ -17,6 +17,8 @@ class EditSelectedDeck: UIViewController, UITableViewDelegate, UITableViewDataSo
     var decksList:[Deck] = []
     var indexOfSelectedDeck:Int = -1
     
+    let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,7 +78,6 @@ class EditSelectedDeck: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     // Saves the selected deck ID in UserDefaults
     func saveEditedDeckID(_ deck : Deck) {
-        let defaults: UserDefaults = UserDefaults.standard
         defaults.set(deck.deckID, forKey: "Edited Deck ID")
         defaults.synchronize()
     }
@@ -84,30 +85,25 @@ class EditSelectedDeck: UIViewController, UITableViewDelegate, UITableViewDataSo
     // Reads the selected deck ID from UserDefaults
     @discardableResult
     func readEditedDeckID() -> Int {
-        let defaults = UserDefaults.standard
-        let id:Int = defaults.integer(forKey:"Edited Deck ID")
-        return id
+        return defaults.integer(forKey:"Edited Deck ID")
     }
     
     // Saves the selected deck name in UserDefaults
     func saveEditedDeckName(_ deck: Deck) {
-        let defaults: UserDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
-        defaults.set(deck.name, forKey: "Edited Deck Name")
-        defaults.synchronize()
+        groupDefaults?.set(deck.name, forKey: "Edited Deck Name")
+        groupDefaults?.synchronize()
     }
     
     // Saves the selected deck class
     func saveEditedDeckClass(_ deck: Deck) {
-        let defaults: UserDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
-        defaults.set(deck.heroClass.rawValue, forKey: "Edited Deck Class")
-        defaults.synchronize()
+        groupDefaults?.set(deck.heroClass.rawValue, forKey: "Edited Deck Class")
+        groupDefaults?.synchronize()
     }
     
     // Reads the edited deck name
     @discardableResult
     func readEditedDeckName() -> String {
-        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
-        return defaults.string(forKey:"Edited Deck Name") ?? ""
+        return groupDefaults?.string(forKey:"Edited Deck Name") ?? ""
     }
     
     // Deselects the row if you select another

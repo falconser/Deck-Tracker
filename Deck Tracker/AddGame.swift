@@ -29,8 +29,11 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     @IBOutlet var winCellSwitch: UISwitch!
     @IBOutlet weak var tagsLabel: UILabel!
 
-    var tag = ""
-    var iCloudKeyStore: NSUbiquitousKeyValueStore = NSUbiquitousKeyValueStore()
+    let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
+    let iCloudKeyStore: NSUbiquitousKeyValueStore = NSUbiquitousKeyValueStore()
+    let defaults = UserDefaults.standard
+    
+    var tag: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,12 +64,12 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     
     func readSelectedDeckName() -> String {
         // Reads the selected deck name from iCloud or UserDefaults
-        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
+        
         var name = ""
-        if let _ = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name") {
-            name = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name")!
-        } else if let _ = defaults.string(forKey:"Selected Deck Name") {
-            name = defaults.string(forKey:"Selected Deck Name")!
+        if let iCloudName = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name") {
+            name = iCloudName
+        } else if let defaultsName = groupDefaults?.string(forKey:"Selected Deck Name") {
+            name = defaultsName
         }
         
         return name
@@ -97,19 +100,10 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     
     func readSelectedOpponentClass() -> String {
         // Reads the selected opponent's class from UserDefaults
-        let defaults = UserDefaults.standard
-        if let name:String = defaults.string(forKey:"Opponent Class") as String! {
-            return name
-        } else {
-            return ""
-        }
+        
+        return defaults.string(forKey:"Opponent Class") ?? ""
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     // Have the nav bar show ok.
     // You need to crtl+drag the nav bar to the view controller in storyboard to create a delegate
     // Then add "UINavigationBarDelegate" to the class on top
@@ -121,7 +115,6 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     
     @objc @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
         // Remove the selected date and selected opponent class from UserDefaults and dismissed the screen
-        let defaults: UserDefaults = UserDefaults.standard
         defaults.removeObject(forKey: "Saved Date")
         defaults.removeObject(forKey: "Opponent Class")
         defaults.removeObject(forKey: "Selected Tag")
@@ -143,9 +136,6 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     
     @objc @IBAction func saveButtonPressed(_ sender:UIBarButtonItem) {
         // Removes the selected date, opponent class and selected tag from UserDefaults and sends all the info to the Game List
-        let defaults = UserDefaults.standard
-        let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
-        
         // Gets all the atributes for a new Game
         let newGameID = newGameGetID()
         let newGameDate = SelectDate().readDate()
@@ -238,13 +228,11 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     
     // Gets the ID for a new Game
     func newGameGetID () -> Int {
-        var matchesCount = UserDefaults.standard.integer(forKey:"Matches Count")
-        if let _ = iCloudKeyStore.object(forKey: "iCloud Matches Count") {
-            matchesCount = iCloudKeyStore.object(forKey: "iCloud Matches Count") as! Int
-        }
+        var matchesCount = (iCloudKeyStore.object(forKey: "iCloud Matches Count") as? Int) ?? defaults.integer(forKey:"Matches Count")
         matchesCount += 1
-        UserDefaults.standard.set(matchesCount, forKey: "Matches Count");
-        UserDefaults.standard.synchronize()
+        
+        defaults.set(matchesCount, forKey: "Matches Count");
+        defaults.synchronize()
         iCloudKeyStore.set(matchesCount, forKey: "iCloud Matches Count")
         iCloudKeyStore.synchronize()
         
@@ -253,14 +241,7 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     
     // Puts the tags on the Tags Label
     func putTagLabel() {
-        let defaults = UserDefaults.standard
-        if let _ = defaults.string(forKey:"Selected Tag") {
-            tag = defaults.string(forKey:"Selected Tag") as String!
-        }
-        if tag.isEmpty {
-            tagsLabel.text = "Add Tags"
-        } else {
-            tagsLabel.text = "Tags: " + tag
-        }
+        tag = defaults.string(forKey:"Selected Tag") ?? ""
+        tagsLabel.text = tag.isEmpty ? "Add Tags" : ("Tags: " + tag)
     }
 }

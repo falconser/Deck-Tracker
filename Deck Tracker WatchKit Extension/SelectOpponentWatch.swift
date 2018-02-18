@@ -22,73 +22,54 @@ class SelectOpponentWatch: WKInterfaceController {
     @IBOutlet var mageButton: WKInterfaceButton!
     @IBOutlet var priestButton: WKInterfaceButton!
     
-    override func awake(withContext context: Any?) {
-        super.awake(withContext: context)
-        // Configure interface objects here.
-    }
-
-    override func willActivate() {
-        // This method is called when watch view controller is about to be visible to user
-        super.willActivate()
-    }
-
-    override func didDeactivate() {
-        // This method is called when watch view controller is no longer visible
-        super.didDeactivate()
+    private func setClass(_ classString: String) {
+        UserDefaults.standard.set(classString, forKey: "Watch Opponent Class")
+        UserDefaults.standard.synchronize()
     }
     
     // Saves info for opponent class and returns to Main View
     @objc @IBAction func warriorButtonPressed() {
-        UserDefaults.standard.set("Warrior", forKey: "Watch Opponent Class")
-        UserDefaults.standard.synchronize()
+        setClass("Warrior")
         self.pop()
     }
     
     @objc @IBAction func paladinButtonPressed() {
-        UserDefaults.standard.set("Paladin", forKey: "Watch Opponent Class")
-        UserDefaults.standard.synchronize()
+        setClass("Paladin")
         self.pop()
     }
     
     @objc @IBAction func shamanButtonPressed() {
-        UserDefaults.standard.set("Shaman", forKey: "Watch Opponent Class")
-        UserDefaults.standard.synchronize()
+        setClass("Shaman")
         self.pop()
     }
     
     @objc @IBAction func hunterButtonPressed() {
-        UserDefaults.standard.set("Hunter", forKey: "Watch Opponent Class")
-        UserDefaults.standard.synchronize()
+        setClass("Hunter")
         self.pop()
     }
     
     @objc @IBAction func druidButtonPressed() {
-        UserDefaults.standard.set("Druid", forKey: "Watch Opponent Class")
-        UserDefaults.standard.synchronize()
+        setClass("Druid")
         self.pop()
     }
     
     @objc @IBAction func rogueButtonPressed() {
-        UserDefaults.standard.set("Rogue", forKey: "Watch Opponent Class")
-        UserDefaults.standard.synchronize()
+        setClass("Rogue")
         self.pop()
     }
     
     @objc @IBAction func warlockButtonPressed() {
-        UserDefaults.standard.set("Warlock", forKey: "Watch Opponent Class")
-        UserDefaults.standard.synchronize()
+        setClass("Warlock")
         self.pop()
     }
     
     @objc @IBAction func mageButtonPressed() {
-        UserDefaults.standard.set("Mage", forKey: "Watch Opponent Class")
-        UserDefaults.standard.synchronize()
+        setClass("Mage")
         self.pop()
     }
     
     @objc @IBAction func priestButtonPressed() {
-        UserDefaults.standard.set("Priest", forKey: "Watch Opponent Class")
-        UserDefaults.standard.synchronize()
+        setClass("Priest")
         self.pop()
     }
 }

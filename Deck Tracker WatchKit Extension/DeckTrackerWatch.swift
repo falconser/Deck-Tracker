@@ -20,6 +20,9 @@ class DeckTrackerWatch: WKInterfaceController {
     @IBOutlet var tagsButton: WKInterfaceButton!
     @IBOutlet var saveGameButton: WKInterfaceButton!
     
+    let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
+    let defaults = UserDefaults.standard
+    
     var coinSwitchInt:Int = 0
     var winSwitchInt:Int = 1
     var selectedDeckName: String = ""
@@ -51,18 +54,19 @@ class DeckTrackerWatch: WKInterfaceController {
     @objc @IBAction func saveButtonPressed() {
         
         // Gathers the data to make the dict to send the info to the phone
-        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
         let dict = NSMutableDictionary()
         // Gets selected deck and selected class associated with the deck
-        if let _ = defaults.string(forKey:"Selected Deck Name") {
-            selectedDeckName = defaults.string(forKey:"Selected Deck Name")!
-            selectedDeckClass = defaults.string(forKey:"Selected Deck Class")!
+        if let deckName = groupDefaults?.string(forKey:"Selected Deck Name"),
+            let deckClass = groupDefaults?.string(forKey:"Selected Deck Class")
+        {
+            selectedDeckName = deckName
+            selectedDeckClass = deckClass
             dict.setValue(selectedDeckName, forKey: "selectedDeckName")
             dict.setValue(selectedDeckClass, forKey: "selectedDeckClass")
         }
         
         // Gets the Opponent Class
-        let opponentClass = UserDefaults.standard.string(forKey:"Watch Opponent Class")
+        let opponentClass = defaults.string(forKey:"Watch Opponent Class")
         dict.setValue(opponentClass, forKey: "watchOpponentClass")
         
         // Gets if user had coin or not
@@ -84,18 +88,17 @@ class DeckTrackerWatch: WKInterfaceController {
         dict.setValue(win, forKey: "win")
         
         // Gets the selected tag
-        selectedTag = UserDefaults.standard.string(forKey:"Selected Tag Watch") ?? ""
+        selectedTag = defaults.string(forKey:"Selected Tag Watch") ?? ""
         
         dict.setValue(selectedTag, forKey: "watchSelectedTag")
         
         // Saves the dictionary and sends the info to the phone
         if opponentClass != nil {
-            if let _ = defaults.string(forKey:"Selected Deck Name") {
-                defaults.set(dict, forKey: "Add Game Watch")
-                defaults.synchronize()
-                
                 WKInterfaceController.openParentApplication(["Save New Game" : ""] , reply: { [](reply, error) -> Void in
                     })
+            if let _ = groupDefaults?.string(forKey:"Selected Deck Name") {
+                groupDefaults?.set(dict, forKey: "Add Game Watch")
+                groupDefaults?.synchronize()
             } else {
                 saveGameButton.setTitle("Select a deck!")
             }
@@ -106,28 +109,28 @@ class DeckTrackerWatch: WKInterfaceController {
         }
         
         // Remove saved settings
-        UserDefaults.standard.removeObject(forKey: "Watch Opponent Class")
-        UserDefaults.standard.removeObject(forKey: "Selected Tag Watch")
+        defaults.removeObject(forKey: "Watch Opponent Class")
+        defaults.removeObject(forKey: "Selected Tag Watch")
         setOpponentClassButtonBackgroundToBlack()
         willActivate()
     }
     
     func setSelectedDeckButton() {
         // Populates the selected deck button
-        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
-        if let _ = defaults.integer(forKey:"Selected Deck ID") as Int! {
-            if let selectedDeckName = defaults.string(forKey:"Selected Deck Name") as String! {
-                let selectedDeckClass = defaults.string(forKey:"Selected Deck Class")!
+        
+        if let _ = groupDefaults?.integer(forKey:"Selected Deck ID"),
+            let selectedDeckName = groupDefaults?.string(forKey:"Selected Deck Name"),
+            let selectedDeckClass = groupDefaults?.string(forKey:"Selected Deck Class")
+        {
                 selectDeckButton.setTitle(selectedDeckName)
                 colorCell(classToBeColored: selectedDeckClass, button: selectDeckButton, opponent: false, deckName: selectedDeckName)
-            }
         }
     }
     
     
     func setOpponentClassButton() {
         // Populates the opponent class button
-        if let opponentClass = UserDefaults.standard.string(forKey:"Watch Opponent Class") {
+        if let opponentClass = defaults.string(forKey:"Watch Opponent Class") {
             //selectOpponentButton.setTitle("Opponent: " + String(opponentClass))
             colorCell(classToBeColored: opponentClass, button: selectOpponentButton, opponent: true, deckName: "")
             saveGameButton.setTitle("Save Game")
@@ -280,8 +283,8 @@ class DeckTrackerWatch: WKInterfaceController {
     
     func setTagButton() {
         // Populates the tags button
-        if let _ = UserDefaults.standard.string(forKey:"Selected Tag Watch") {
-            selectedTag = UserDefaults.standard.string(forKey:"Selected Tag Watch") as String!
+        if let defaultsTag = UserDefaults.standard.string(forKey:"Selected Tag Watch") {
+            selectedTag = defaultsTag
             tagsButton.setTitle("Tag: " + selectedTag)
         } else {
             tagsButton.setTitle("Add Tag")

@@ -12,6 +12,7 @@ class SelectDate: UIViewController {
     
     @IBOutlet var datePicker: UIDatePicker!
     
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +43,6 @@ class SelectDate: UIViewController {
     
     // Saves the selected date in UserDefaults
     func saveDate(_ date: Date) {
-        let defaults: UserDefaults = UserDefaults.standard
         defaults.set(date, forKey: "Saved Date")
         defaults.synchronize()
     }
@@ -50,7 +50,6 @@ class SelectDate: UIViewController {
     // Reads the saved date
     @discardableResult
     func readDate() -> Date {
-        let defaults = UserDefaults.standard
         return defaults.object(forKey: "Saved Date") as? Date ?? Date()
     }
 }

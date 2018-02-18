@@ -16,8 +16,10 @@ class SelectTags: UITableViewController {
     var allTags:[String] = []
     var selectedTag:String = ""
     // Save to iCloud
-    var iCloudKeyStore: NSUbiquitousKeyValueStore = NSUbiquitousKeyValueStore()
-
+    let iCloudKeyStore: NSUbiquitousKeyValueStore = NSUbiquitousKeyValueStore()
+    let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
+    let defaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         readData()
@@ -61,7 +63,6 @@ class SelectTags: UITableViewController {
     
     func saveSelectedTag(_ selectedTag:String) {
         // Saves the selected tag as an array
-        let defaults: UserDefaults = UserDefaults.standard
         defaults.set(selectedTag, forKey: "Selected Tag")
         defaults.synchronize()
         
@@ -73,13 +74,11 @@ class SelectTags: UITableViewController {
     
     func readSelectedTag() -> String {
         
-        let defaults = UserDefaults.standard
-        
         // Reads from iCloud or local storage
-        if let _ = iCloudKeyStore.array(forKey: "iCloud selected tag") {
-            selectedTag = iCloudKeyStore.string(forKey:"iCloud selected tag") as String!
-        } else if let _ = defaults.array(forKey: "Selected Tag") {
-            selectedTag = defaults.string(forKey:"Selected Tag") as String!
+        if let iCloudTag = iCloudKeyStore.string(forKey: "iCloud selected tag") {
+            selectedTag = iCloudTag
+        } else if let defaultsTag = defaults.string(forKey: "Selected Tag") {
+            selectedTag = defaultsTag
         }
         return selectedTag
     }
@@ -141,9 +140,8 @@ class SelectTags: UITableViewController {
     }
     
     func saveAllTags() {
-        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
-        defaults.set(allTags, forKey: "All Tags")
-        defaults.synchronize()
+        groupDefaults?.set(allTags, forKey: "All Tags")
+        groupDefaults?.synchronize()
         
         // Save to iCloud
         iCloudKeyStore.set(allTags, forKey: "iCloud All Tags")
@@ -152,11 +150,10 @@ class SelectTags: UITableViewController {
     
     @discardableResult
     func readTags() -> [String]{
-        let defaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")!
-        if let _ = iCloudKeyStore.array(forKey: "iCloud All Tags") {
-            allTags = iCloudKeyStore.array(forKey: "iCloud All Tags") as! [String]
-        } else if let _ = defaults.array(forKey: "All Tags") {
-            allTags = defaults.array(forKey: "All Tags") as! [String]
+        if let iCloudTags = iCloudKeyStore.array(forKey: "iCloud All Tags") as? [String] {
+            allTags = iCloudTags
+        } else if let defaultsTags = groupDefaults?.array(forKey: "All Tags") as? [String] {
+            allTags = defaultsTags
         }
         return allTags
     }

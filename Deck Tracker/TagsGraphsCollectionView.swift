@@ -15,8 +15,7 @@ class TagsGraphsCollectionView: UICollectionViewController {
     // Date selected by the user and if it's the current deck or all decks
     var dateIndex = -1
     var deckName = ""
-    // Index of the selected graph, so we can get all relevant games from the whole list
-    var indexOfSelectedGraph = -1
+    
     let data = ["All", "Warrior", "Paladin", "Shaman", "Hunter", "Druid", "Rogue", "Mage", "Warlock", "Priest"]
     // Array of decks filtered by Date / Deck name / Opponent
     var filteredGames:[Game] = []
@@ -28,6 +27,7 @@ class TagsGraphsCollectionView: UICollectionViewController {
     var gamesLostArray:[Int] = []
     var filteredGamesAndTags:[Game] = []
     
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,23 +51,15 @@ class TagsGraphsCollectionView: UICollectionViewController {
     }
     
     func getDateIndex() {
-        dateIndex = UserDefaults.standard.integer(forKey:"Date Index")
-        //print("Date Index is: " + String(dateIndex))
+        dateIndex = defaults.integer(forKey:"Date Index")
     }
     
     func getDeckName() {
-        if let _ =  UserDefaults.standard.string(forKey:"Deck Name") as String! {
-            deckName = UserDefaults.standard.string(forKey:"Deck Name") as String!
-        } else {
-            deckName = ""
-        }
-        //print("Deck Name is: " + deckName)
+        deckName = defaults.string(forKey:"Deck Name") ?? ""
     }
     
     func getGraphsClicked() {
-        if let _ = UserDefaults.standard.integer(forKey:"Index Of Selected Graph") as Int! {
-            indexOfSelectedGraph = UserDefaults.standard.integer(forKey:"Index Of Selected Graph")
-        }
+        let indexOfSelectedGraph = defaults.integer(forKey:"Index Of Selected Graph")
         
         let opponentSelected = data[indexOfSelectedGraph]
         
