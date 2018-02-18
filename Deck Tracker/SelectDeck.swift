@@ -44,7 +44,11 @@ class SelectDeck: UITableViewController {
     
     // Selects the row and saves the info so we can add a checkmark
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        TrackerData.sharedInstance.activeDeck = decksList[indexPath.row]
+        selectedDeck = decksList[indexPath.row]
+        TrackerData.sharedInstance.activeDeck = selectedDeck
+        
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.accessoryType = .checkmark
         navigationController?.popToRootViewController(animated: true)
     }
     
@@ -55,8 +59,8 @@ class SelectDeck: UITableViewController {
     }
     
     // Refreshes the view after adding a deck
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         readData()
         decksTable.reloadData()
     }

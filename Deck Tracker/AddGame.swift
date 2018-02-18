@@ -158,5 +158,13 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
                 self?.game.tag = tag
             }
         }
+        else if let decksListViewController = segue.destination as? DecksList  {
+            decksListViewController.selectedDeck = game.playerDeck
+            decksListViewController.didChangeDeck = { [weak self] (deck: Deck?) in
+                if let deck = deck {
+                    self?.game.playerDeck = deck
+                }
+            }
+        }
     }
 }

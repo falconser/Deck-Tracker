@@ -13,7 +13,14 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     @IBOutlet var decksTable: UITableView!
     
     var decksList:[Deck] = []
-    var selectedDeck: Deck?
+    var didChangeDeck: ((Deck?) -> Void)?
+    var selectedDeck: Deck? = TrackerData.sharedInstance.activeDeck {
+        didSet {
+            if let didChangeDeck = didChangeDeck {
+                didChangeDeck(selectedDeck)
+            }
+        }
+    }
     
     // Save to iCloud
     let iCloudKeyStore = NSUbiquitousKeyValueStore()
