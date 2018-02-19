@@ -18,16 +18,24 @@ class GamesCell: UITableViewCell {
     
     
     
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    @IBOutlet var game: Game? {
+        didSet {
+            playerImage.image = game?.playerDeck.heroClass.smallIcon()
+            opponentImage.image = game?.opponentClass.smallIcon()
+            dateLabel.text = game != nil ? string(from: game!.date) : ""
+            winLabel.text = game != nil ? (game!.win ? "WON" : "LOSS") : ""
+        }
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        game = nil
     }
-
+    
+    private func string(from date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        return formatter.string(from: date)
+    }
+    
 }

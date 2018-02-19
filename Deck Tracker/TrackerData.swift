@@ -87,7 +87,7 @@ public class TrackerData: NSObject {
         }
         
         let selectedId = groupDefaults.integer(forKey:"Selected Deck ID")
-        return listOfDecks.first { $0.deckID == selectedId }
+        return listOfDecks.first { $0.deckID == selectedId } ?? listOfDecks.first
     }
     
     // Adds a game object to the array and save the array in UserDefaults
@@ -192,7 +192,7 @@ public class TrackerData: NSObject {
     }
     
     // Replaces a game from the array
-    func editGame (_ id:Int, oldGame:Game, newGame:Game) {
+    func editGame (_ id:Int, newGame:Game) {
         for i in 0 ..< listOfGames.count {
             if listOfGames[i].id == id {
                 listOfGames.remove(at: i)

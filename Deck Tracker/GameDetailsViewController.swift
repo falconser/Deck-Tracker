@@ -10,36 +10,61 @@ import UIKit
 import Fabric
 import Crashlytics
 
-class AddGame: UITableViewController, UINavigationBarDelegate  {
+class GameDetailsViewController: UITableViewController, UINavigationBarDelegate  {
     
     @IBOutlet var addGameList: UITableView!
     @IBOutlet var saveButton: UIBarButtonItem!
     @IBOutlet var cancelButton: UIBarButtonItem!
     @IBOutlet var dateCell: UITableViewCell!
-    @IBOutlet var dateCellLabel: UILabel!
+    @IBOutlet var dateCellLabel: UILabel?
     @IBOutlet var playerDeckCell: UITableViewCell!
-    @IBOutlet var playerDeckLabel: UILabel!
+    @IBOutlet var playerDeckLabel: UILabel?
     @IBOutlet var opponentDeckCell: UITableViewCell!
-    @IBOutlet var opponentDeckLabel: UILabel!
+    @IBOutlet var opponentDeckLabel: UILabel?
     @IBOutlet var coinCell: UITableViewCell!
     @IBOutlet var coinCellLabel: UILabel!
-    @IBOutlet var coinCellSwitch: UISwitch!
+    @IBOutlet var coinCellSwitch: UISwitch! {
+        didSet {
+            if let coinSwitch = coinCellSwitch {
+                coinSwitch.addTarget(self, action: #selector(GameDetailsViewController.didChangeCoinValue(sender:)), for: .valueChanged)
+            }
+        }
+    }
     @IBOutlet var winCell: UITableViewCell!
     @IBOutlet var winCellLabel: UILabel!
-    @IBOutlet var winCellSwitch: UISwitch!
-    @IBOutlet weak var tagsLabel: UILabel!
+    @IBOutlet var winCellSwitch: UISwitch! {
+        didSet {
+            if let winSwitch = winCellSwitch {
+                winSwitch.addTarget(self, action: #selector(GameDetailsViewController.didChangeWinValue(sender:)), for: .valueChanged)
+            }
+        }
+    }
+    @IBOutlet weak var tagsLabel: UILabel?
 
     let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
     let iCloudKeyStore = NSUbiquitousKeyValueStore()
     
-    var game = Game()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        winCellSwitch.addTarget(self, action: #selector(AddGame.didChangeWinValue(sender:)), for: .valueChanged)
-        coinCellSwitch.addTarget(self, action: #selector(AddGame.didChangeCoinValue(sender:)), for: .valueChanged)
+    var game: Game
+    var isNewGame: Bool = true
+    init(with game: Game? = nil) {
+        self.game = game ?? Game()
+        self.isNewGame = game != nil
+        super.init(style: .plain)
     }
-    
+
+    required init?(coder aDecoder: NSCoder) {
+        game = Game()
+        super.init(coder: aDecoder)
+    }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        putSelectedDateOnLabel()
+        putSelectedDeckNameOnLabel()
+        putSelectedOpponentClassOnLabel()
+        putTagLabel()
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Populates the rows with data
@@ -51,31 +76,31 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     
     // Puts the selected date on the date label
     func putSelectedDateOnLabel() {
-        dateCellLabel.text = "Date: " + string(from: game.date)
+        dateCellLabel?.text = "Date: " + string(from: game.date)
     }
 
     // Puts the tags on the Tags Label
     func putTagLabel() {
-        tagsLabel.text = game.tag.isEmpty ? "Add Tags" : ("Tags: " + game.tag)
+        tagsLabel?.text = game.tag.isEmpty ? "Add Tags" : ("Tags: " + game.tag)
     }
     
     // Gets the selected deck from UserDefaults and puts it on the label
     func putSelectedDeckNameOnLabel() {
         let selectedDeck = game.playerDeck.name
         if selectedDeck == "" {
-            playerDeckLabel.text = "You need to select a deck first"
+            playerDeckLabel?.text = "You need to select a deck first"
         } else {
-            playerDeckLabel.text = "Your deck: " + selectedDeck
+            playerDeckLabel?.text = "Your deck: " + selectedDeck
         }
     }
     
     // Puts opponent's class in UserDefaults
     func putSelectedOpponentClassOnLabel() {
         if case .Unknown = game.opponentClass {
-            opponentDeckLabel.text = "Select Opponent's Class"
+            opponentDeckLabel?.text = "Select Opponent's Class"
         }
         else {
-            opponentDeckLabel.text = "Opponent's class: " + game.opponentClass.rawValue
+            opponentDeckLabel?.text = "Opponent's class: " + game.opponentClass.rawValue
         }
     }
     
@@ -86,10 +111,6 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
     // And move the nav bar 20 points down
     func positionForBar(bar: UIBarPositioning) -> UIBarPosition  {
         return .topAttached
-    }
-    
-    @objc @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
-        self.dismiss(animated:true, completion: {})
     }
     
     func string(from date: Date) -> String {
@@ -116,19 +137,24 @@ class AddGame: UITableViewController, UINavigationBarDelegate  {
         }
         
         // Add to Data class file
-        TrackerData.sharedInstance.addGame(game)
-        self.dismiss(animated:true)
-        
-        // Crashlytics custom events
-        Answers.logCustomEvent(withName: "New game added",
+        if isNewGame {
+            TrackerData.sharedInstance.addGame(game)
+        }
+        else {
+            TrackerData.sharedInstance.editGame(game.id, newGame: game)
+        }
+    
+        Answers.logCustomEvent(withName: isNewGame ? "New game added" : "Game Edited",
                                customAttributes: [
                                 "Deck Name": game.playerDeck.name,
                                 "Deck Class": game.playerDeck.heroClass.rawValue,
                                 "Opponent Class": game.opponentClass.rawValue,
                                 "Win": game.win ? "Win" : "Loss",
                                 "Tag": game.tag.isEmpty ? "No tag" : game.tag,
-                                "Added from": UIDevice.current.model
-            ])
+                                "Added from": UIDevice.current.model])
+        
+
+        self.performSegue(withIdentifier: "unwind.statList", sender: self)
     }
     
     @objc func didChangeWinValue(sender: UISwitch) {

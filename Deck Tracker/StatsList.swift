@@ -13,7 +13,6 @@ class StatsList: UIViewController, UINavigationBarDelegate, UITableViewDelegate,
     @IBOutlet var statsTable: UITableView!
     
     var gamesList:[Game] = []
-    var selectedGameArray:[Game] = []
     static let sharedInstance = StatsList()
 
     let defaults = UserDefaults.standard
@@ -46,90 +45,35 @@ class StatsList: UIViewController, UINavigationBarDelegate, UITableViewDelegate,
         return gamesList.count
     }
     
-    private func stringFromDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        return formatter.string(from: date)
-    }
-    
     // Populates the table with data
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:GamesCell = tableView.dequeueReusableCell(withIdentifier:"Cell") as! GamesCell
         let game = gamesList[indexPath.row]
-        cell.dateLabel.text = stringFromDate(game.date)
-        cell.playerImage.image = game.playerDeck.heroClass.smallIcon()
-        cell.opponentImage.image = game.opponentClass.smallIcon()
-        cell.winLabel.text = game.win ? "WON" : "LOSS"
+        let identifier = "Cell"
+        let cell =
+            tableView.dequeueReusableCell(withIdentifier:identifier)
+            ?? GamesCell(style: .default, reuseIdentifier: identifier)
+        
+        if let gameCell = cell as? GamesCell {
+            gameCell.game = game
+        }
+        
         return cell
     }
     
-    // Saves the selected Game so it can display it's info in the next screen
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedGame = gamesList[indexPath.row]
-        selectedGameArray.append(selectedGame)
-        saveSelectedGame()
-        readSelectedGame()
-        // Remove the selected game from Array so everytime there is only one Game in array
-        selectedGameArray.removeAll(keepingCapacity: true)
-    }
-    
-    // Saves in UserDefaults
-    func saveSelectedGame() {
-        let archivedObject = NSKeyedArchiver.archivedData(withRootObject: selectedGameArray as NSArray)
-        defaults.set(archivedObject, forKey: "Selected Game")
-        defaults.synchronize()
-    }
-    
-    // Reads the game data and returns a Game object
-    @discardableResult
-    func readSelectedGame() -> [Game]? {
-        if let unarchivedObject = defaults.object(forKey:"Selected Game") as? Data {
-            return NSKeyedUnarchiver.unarchiveObject(with: unarchivedObject) as? [Game]
-        }
-        return nil
-    }
-    
-    // Returns the image depeding on the deck class
-    func getImage (_ str:String) -> String {
-        
-        if str == "Warrior" {
-            return "WarriorSmall"
-        } else if str == "Paladin" {
-            return "PaladinSmall"
-        } else if str == "Shaman" {
-            return "ShamanSmall"
-        } else if str == "Druid" {
-            return "DruidSmall"
-        } else if str == "Rogue" {
-            return "RogueSmall"
-        } else if str == "Mage" {
-            return "MageSmall"
-        } else if str == "Warlock" {
-            return "WarlockSmall"
-        } else if str == "Priest" {
-            return "PriestSmall"
-        } else if str == "Hunter" {
-            return "HunterSmall"
-        } else {
-            return ""
-        }
     }
     
     // Reads the games array
     func readData() {
-        if TrackerData.sharedInstance.readGameData() == nil {
-            gamesList = []
-        } else {
-            gamesList = TrackerData.sharedInstance.listOfGames
-        }
+        gamesList = TrackerData.sharedInstance.listOfGames
     }
     
     // Refreshes the view after adding a deck
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         refreshData()
     }
-
+    
     @objc func refreshData() {
         readData()
         statsTable.reloadData()
@@ -142,6 +86,24 @@ class StatsList: UIViewController, UINavigationBarDelegate, UITableViewDelegate,
             TrackerData.sharedInstance.deleteGame(index)
             readData()
             self.statsTable.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+    
+    
+    @IBAction func unwindToStatList(unwindSegue: UIStoryboardSegue) {
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "game.edit",
+            let addGameVC = segue.destination as? GameDetailsViewController
+        {
+            if let selectedIndex = statsTable.indexPathForSelectedRow {
+                addGameVC.navigationItem.title = "Game Details"
+                addGameVC.game = gamesList[selectedIndex.row]
+                addGameVC.isNewGame = false
+                statsTable.deselectRow(at: selectedIndex, animated: false)
+            }
         }
     }
 
