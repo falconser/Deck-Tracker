@@ -47,13 +47,13 @@ class GameDetailsViewController: UITableViewController, UINavigationBarDelegate 
     var game: Game
     var isNewGame: Bool = true
     init(with game: Game? = nil) {
-        self.game = game ?? Game()
+        self.game = game ?? Game(with: TrackerData.sharedInstance.activeDeck!)
         self.isNewGame = game != nil
         super.init(style: .plain)
     }
 
     required init?(coder aDecoder: NSCoder) {
-        game = Game()
+        game = Game(with: TrackerData.sharedInstance.activeDeck!)
         super.init(coder: aDecoder)
     }
 

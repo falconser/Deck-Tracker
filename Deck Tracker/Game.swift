@@ -19,8 +19,9 @@ class Game : NSObject, NSCoding {
     var date:Date = Date()
     var tag:String = ""
 
-    override init () {
-        playerDeck = TrackerData.sharedInstance.activeDeck!
+    init(with deck: Deck) {
+        playerDeck = deck
+        super.init()
     }
     
     // Initialize an Game object with the following arguments
