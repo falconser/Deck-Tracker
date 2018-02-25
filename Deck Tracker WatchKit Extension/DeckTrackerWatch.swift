@@ -7,6 +7,7 @@
 //
 
 import WatchKit
+import WatchConnectivity
 import Foundation
 
 
@@ -23,19 +24,22 @@ class DeckTrackerWatch: WKInterfaceController {
     let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
     let defaults = UserDefaults.standard
     
+    let connectivityManager = WatchConnectivityManager()
+    
     var coin = false
     var win = true
     var selectedDeckName = ""
     var selectedDeckClass = ""
     var selectedTag = ""
 
-
-    override func awake(withContext context: Any?) {
-        super.awake(withContext: context)
-        // Configure interface objects here.
+    
+    override init() {
+        super.init()
+        connectivityManager.delegate = self
     }
-
+    
     override func willActivate() {
+        connectivityManager.activate()
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
         // Populates the "Selected Deck", "Opponent Class" and "Tags" buttons
@@ -171,5 +175,30 @@ class DeckTrackerWatch: WKInterfaceController {
             tagsButton.setTitle("Add Tag")
         }
     }
+}
+extension DeckTrackerWatch: WatchConnectivityManagerDelegate {
+    func connectivityManager(_ manager: WatchConnectivityManager, didUpdateApplicationContext context: [String : Any]) {
+        
+        guard let activeDeckData = context["activeDeck"] as? Data else {
+            return
+        }
+        let decoder = NSKeyedUnarchiver(forReadingWith: activeDeckData)
+        decoder.delegate = self
+        
+        if let activeDeck = decoder.decodeObject(forKey: "root") as? Deck {
+            let deckName = activeDeck.name
+            selectDeckButton.setTitle(deckName)
+            colorCell(classToBeColored: activeDeck.heroClass.rawValue, button: selectDeckButton, opponent: false, deckName: deckName)
+        }
 
+    }
+}
+
+extension DeckTrackerWatch: NSKeyedUnarchiverDelegate {
+    public func unarchiver(_ unarchiver: NSKeyedUnarchiver, cannotDecodeObjectOfClassName name: String, originalClasses classNames: [String]) -> Swift.AnyClass? {
+        if name == "Deck_Tracker.Deck" {
+            return Deck.self
+        }
+        return nil
+    }
 }

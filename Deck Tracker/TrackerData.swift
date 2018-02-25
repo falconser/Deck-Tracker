@@ -14,6 +14,7 @@ public class TrackerData: NSObject {
     
     // This is to user Data functions easier in other classes
     static let sharedInstance = TrackerData()
+    let connectivityManager = WatchConnectivityManager()
     
     // We create two arrays that will hold our objects
     var listOfGames:[Game] = []
@@ -52,6 +53,8 @@ public class TrackerData: NSObject {
     // We initialize the data structure
     override init() {
         super.init()
+        connectivityManager.delegate = self
+        connectivityManager.activate()
         
         NotificationCenter.default.addObserver(self, selector: #selector(TrackerData.keyValueStoreDidChange(notification:)), name: NSUbiquitousKeyValueStore.didChangeExternallyNotification, object: iCloudKeyStore)
         iCloudKeyStore.synchronize()
@@ -72,6 +75,7 @@ public class TrackerData: NSObject {
         }
         
         activeDeck = readActiveDeck()
+        updateWatchAppContext()
     }
     
     @objc func keyValueStoreDidChange(notification: NSNotification) {
@@ -324,5 +328,29 @@ public class TrackerData: NSObject {
             }
         }
         return filteredGamesByOpponent
+    }
+}
+extension TrackerData: WatchConnectivityManagerDelegate {
+    func connectivityManager(_ manager: WatchConnectivityManager, didUpdateApplicationContext: [String : Any]) {
+        
+    }
+    
+    func connectivityManager(_ manager: WatchConnectivityManager, didReceiveGame game: Game) {
+        addGame(game)
+    }
+    
+    func connectivityManagerDidActivate(_ manager: WatchConnectivityManager) {
+        updateWatchAppContext()
+    }
+    
+    func updateWatchAppContext() {
+        var context = [String:Any]()
+        
+        context["decksList"] = NSKeyedArchiver.archivedData(withRootObject: listOfDecks)
+        if let activeDeck = activeDeck {
+            context["activeDeck"] = NSKeyedArchiver.archivedData(withRootObject: activeDeck)
+        }
+        
+        connectivityManager.updateApplicationContext(context)
     }
 }
