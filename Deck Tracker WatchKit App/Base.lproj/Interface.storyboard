@@ -26,12 +26,12 @@
                         </button>
                         <switch width="1" alignment="left" title="Coin" id="VJz-zJ-NLf">
                             <connections>
-                                <action selector="coinSwitchToggled:" destination="AgC-eL-Hgc" id="b5S-Xs-xdJ"/>
+                                <action selector="coinSwitchToggledWithValue:" destination="AgC-eL-Hgc" id="Xzj-C2-1Zt"/>
                             </connections>
                         </switch>
                         <switch width="1" alignment="left" value="YES" title="Win" id="cvZ-B2-9oe">
                             <connections>
-                                <action selector="winSwitchToggled:" destination="AgC-eL-Hgc" id="xob-9B-3sa"/>
+                                <action selector="winSwitchToggledWithValue:" destination="AgC-eL-Hgc" id="Jk6-ya-n9T"/>
                             </connections>
                         </switch>
                         <button width="1" alignment="left" title="Add Tags" id="dss-WK-fqe">
