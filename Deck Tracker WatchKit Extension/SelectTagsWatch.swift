@@ -16,22 +16,28 @@ class SelectTagsWatch: WKInterfaceController {
     @IBOutlet weak var noTagsLabel: WKInterfaceLabel!
     var tagsList:[String] = []
     var selectedTag:String = ""
-    var wasAlreadySelected = false
     
     let defaults = UserDefaults.standard
     let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
     
+    var didSelectBlock: ((String) -> ())?
+    
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
+        
+        if let dict = context as? [String:Any],
+            let didSelectBlock = dict["didSelectBlock"] as? ((String) -> ())
+        {
+            self.didSelectBlock = didSelectBlock
+        }
+    }
+
+    override func willActivate() {
+        super.willActivate()
         
         noTagsLabel.setHidden(true)
         loadData()
         reloadTable()
-    }
-
-    override func willActivate() {
-        // This method is called when watch view controller is about to be visible to user
-        super.willActivate()
     }
 
     override func didDeactivate() {
@@ -56,56 +62,49 @@ class SelectTagsWatch: WKInterfaceController {
     func reloadTable() {
         // Populates the table
         tagsTable.setNumberOfRows(tagsList.count, withRowType: "TagRow")
-        if tagsList.count == 0 {
+        guard tagsList.count > 0  else {
             noTagsLabel.setHidden(false)
-        } else {
-            // Sets the labels text
-            for i in 0 ..< tagsList.count {
-                if let row = tagsTable.rowController(at:i) as? TagsRow {
-                    row.tagLabel.setText(tagsList[i])
-                }
-                // Set background color to the selected tag
-                if tagsList[i] == selectedTag {
-                    if let row = tagsTable.rowController(at:i) as? TagsRow {
-                        row.groupTable.setBackgroundColor(UIColor.green)
-                        row.tagLabel.setTextColor(UIColor.black)
-                    }
-                }
+            return
+        }
+    
+        tagsList.enumerated().forEach{ (i, tag) in
+            guard let row = tagsTable.rowController(at:i) as? TagsRow else {
+                return
+            }
+            
+            row.tagLabel.setText(tag)
+            if tag == selectedTag {
+                row.groupTable.setBackgroundColor(UIColor.green)
+                row.tagLabel.setTextColor(UIColor.black)
             }
         }
     }
     
     
     override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
-        // Saves the selected tag and colors the row
-        let row = table.rowController(at:rowIndex) as? TagsRow
-        
-        wasAlreadySelected = false
-        
+        let tag = tagsList[rowIndex]
         // Check to see if the button user pressed was selected already or not
-        if selectedTag == tagsList[rowIndex] {
-            wasAlreadySelected = true
-        }
+        let wasAlreadySelected = selectedTag == tag
         
-        selectedTag = tagsList[rowIndex]
+        selectedTag = tag
         
-        if wasAlreadySelected == true {
-            // If it was already selected then remove the tag from array and color the row
-            row!.groupTable.setBackgroundColor(UIColor.black)
-            row?.tagLabel.setTextColor(UIColor.white)
-        } else {
-            // If it was not already selected then add it to array and color the row
-            row!.groupTable.setBackgroundColor(UIColor.green)
-            row?.tagLabel.setTextColor(UIColor.black)
+        if let row = table.rowController(at:rowIndex) as? TagsRow {
+            if wasAlreadySelected == true {
+                // If it was already selected then remove the tag from array and color the row
+                row.groupTable.setBackgroundColor(UIColor.black)
+                row.tagLabel.setTextColor(UIColor.white)
+            } else {
+                // If it was not already selected then add it to array and color the row
+                row.groupTable.setBackgroundColor(UIColor.green)
+                row.tagLabel.setTextColor(UIColor.black)
+            }
         }
         print("Selected Tag: " + selectedTag)
 
-        //println(wasAlreadySelected)
-        
         // Save selected tag array
-        
-        defaults.set(selectedTag, forKey: "Selected Tag Watch")
-        defaults.synchronize()
+        if let didSelectBlock = didSelectBlock {
+            didSelectBlock(selectedTag)
+        }
         self.pop()
     }
 

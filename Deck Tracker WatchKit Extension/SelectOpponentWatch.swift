@@ -22,54 +22,64 @@ class SelectOpponentWatch: WKInterfaceController {
     @IBOutlet var mageButton: WKInterfaceButton!
     @IBOutlet var priestButton: WKInterfaceButton!
     
-    private func setClass(_ classString: String) {
-        UserDefaults.standard.set(classString, forKey: "Watch Opponent Class")
-        UserDefaults.standard.synchronize()
+    var didSelectBlock: ((Class) -> ())?
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
+        guard let dict = context as? [String:Any] else { return }
+        if let didSelectBlock = dict["didSelectBlock"] as? ((Class) -> ()) {
+            self.didSelectBlock = didSelectBlock
+        }
+    }
+    
+    private func setClass(_ heroClass: Class) {
+        if let didSelectBlock = didSelectBlock {
+            didSelectBlock(heroClass)
+        }
     }
     
     // Saves info for opponent class and returns to Main View
     @objc @IBAction func warriorButtonPressed() {
-        setClass("Warrior")
+        setClass(.Warrior)
         self.pop()
     }
     
     @objc @IBAction func paladinButtonPressed() {
-        setClass("Paladin")
+        setClass(.Paladin)
         self.pop()
     }
     
     @objc @IBAction func shamanButtonPressed() {
-        setClass("Shaman")
+        setClass(.Shaman)
         self.pop()
     }
     
     @objc @IBAction func hunterButtonPressed() {
-        setClass("Hunter")
+        setClass(.Hunter)
         self.pop()
     }
     
     @objc @IBAction func druidButtonPressed() {
-        setClass("Druid")
+        setClass(.Druid)
         self.pop()
     }
     
     @objc @IBAction func rogueButtonPressed() {
-        setClass("Rogue")
+        setClass(.Rogue)
         self.pop()
     }
     
     @objc @IBAction func warlockButtonPressed() {
-        setClass("Warlock")
+        setClass(.Warlock)
         self.pop()
     }
     
     @objc @IBAction func mageButtonPressed() {
-        setClass("Mage")
+        setClass(.Mage)
         self.pop()
     }
     
     @objc @IBAction func priestButtonPressed() {
-        setClass("Priest")
+        setClass(.Priest)
         self.pop()
     }
 }

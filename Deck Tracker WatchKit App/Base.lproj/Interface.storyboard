@@ -1,8 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="13771" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+    <device id="watch38" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="7701"/>
+        <deployment identifier="watchOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="13756"/>
     </dependencies>
     <scenes>
         <!--Deck Tracker-->
@@ -12,12 +16,12 @@
                     <items>
                         <button width="1" alignment="left" title="Select Deck" id="OeP-ur-hho">
                             <connections>
-                                <segue destination="P0m-eW-eqT" kind="push" id="LRo-v3-yZW"/>
+                                <segue destination="P0m-eW-eqT" kind="push" identifier="selectDeck" id="LRo-v3-yZW"/>
                             </connections>
                         </button>
                         <button width="1" alignment="left" title="Select Opponent" id="2U8-dk-e3Q">
                             <connections>
-                                <segue destination="4oD-Qa-rEF" kind="push" id="TM5-jZ-1Li"/>
+                                <segue destination="4oD-Qa-rEF" kind="push" identifier="selectOpponent" id="TM5-jZ-1Li"/>
                             </connections>
                         </button>
                         <switch width="1" alignment="left" title="Coin" id="VJz-zJ-NLf">
@@ -32,7 +36,7 @@
                         </switch>
                         <button width="1" alignment="left" title="Add Tags" id="dss-WK-fqe">
                             <connections>
-                                <segue destination="Ysh-R1-kNH" kind="push" id="5q1-Nt-1kX"/>
+                                <segue destination="Ysh-R1-kNH" kind="push" identifier="selectTags" id="5q1-Nt-1kX"/>
                             </connections>
                         </button>
                         <button width="1" alignment="center" title="Save Game" id="jsT-xT-AhW">
@@ -89,64 +93,64 @@
                 <controller title="Opponent" id="4oD-Qa-rEF" customClass="SelectOpponentWatch" customModule="Deck_Tracker_WatchKit_Extension">
                     <items>
                         <button width="1" alignment="left" title="Warrior" id="BaD-7m-2dq">
-                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <color key="backgroundColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="warriorButtonPressed" destination="4oD-Qa-rEF" id="MNd-V9-da2"/>
                             </connections>
                         </button>
                         <button width="1" alignment="left" title="Paladin" id="NvQ-mU-O8y">
-                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="paladinButtonPressed" destination="4oD-Qa-rEF" id="ffs-Jj-nAu"/>
                             </connections>
                         </button>
                         <button width="1" alignment="left" title="Shaman" id="IhB-gY-Di1">
-                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="shamanButtonPressed" destination="4oD-Qa-rEF" id="BNp-0i-X7g"/>
                             </connections>
                         </button>
                         <button width="1" alignment="left" title="Hunter" id="xES-6B-LTx">
-                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <color key="backgroundColor" red="0.20000000000000001" green="0.59999999999999998" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="0.20000000000000001" green="0.59999999999999998" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="hunterButtonPressed" destination="4oD-Qa-rEF" id="vbO-FZ-AbU"/>
                             </connections>
                         </button>
                         <button width="1" alignment="left" title="Druid" id="LYj-fN-5Pa">
-                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <color key="backgroundColor" red="0.59999999999999998" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="0.59999999999999998" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="druidButtonPressed" destination="4oD-Qa-rEF" id="dKW-Xw-2uF"/>
                             </connections>
                         </button>
                         <button width="1" alignment="left" title="Rogue" id="CWa-bj-KRu">
-                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="0.3333333432674408" green="0.3333333432674408" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="rogueButtonPressed" destination="4oD-Qa-rEF" id="Vfu-HQ-7i7"/>
                             </connections>
                         </button>
                         <button width="1" alignment="left" title="Warlock" id="0It-sW-xtO">
-                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <color key="backgroundColor" red="0.59999999999999998" green="0.0" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="0.59999999999999998" green="0.0" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="warlockButtonPressed" destination="4oD-Qa-rEF" id="c5o-oF-9RT"/>
                             </connections>
                         </button>
                         <button width="1" alignment="left" title="Mage" id="cmw-9f-Jhs">
-                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <color key="backgroundColor" red="0.0" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="0.0" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="mageButtonPressed" destination="4oD-Qa-rEF" id="169-y7-pym"/>
                             </connections>
                         </button>
                         <button width="1" alignment="left" title="Priest" id="Hdf-PG-Buf">
-                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="0.66666668653488159" green="0.66666668653488159" blue="0.66666668653488159" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="priestButtonPressed" destination="4oD-Qa-rEF" id="rK4-Ov-pJY"/>
                             </connections>

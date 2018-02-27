@@ -20,44 +20,15 @@ class SelectDeckWatch: WKInterfaceController {
     
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
+        if let context = context as? [String: Any],
+            let deckList = context["decksList"] as? [Deck]
+        {
+            self.deckList = deckList
+        }
         
         noDeckLabel.setHidden(true)
-        loadData()
         reloadTable()
     }
-
-    override func willActivate() {
-        // This method is called when watch view controller is about to be visible to user
-        super.willActivate()
-        
-        
-    }
-
-    override func didDeactivate() {
-        // This method is called when watch view controller is no longer visible
-        super.didDeactivate()
-    }
-    
-    
-    func loadData() {
-        // Loads data from UserDefaults
-        if let dict = groupDefaults?.object(forKey: "List of decks dictionary") as? [NSDictionary] {
-            extractDictToArrayOfDecks(dict)
-        }
-    }
-    
-    
-    func extractDictToArrayOfDecks(_ dict:[NSDictionary]) {
-        // Takes the saved dictionary and transforms it into a Deck array
-        for i in 0 ..< dict.count {
-            let deckName: String = dict[i]["deckName"] as! String
-            let deckClass: String = dict[i]["deckClass"] as! String
-            let deckID: Int = dict[i]["deckID"] as! Int
-            let newDeck = Deck(deckID: deckID, name: deckName, heroClass: deckClass)
-            deckList.append(newDeck)
-        }
-    }
-    
     
     func reloadTable() {
         // Populates the table
@@ -86,8 +57,7 @@ class SelectDeckWatch: WKInterfaceController {
         groupDefaults?.set(selectedDeck.name, forKey: "Selected Deck Name")
         groupDefaults?.set(selectedDeck.heroClass.rawValue, forKey: "Selected Deck Class")
         groupDefaults?.synchronize()
-        WKInterfaceController.openParentApplication(["Save Selected Deck" : ""] , reply: { [](reply, error) -> Void in
-            })
+        WCSession.default.transferUserInfo(["Save Selected Deck" : ""])
         self.pop()
     }
 }
