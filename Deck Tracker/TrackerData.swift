@@ -337,6 +337,7 @@ extension TrackerData: WatchConnectivityManagerDelegate {
     
     func connectivityManager(_ manager: WatchConnectivityManager, didReceiveGame game: Game) {
         addGame(game)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "GameAdded"), object: self)
     }
     
     func connectivityManagerDidActivate(_ manager: WatchConnectivityManager) {

@@ -75,6 +75,13 @@ class StatsList: UIViewController, UINavigationBarDelegate, UITableViewDelegate,
     }
     
     @objc func refreshData() {
+        if !Thread.isMainThread {
+            DispatchQueue.main.async {
+                self.refreshData()
+            }
+            return
+        }
+        
         readData()
         statsTable.reloadData()
     }
