@@ -25,10 +25,17 @@ class SelectTagsWatch: WKInterfaceController {
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
-        if let dict = context as? [String:Any],
-            let didSelectBlock = dict["didSelectBlock"] as? ((String) -> ())
-        {
-            self.didSelectBlock = didSelectBlock
+        
+        if let dict = context as? [String:Any] {
+            if let didSelectBlock = dict["didSelectBlock"] as? ((String) -> ()) {
+                self.didSelectBlock = didSelectBlock
+            }
+            if let tagsList = dict["tagsList"] as? [String] {
+                self.tagsList = tagsList
+            }
+            if let selectedTag = dict["selectedTag"] as? String {
+                self.selectedTag = selectedTag
+            }
         }
     }
 
@@ -36,26 +43,12 @@ class SelectTagsWatch: WKInterfaceController {
         super.willActivate()
         
         noTagsLabel.setHidden(true)
-        loadData()
         reloadTable()
     }
 
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
-    }
-    
-    
-    func loadData() {
-        // Loads all saved tags and then the already selected by user
-        if let testTags = groupDefaults?.object(forKey: "All Tags") as? [String] {
-            tagsList = testTags
-        }
-        if let defaultsTag = defaults.string(forKey:"Selected Tag Watch") {
-            selectedTag = defaultsTag
-        }
-        //println(tagsList)
-        //println("Selected tag: " + String(stringInterpolationSegment: selectedTagsArray))
     }
     
     

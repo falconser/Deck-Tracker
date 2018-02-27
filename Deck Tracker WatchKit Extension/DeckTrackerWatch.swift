@@ -19,10 +19,7 @@ class DeckTrackerWatch: WKInterfaceController {
     @IBOutlet var winSwitch: WKInterfaceSwitch!
     @IBOutlet var tagsButton: WKInterfaceButton!
     @IBOutlet var saveGameButton: WKInterfaceButton!
-    
-    let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
-    let defaults = UserDefaults.standard
-    
+        
     let connectivityManager = WatchConnectivityManager()
     
     var game = Game()
@@ -107,6 +104,11 @@ class DeckTrackerWatch: WKInterfaceController {
             }
         }
         else if segueIdentifier == "selectTags" {
+            if let tagsList = connectivityManager.applicationContext["tagsList"] as? [String] {
+                context["tagsList"] = tagsList
+            }
+            
+            context["selectedTag"] = game.tag
             context["didSelectBlock"] = { (tag: String) in
                 self.game.tag = tag
                 self.updateInterface()
