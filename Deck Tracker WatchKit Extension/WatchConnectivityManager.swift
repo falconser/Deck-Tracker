@@ -74,9 +74,12 @@ class WatchConnectivityManager: NSObject {
         guard WCSession.isSupported() else {
             return false
         }
+        guard session.activationState != .activated else {
+            return true
+        }
         
         session.activate()
-        applicationContext = session.applicationContext
+        applicationContext = session.receivedApplicationContext
         return true
     }
     
