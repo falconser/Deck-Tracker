@@ -210,7 +210,7 @@ public class TrackerData: NSObject {
     
     // Deletes all games associated with a certain deck
     func deleteAllGamesAssociatedWithADeck( deckName: String) {
-        listOfGames = listOfGames.filter { $0.playerDeck.name != deckName }
+        listOfGames = listOfGames.filter { $0.playerDeck?.name != deckName }
         saveGame()
     }
     
@@ -230,7 +230,7 @@ public class TrackerData: NSObject {
         if deckName == selectedDeckName {
             filteredGames = []
             for i in 0 ..< dateArray.count {
-                if deckName == dateArray[i].playerDeck.name {
+                if deckName == dateArray[i].playerDeck?.name {
                     filteredGames.append(dateArray[i])
                 }
             }
@@ -311,7 +311,7 @@ public class TrackerData: NSObject {
         // If current deck is selected
         if deck == selectedDeckName {
             for i in 0 ..< filteredGamesByDate.count {
-                if deck == filteredGamesByDate[i].playerDeck.name {
+                if deck == filteredGamesByDate[i].playerDeck?.name {
                     filteredGamesBySelectedDeck.append(filteredGamesByDate[i])
                 }
             }

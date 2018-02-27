@@ -12,14 +12,14 @@ import Foundation
 class Game : NSObject, NSCoding {
     
     var id:Int = -1
-    var playerDeck: Deck
+    var playerDeck: Deck?
     var opponentClass: Class = .Unknown
     var coin:Bool = false
     var win:Bool = true
     var date:Date = Date()
     var tag:String = ""
 
-    init(with deck: Deck) {
+    init(with deck: Deck? = nil) {
         playerDeck = deck
         super.init()
     }
@@ -81,6 +81,6 @@ class Game : NSObject, NSCoding {
         let winString = String(stringInterpolationSegment: win)
         let idString = String(id)
         
-        return ("Game number: " + idString + ", date: " + dateString + ", Player Deck Name: " + playerDeck.name + ", Opponent Deck: " + opponentClass.rawValue + ", Coin: " + coinString + ", Win: " + winString + ", Tag: " + tag)
+        return ("Game number: " + idString + ", date: " + dateString + ", Player Deck Name: " + String(describing: playerDeck?.name) + ", Opponent Deck: " + opponentClass.rawValue + ", Coin: " + coinString + ", Win: " + winString + ", Tag: " + tag)
     }
 }

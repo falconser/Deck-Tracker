@@ -20,7 +20,7 @@ class GamesCell: UITableViewCell {
     
     @IBOutlet var game: Game? {
         didSet {
-            playerImage.image = game?.playerDeck.heroClass.smallIcon()
+            playerImage.image = game?.playerDeck?.heroClass.smallIcon()
             opponentImage.image = game?.opponentClass.smallIcon()
             dateLabel.text = game != nil ? string(from: game!.date) : ""
             winLabel.text = game != nil ? (game!.win ? "WON" : "LOSS") : ""

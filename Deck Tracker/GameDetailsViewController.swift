@@ -86,7 +86,7 @@ class GameDetailsViewController: UITableViewController, UINavigationBarDelegate 
     
     // Gets the selected deck from UserDefaults and puts it on the label
     func putSelectedDeckNameOnLabel() {
-        let selectedDeck = game.playerDeck.name
+        let selectedDeck = game.playerDeck?.name ?? ""
         if selectedDeck == "" {
             playerDeckLabel?.text = "You need to select a deck first"
         } else {
@@ -120,12 +120,12 @@ class GameDetailsViewController: UITableViewController, UINavigationBarDelegate 
     }
     
     @objc @IBAction func saveButtonPressed(_ sender:UIBarButtonItem) {
-        guard game.playerDeck.name.isEmpty == false, game.opponentClass != .Unknown else {
+        guard let deck = game.playerDeck, deck.name.isEmpty == false, game.opponentClass != .Unknown else {
             let alert = UIAlertView()
             alert.title = "Missing Info"
             alert.addButton(withTitle: "OK")
             
-            if game.playerDeck.name == "" {
+            if game.playerDeck == nil {
                 alert.message = "You need to select a deck"
             } else if game.opponentClass == .Unknown {
                 alert.message = "You need to select your opponent's class"
@@ -146,8 +146,8 @@ class GameDetailsViewController: UITableViewController, UINavigationBarDelegate 
     
         Answers.logCustomEvent(withName: isNewGame ? "New game added" : "Game Edited",
                                customAttributes: [
-                                "Deck Name": game.playerDeck.name,
-                                "Deck Class": game.playerDeck.heroClass.rawValue,
+                                "Deck Name": game.playerDeck!.name,
+                                "Deck Class": game.playerDeck!.heroClass.rawValue,
                                 "Opponent Class": game.opponentClass.rawValue,
                                 "Win": game.win ? "Win" : "Loss",
                                 "Tag": game.tag.isEmpty ? "No tag" : game.tag,
