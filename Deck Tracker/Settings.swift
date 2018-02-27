@@ -15,16 +15,6 @@ class Settings: UITableViewController {
     let iCloudKeyStore = NSUbiquitousKeyValueStore()
     let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
     let defaults = UserDefaults.standard
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -46,8 +36,10 @@ class Settings: UITableViewController {
             self.groupDefaults?.removeObject(forKey: "All Tags")
             TrackerData.sharedInstance.listOfGames = []
             TrackerData.sharedInstance.listOfDecks = []
+            TrackerData.sharedInstance.listOfTags = []
             
             // Sync
+            self.groupDefaults?.synchronize()
             self.defaults.synchronize()
             
             // Remove from iCloud as well
@@ -87,6 +79,7 @@ class Settings: UITableViewController {
             TrackerData.sharedInstance.listOfGames = []
             TrackerData.sharedInstance.listOfDecks = []
             // Sync
+            self.groupDefaults?.synchronize()
             self.defaults.synchronize()
             
             // Remove from iCloud as well

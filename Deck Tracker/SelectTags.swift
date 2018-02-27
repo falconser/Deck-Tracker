@@ -68,28 +68,25 @@ class SelectTags: UITableViewController {
         alert.addAction(UIAlertAction(title: "Finish", style: .default, handler: { action in
 
             guard let tagToAdd = alert.textFields![0].text, tagToAdd != "" else {
-                let alert = UIAlertView()
-                alert.title = "Tag empty"
-                alert.message = "Tag cannot be empty"
-                alert.addButton(withTitle: "OK")
-                alert.show()
+                let alert = UIAlertController(title: "Tag empty",
+                                              message: "Tag cannot be empty",
+                                              preferredStyle: .alert)
+                alert.addAction(.init(title: "OK", style: .cancel))
+                self.present(alert, animated: true, completion: nil)
+                return
+            }
+            guard !self.allTags.contains(where: { $0.lowercased() == tagToAdd.lowercased() }) else {
+                let alert = UIAlertController(title: "Tag already exists",
+                                              message: "Enter another tag name",
+                                              preferredStyle: .alert)
+                alert.addAction(.init(title: "OK", style: .cancel))
+                self.present(alert, animated: true, completion: nil)
                 return
             }
             
-            // Check the tag is not already in the list
-            let tagAlreadyExists = self.allTags.contains { $0.lowercased() == tagToAdd.lowercased() }
-            
-            if tagAlreadyExists == true {
-                let alert = UIAlertView()
-                alert.title = "Tag already exists"
-                alert.message = "Enter another tag name"
-                alert.addButton(withTitle: "OK")
-                alert.show()
-            } else {
-                TrackerData.sharedInstance.addTag(tagToAdd)
-                self.readData()
-                self.tableView.reloadData()
-            }
+            TrackerData.sharedInstance.addTag(tagToAdd)
+            self.readData()
+            self.tableView.reloadData()
         }))
         
         // 4. Present the alert.

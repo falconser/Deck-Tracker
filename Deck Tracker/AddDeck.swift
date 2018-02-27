@@ -69,11 +69,11 @@ class AddDeck: UIViewController, UITextFieldDelegate, UINavigationBarDelegate {
             }
             
             if deckNameAlreadyExists == true {
-                let alert = UIAlertView()
-                alert.title = "Deck already exists"
-                alert.message = "Deck name already exists"
-                alert.addButton(withTitle: "OK")
-                alert.show()
+                let alert = UIAlertController(title: "Deck already exists",
+                                              message: "Deck name already exists",
+                                              preferredStyle: .alert)
+                alert.addAction(.init(title: "OK", style: .cancel))
+                present(alert, animated: true, completion: nil)
             } else {
                 let newDeck = Deck(deckID: deckID, name: deckName, heroClass: deckSelected)
                 //println("Added: " + newDeck.toString())
@@ -88,25 +88,18 @@ class AddDeck: UIViewController, UITextFieldDelegate, UINavigationBarDelegate {
             }
 
         } else {
+            let alert = UIAlertController(title: "Error",
+                                          message: nil,
+                                          preferredStyle: .alert)
+            alert.addAction(.init(title: "OK", style: .cancel))
             if deckName == "" && deckSelected == "" {
-                let alert = UIAlertView()
-                alert.title = "Error"
                 alert.message = "Please enter a name and select a class"
-                alert.addButton(withTitle: "OK")
-                alert.show()
             } else if deckSelected == "" {
-                let alert = UIAlertView()
-                alert.title = "Error"
                 alert.message = "No Deck Selected"
-                alert.addButton(withTitle: "OK")
-                alert.show()
             } else if deckName == "" {
-                let alert = UIAlertView()
-                alert.title = "Error"
                 alert.message = "Please enter a name"
-                alert.addButton(withTitle: "OK")
-                alert.show()
             }
+            present(alert, animated: true, completion: nil)
         }
     }
     

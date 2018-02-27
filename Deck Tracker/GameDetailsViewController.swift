@@ -120,9 +120,8 @@ class GameDetailsViewController: UITableViewController, UINavigationBarDelegate 
     
     @objc @IBAction func saveButtonPressed(_ sender:UIBarButtonItem) {
         guard let deck = game.playerDeck, deck.name.isEmpty == false, game.opponentClass != .Unknown else {
-            let alert = UIAlertView()
-            alert.title = "Missing Info"
-            alert.addButton(withTitle: "OK")
+            let alert = UIAlertController(title: "Missing Info", message: nil, preferredStyle: .alert)
+            alert.addAction(.init(title: "OK", style: .cancel, handler: nil))
             
             if game.playerDeck == nil {
                 alert.message = "You need to select a deck"
@@ -131,7 +130,7 @@ class GameDetailsViewController: UITableViewController, UINavigationBarDelegate 
             } else {
                 alert.message = "You need to enter all required info"
             }
-            alert.show()
+            present(alert, animated: true, completion: nil)
             return
         }
         
