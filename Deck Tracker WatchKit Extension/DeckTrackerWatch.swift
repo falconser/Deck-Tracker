@@ -53,8 +53,7 @@ class DeckTrackerWatch: WKInterfaceController {
             saveGameButton.setTitle("Opponent Class Needed!")
         }
         
-        if let defaultsTag = UserDefaults.standard.string(forKey:"Selected Tag Watch") {
-            game.tag = defaultsTag
+        if !game.tag.isEmpty {
             tagsButton.setTitle("Tag: " + game.tag)
         } else {
             tagsButton.setTitle("Add Tag")
@@ -96,12 +95,15 @@ class DeckTrackerWatch: WKInterfaceController {
 
         if segueIdentifier == "selectDeck" {
             
-            guard let decksData = connectivityManager.applicationContext["decksList"] as? Data else {
-                return nil
+            if let decksData = connectivityManager.applicationContext["decksList"] as? Data,
+                let decks = KeyedUnarchiverMapper.unarchiveObject(with: decksData) as? [Deck]
+            {
+                context["decksList"] = decks
             }
             
-            if let decks = KeyedUnarchiverMapper.unarchiveObject(with: decksData) as? [Deck] {
-                context["decksList"] = decks
+            context["didSelectBlock"] = { (deck: Deck) in
+                self.game.playerDeck = deck
+                self.updateInterface()
             }
         }
         else if segueIdentifier == "selectTags" {

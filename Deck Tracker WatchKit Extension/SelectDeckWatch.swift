@@ -14,16 +14,20 @@ class SelectDeckWatch: WKInterfaceController {
 
     @IBOutlet var deckTable: WKInterfaceTable!
     @IBOutlet var noDeckLabel: WKInterfaceLabel!
-    var deckList:[Deck] = []
     
-    let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
+    var deckList:[Deck] = []
+    var didSelectBlock: ((Deck) -> ())?
     
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
-        if let context = context as? [String: Any],
-            let deckList = context["decksList"] as? [Deck]
-        {
-            self.deckList = deckList
+        
+        if let context = context as? [String: Any] {
+            if let deckList = context["decksList"] as? [Deck] {
+                self.deckList = deckList
+            }
+            if let didSelectBlock = context["didSelectBlock"] as? (Deck)->() {
+                self.didSelectBlock = didSelectBlock
+            }
         }
         
         noDeckLabel.setHidden(true)
@@ -34,30 +38,28 @@ class SelectDeckWatch: WKInterfaceController {
         // Populates the table
         deckTable.setNumberOfRows(deckList.count, withRowType: "DeckRow")
         
-        if deckList.count == 0 {
+        guard deckList.count > 0 else {
             noDeckLabel.setHidden(false)
-        } else {
-            for i in 0 ..< deckList.count {
-                if let row = deckTable.rowController(at:i) as? DeckRow {
-                    let deck = deckList[i]
-                    row.deckLabel.setText(deck.name)
-                    row.deckLabel.setTextColor(UIColor.black)
-                    row.groupTable.setBackgroundColor(deck.heroClass.color())
-                }
+            return
+        }
+        deckList.enumerated().forEach{ i, deck in
+            guard let row = deckTable.rowController(at:i) as? DeckRow else {
+                return
+                
             }
+            row.deckLabel.setText(deck.name)
+            row.deckLabel.setTextColor(UIColor.black)
+            row.groupTable.setBackgroundColor(deck.heroClass.color())
         }
     }
     
     
     override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
         // Saves the selected deck and returns to Main View
-        //let row = table.rowController(at:rowIndex) as? DeckRow
-        let selectedDeck = deckList[rowIndex]
-        groupDefaults?.set(selectedDeck.deckID, forKey: "Selected Deck ID")
-        groupDefaults?.set(selectedDeck.name, forKey: "Selected Deck Name")
-        groupDefaults?.set(selectedDeck.heroClass.rawValue, forKey: "Selected Deck Class")
-        groupDefaults?.synchronize()
-        WCSession.default.transferUserInfo(["Save Selected Deck" : ""])
+        let deck = deckList[rowIndex]
+        if let didSelectBlock = didSelectBlock {
+            didSelectBlock(deck)
+        }
         self.pop()
     }
 }
