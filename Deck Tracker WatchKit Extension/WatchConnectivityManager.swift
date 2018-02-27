@@ -82,7 +82,9 @@ class WatchConnectivityManager: NSObject {
     
     func updateApplicationContext(_ context: [String: Any]) {
         guard session.activationState == .activated else { return }
-        
+        #if os(iOS)
+        guard session.isWatchAppInstalled else { return }
+        #endif
         do {
             try session.updateApplicationContext(context)
         }
