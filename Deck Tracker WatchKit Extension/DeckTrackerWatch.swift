@@ -64,7 +64,7 @@ class DeckTrackerWatch: WKInterfaceController {
     @objc @IBAction func saveButtonPressed() {
         guard game.playerDeck != nil else { return }
         guard game.opponentClass != .Unknown else { return }
-        
+        game.date = Date()
         connectivityManager.saveGame(game)
     }
     
