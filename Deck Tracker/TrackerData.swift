@@ -44,6 +44,11 @@ public class TrackerData: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(TrackerData.keyValueStoreDidChange(notification:)), name: NSUbiquitousKeyValueStore.didChangeExternallyNotification, object: iCloudKeyStore)
         
         // Check at first install if the game/deck database is empty
+        loadData()
+        updateWatchAppContext()
+    }
+    
+    func loadData() {
         if let gamesData = readGameData() {
             listOfGames = gamesData
         } else { print("Game database empty") }
@@ -63,19 +68,11 @@ public class TrackerData: NSObject {
         }
         
         activeDeck = readActiveDeck()
-        updateWatchAppContext()
     }
     
     @objc func keyValueStoreDidChange(notification: NSNotification) {
-        if let iCloudUnarchivedObject = iCloudKeyStore.object(forKey: "iCloud list of decks") as? Data {
-            print("iCloud decks loaded")
-            listOfDecks = NSKeyedUnarchiver.unarchiveObject(with: iCloudUnarchivedObject) as! [Deck]
-        }
-        
-        if let iCloudTags = iCloudKeyStore.object(forKey: "iCloud All Tags") as? [String] {
-            print("iCloud tags loaded")
-            listOfTags = iCloudTags
-        }
+        loadData()
+        updateWatchAppContext()
     }
 
     // MARK: Decks management
@@ -83,28 +80,31 @@ public class TrackerData: NSObject {
         if let activeDeck = activeDeck {
             groupDefaults?.set(activeDeck.deckID, forKey: "Selected Deck ID")
             groupDefaults?.set(activeDeck.name, forKey: "Selected Deck Name")
-            groupDefaults?.set(activeDeck.heroClass.rawValue, forKey: "Selected Deck Class")
         }
         else {
             groupDefaults?.removeObject(forKey: "Selected Deck ID")
             groupDefaults?.removeObject(forKey: "Selected Deck Name")
-            groupDefaults?.removeObject(forKey: "Selected Deck Class")
         }
         groupDefaults?.synchronize()
         
         
-        iCloudKeyStore.set(activeDeck?.name, forKey: "iCloud Selected Deck Name")
+        iCloudKeyStore.set(activeDeck?.deckID, forKey: "iCloud Selected Deck ID")
         iCloudKeyStore.synchronize()
         updateWatchAppContext()
     }
     
     fileprivate func readActiveDeck() -> Deck? {
-        guard let groupDefaults = groupDefaults else {
-            return nil
+        var loadedActiveDeck: Deck? = nil
+        let icloudActiveDeckId = iCloudKeyStore.longLong(forKey: "iCloud Selected Deck ID")
+        loadedActiveDeck = listOfDecks.first { $0.deckID == icloudActiveDeckId }
+        
+        if loadedActiveDeck == nil,
+            let defaultsActiveDeckId = groupDefaults?.integer(forKey:"Selected Deck ID")
+        {
+            loadedActiveDeck = listOfDecks.first { $0.deckID == defaultsActiveDeckId }
         }
         
-        let selectedId = groupDefaults.integer(forKey:"Selected Deck ID")
-        return listOfDecks.first { $0.deckID == selectedId } ?? listOfDecks.first
+        return loadedActiveDeck ?? activeDeck ?? listOfDecks.first
     }
     
     // Adds a deck object to the array
