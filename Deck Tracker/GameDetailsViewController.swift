@@ -75,7 +75,7 @@ class GameDetailsViewController: UITableViewController, UINavigationBarDelegate 
     
     // Puts the selected date on the date label
     func putSelectedDateOnLabel() {
-        dateCellLabel?.text = "Date: " + string(from: game.date)
+        dateCellLabel?.text = "Date: " + game.date.appStringRepresentation()
     }
 
     // Puts the tags on the Tags Label
@@ -110,12 +110,6 @@ class GameDetailsViewController: UITableViewController, UINavigationBarDelegate 
     // And move the nav bar 20 points down
     func positionForBar(bar: UIBarPositioning) -> UIBarPosition  {
         return .topAttached
-    }
-    
-    func string(from date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        return formatter.string(from: date)
     }
     
     @objc @IBAction func saveButtonPressed(_ sender:UIBarButtonItem) {

@@ -18,11 +18,7 @@ class Utils: XCTestCase {
     
     func dateToday() -> String {
         // Get today's date as a String
-        let now = Date()
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        let dateString = formatter.string(from: now)
-        return dateString
+        return Date().appStringRepresentation()
     }
     
     func resetAll() {

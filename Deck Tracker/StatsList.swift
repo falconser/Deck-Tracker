@@ -34,12 +34,6 @@ class StatsList: UIViewController, UINavigationBarDelegate, UITableViewDelegate,
         NotificationCenter.default.removeObserver(self)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
     // Gets the number of rows to be displayed in the table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return gamesList.count
@@ -58,9 +52,6 @@ class StatsList: UIViewController, UINavigationBarDelegate, UITableViewDelegate,
         }
         
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }
     
     // Reads the games array

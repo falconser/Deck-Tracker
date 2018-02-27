@@ -7,7 +7,6 @@
 //
 
 
-// This class manipulates the data base structure of games/decks
 import Foundation
 
 public class TrackerData: NSObject {

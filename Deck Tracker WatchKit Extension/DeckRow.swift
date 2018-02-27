@@ -13,8 +13,4 @@ class DeckRow: NSObject {
     // Label and table for the rows in Select Deck screen
     @IBOutlet var deckLabel: WKInterfaceLabel!
     @IBOutlet var groupTable: WKInterfaceGroup!
-    
-    
-    
-    
 }

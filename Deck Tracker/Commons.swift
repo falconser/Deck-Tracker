@@ -19,3 +19,12 @@ extension UIColor {
         )
     }
 }
+
+
+extension Date {
+    func appStringRepresentation() -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        return formatter.string(from: self)
+    }
+}

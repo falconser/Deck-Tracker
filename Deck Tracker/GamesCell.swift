@@ -16,13 +16,11 @@ class GamesCell: UITableViewCell {
     @IBOutlet var coinLabel: UILabel!
     @IBOutlet var winLabel: UILabel!
     
-    
-    
     @IBOutlet var game: Game? {
         didSet {
             playerImage.image = game?.playerDeck?.heroClass.smallIcon()
             opponentImage.image = game?.opponentClass.smallIcon()
-            dateLabel.text = game != nil ? string(from: game!.date) : ""
+            dateLabel.text = game != nil ? game!.date.appStringRepresentation() : ""
             winLabel.text = game != nil ? (game!.win ? "WON" : "LOSS") : ""
         }
     }
@@ -30,12 +28,6 @@ class GamesCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         game = nil
-    }
-    
-    private func string(from date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        return formatter.string(from: date)
     }
     
 }

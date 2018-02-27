@@ -10,9 +10,6 @@ import UIKit
 
 class SelectTags: UITableViewController {
     
-    @IBOutlet var tagsTable: UITableView!
-    @IBOutlet var plusButton: UIBarButtonItem!
-
     var allTags: [String] = []
     var didChangeTag: ((String) -> Void)?
     var selectedTag: String = "" {
@@ -23,9 +20,16 @@ class SelectTags: UITableViewController {
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Removes the empty rows from view
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         readData()
+        tableView.reloadData()
     }
     
     func readData() {
@@ -91,7 +95,6 @@ class SelectTags: UITableViewController {
         
         // 4. Present the alert.
         self.present(alert, animated: true, completion: nil)
-        
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -102,6 +105,4 @@ class SelectTags: UITableViewController {
             TrackerData.sharedInstance.deleteTag(tag)
         }
     }
-    
-    
 }

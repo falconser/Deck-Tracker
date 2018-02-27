@@ -9,26 +9,11 @@
 import UIKit
 
 class GraphsCell : UITableViewCell {
-    
-    
 
     @IBOutlet weak var playerDeckLabel: UILabel!
     @IBOutlet weak var winPercentLabel: UILabel!
     @IBOutlet weak var gamesListLabel: UILabel!
     @IBOutlet weak var playerDeckIcon: UIImageView!
     @IBOutlet weak var opponentClassIcon: UIImageView!
-    
-    
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
-    }
-    
+
 }

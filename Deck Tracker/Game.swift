@@ -73,9 +73,7 @@ class Game : NSObject, NSCoding {
     
     // Returns a string containing all the proprierties of the object
     func toString() -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        let dateString = formatter.string(from: date)
+        let dateString = date.appStringRepresentation()
         
         let coinString = String(stringInterpolationSegment: coin)
         let winString = String(stringInterpolationSegment: win)

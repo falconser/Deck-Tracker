@@ -13,40 +13,15 @@ class About: UIViewController {
     @IBOutlet var versionLabel: UILabel!
     @IBOutlet var emailButton: UIButton!
     
-    let version = "2.1"
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        versionLabel.text = "Version: " + version
-        
-        // Do any additional setup after loading the view.
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+        versionLabel.text = "Version: \(version)"
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     @objc @IBAction func emailButtonPressed(_ sender:UIButton) {
         let email = "raiden007@gmail.com"
         let url = URL(string: "mailto:\(email)")
         UIApplication.shared.openURL(url!)
     }
-    
-    
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

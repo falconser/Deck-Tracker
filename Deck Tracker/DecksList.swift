@@ -24,14 +24,15 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        refreshData()
         
         // Listens for "Deck Selected" and calls refreshData()
         NotificationCenter.default.addObserver(self, selector: #selector(DecksList.refreshData), name: NSNotification.Name(rawValue: "DeckSelected"), object: nil)
-        
-        // Removes the empty rows from view
-        decksTable.tableFooterView = UIView(frame: CGRect.zero)
+    }
+    
+    // Refreshes the view after adding a deck
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        refreshData()
     }
 
     // Gets the number of rows to be displayed in the table
@@ -65,13 +66,7 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         let cell = tableView.cellForRow(at: indexPath)
         cell?.accessoryType = UITableViewCellAccessoryType.none
     }
-    
-    // Refreshes the view after adding a deck
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        refreshData()
-    }
-    
+
     // Reads the data from Data file
     func readData() {
         decksList = TrackerData.sharedInstance.listOfDecks

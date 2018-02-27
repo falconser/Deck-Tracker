@@ -16,44 +16,6 @@ import WatchConnectivity
 }
 
 class WatchConnectivityManager: NSObject {
-    private enum Message {
-        case addGame(game: Game)
-        
-        var messageType: String {
-            switch self {
-            case .addGame:
-              return "addGame"
-            }
-        }
-        
-        init?(messageDict dict: [String: Any]) {
-            guard let type = dict["messageType"] as? String else {
-                return nil
-            }
-            
-            if type == "addGame" {
-                guard
-                    let gameData = dict["game"] as? Data,
-                    let game = KeyedUnarchiverMapper.unarchiveObject(with: gameData) as? Game else
-                { return nil }
-                
-                self = .addGame(game: game)
-            }
-            else {
-                return nil
-            }
-        }
-        
-        func dict() -> [String: Any] {
-            var result: [String: Any] = ["messageType": messageType]
-            switch self {
-            case .addGame(let game):
-                result["game"] = NSKeyedArchiver.archivedData(withRootObject: game)
-                break
-            }
-            return result
-        }
-    }
     
     let session = WCSession.default
     var delegate: WatchConnectivityManagerDelegate?
@@ -95,7 +57,7 @@ class WatchConnectivityManager: NSObject {
             print("updateContextError: \(String(describing: error))")
         }
     }
-//#if os(watchOS)
+#if os(watchOS)
     func saveGame(_ game: Game) {
         let message = Message.addGame(game: game)
         if session.isReachable {
@@ -107,6 +69,7 @@ class WatchConnectivityManager: NSObject {
             session.transferUserInfo(message.dict())
         }
     }
+#endif
     
     private func processMessage(_ message: Message?) {
         guard let message = message else { return }
@@ -163,3 +126,44 @@ extension WatchConnectivityManager: WCSessionDelegate {
     }
 }
 
+
+private extension WatchConnectivityManager {
+    private enum Message {
+        case addGame(game: Game)
+        
+        var messageType: String {
+            switch self {
+            case .addGame:
+                return "addGame"
+            }
+        }
+        
+        init?(messageDict dict: [String: Any]) {
+            guard let type = dict["messageType"] as? String else {
+                return nil
+            }
+            
+            if type == "addGame" {
+                guard
+                    let gameData = dict["game"] as? Data,
+                    let game = KeyedUnarchiverMapper.unarchiveObject(with: gameData) as? Game else
+                { return nil }
+                
+                self = .addGame(game: game)
+            }
+            else {
+                return nil
+            }
+        }
+        
+        func dict() -> [String: Any] {
+            var result: [String: Any] = ["messageType": messageType]
+            switch self {
+            case .addGame(let game):
+                result["game"] = NSKeyedArchiver.archivedData(withRootObject: game)
+                break
+            }
+            return result
+        }
+    }
+}
