@@ -72,6 +72,8 @@ class GameDetailsViewController: UITableViewController, UINavigationBarDelegate 
         putSelectedDeckNameOnLabel()
         putSelectedOpponentClassOnLabel()
         putTagLabel()
+        winCellSwitch.isOn = game.win
+        coinCellSwitch.isOn = game.coin
     }
     
     // Puts the selected date on the date label
