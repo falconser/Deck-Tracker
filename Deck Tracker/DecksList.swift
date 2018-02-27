@@ -22,10 +22,6 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         }
     }
     
-    // Save to iCloud
-    let iCloudKeyStore = NSUbiquitousKeyValueStore()
-    let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.

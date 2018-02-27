@@ -15,10 +15,6 @@ class SelectDeck: UITableViewController {
     var decksList:[Deck] = []
     var selectedDeck: Deck? = TrackerData.sharedInstance.activeDeck
     
-    let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
-    let iCloudKeyStore: NSUbiquitousKeyValueStore = NSUbiquitousKeyValueStore()
-    let defaults = UserDefaults.standard
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.

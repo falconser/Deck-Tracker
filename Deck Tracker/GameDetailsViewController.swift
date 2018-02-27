@@ -41,9 +41,6 @@ class GameDetailsViewController: UITableViewController, UINavigationBarDelegate 
     }
     @IBOutlet weak var tagsLabel: UILabel?
 
-    let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
-    let iCloudKeyStore = NSUbiquitousKeyValueStore()
-    
     var game: Game
     var isNewGame: Bool = true
     init(with game: Game? = nil) {
@@ -143,7 +140,7 @@ class GameDetailsViewController: UITableViewController, UINavigationBarDelegate 
             TrackerData.sharedInstance.addGame(game)
         }
         else {
-            TrackerData.sharedInstance.editGame(game.id, newGame: game)
+            TrackerData.sharedInstance.editGame(game)
         }
     
         Answers.logCustomEvent(withName: isNewGame ? "New game added" : "Game Edited",

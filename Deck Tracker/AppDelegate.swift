@@ -21,10 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Crashlytics
         Fabric.with([Crashlytics()])
         
-        // Initialize the data structure and print it to the console at app launch
-        TrackerData.sharedInstance.printDeckData()
-        TrackerData.sharedInstance.printGameData() 
-        
         // Show page UI for graphs
         let pageControl = UIPageControl.appearance()
         pageControl.pageIndicatorTintColor = UIColor.lightGray

@@ -89,8 +89,8 @@ class StatsList: UIViewController, UINavigationBarDelegate, UITableViewDelegate,
     // Deletes the row
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let index = indexPath.row
-            TrackerData.sharedInstance.deleteGame(index)
+            let game = gamesList[indexPath.row]
+            TrackerData.sharedInstance.deleteGame(game)
             readData()
             self.statsTable.deleteRows(at: [indexPath], with: .fade)
         }

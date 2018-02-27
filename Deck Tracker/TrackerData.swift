@@ -19,26 +19,12 @@ public class TrackerData: NSObject {
     // We create two arrays that will hold our objects
     var listOfGames:[Game] = []
     var listOfDecks:[Deck] = []
+    var listOfTags = [String]()
     var deckListForPhone:[NSDictionary] = []
     
     var activeDeck: Deck? {
         didSet {
-            if let activeDeck = activeDeck {
-                groupDefaults?.set(activeDeck.deckID, forKey: "Selected Deck ID")
-                groupDefaults?.set(activeDeck.name, forKey: "Selected Deck Name")
-                groupDefaults?.set(activeDeck.heroClass.rawValue, forKey: "Selected Deck Class")
-            }
-            else {
-                groupDefaults?.removeObject(forKey: "Selected Deck ID")
-                groupDefaults?.removeObject(forKey: "Selected Deck Name")
-                groupDefaults?.removeObject(forKey: "Selected Deck Class")
-            }
-            groupDefaults?.synchronize()
-
-            
-            iCloudKeyStore.set(activeDeck?.name, forKey: "iCloud Selected Deck Name")
-            iCloudKeyStore.synchronize()
-            
+            synchronizeActiveDeck()
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "DeckSelected"), object: self)
         }
     }
@@ -57,21 +43,24 @@ public class TrackerData: NSObject {
         connectivityManager.activate()
         
         NotificationCenter.default.addObserver(self, selector: #selector(TrackerData.keyValueStoreDidChange(notification:)), name: NSUbiquitousKeyValueStore.didChangeExternallyNotification, object: iCloudKeyStore)
-        iCloudKeyStore.synchronize()
-            
+        
         // Check at first install if the game/deck database is empty
         if let gamesData = readGameData() {
             listOfGames = gamesData
-        }
-        else {
-            print("Game database empty")
-        }
+        } else { print("Game database empty") }
         
         if let decksData = readDeckData() {
             listOfDecks = decksData
         }
         else {
             print("Decks database empty")
+        }
+        
+        if let tagsList = readTags() {
+            self.listOfTags = tagsList
+        }
+        else {
+            print("Tags database empty")
         }
         
         activeDeck = readActiveDeck()
@@ -83,9 +72,34 @@ public class TrackerData: NSObject {
             print("iCloud decks loaded")
             listOfDecks = NSKeyedUnarchiver.unarchiveObject(with: iCloudUnarchivedObject) as! [Deck]
         }
+        
+        if let iCloudTags = iCloudKeyStore.object(forKey: "iCloud All Tags") as? [String] {
+            print("iCloud tags loaded")
+            listOfTags = iCloudTags
+        }
+    }
+
+    // MARK: Decks management
+    fileprivate func synchronizeActiveDeck() {
+        if let activeDeck = activeDeck {
+            groupDefaults?.set(activeDeck.deckID, forKey: "Selected Deck ID")
+            groupDefaults?.set(activeDeck.name, forKey: "Selected Deck Name")
+            groupDefaults?.set(activeDeck.heroClass.rawValue, forKey: "Selected Deck Class")
+        }
+        else {
+            groupDefaults?.removeObject(forKey: "Selected Deck ID")
+            groupDefaults?.removeObject(forKey: "Selected Deck Name")
+            groupDefaults?.removeObject(forKey: "Selected Deck Class")
+        }
+        groupDefaults?.synchronize()
+        
+        
+        iCloudKeyStore.set(activeDeck?.name, forKey: "iCloud Selected Deck Name")
+        iCloudKeyStore.synchronize()
+        updateWatchAppContext()
     }
     
-    func readActiveDeck() -> Deck? {
+    fileprivate func readActiveDeck() -> Deck? {
         guard let groupDefaults = groupDefaults else {
             return nil
         }
@@ -94,76 +108,35 @@ public class TrackerData: NSObject {
         return listOfDecks.first { $0.deckID == selectedId } ?? listOfDecks.first
     }
     
-    // Adds a game object to the array and save the array in UserDefaults
-    func addGame (_ newGame : Game) {
-        newGame.id = listOfGames.count
-        listOfGames.append(newGame)
-        listOfGames.sort { $0.date.compare($1.date) == .orderedDescending }
-        saveGame()
-    }
-    
-    // Saves the games array
-    func saveGame() {
-        let archivedObject = NSKeyedArchiver.archivedData(withRootObject: listOfGames as NSArray)
-        defaults.set(archivedObject, forKey: "List of games")
-        defaults.synchronize()
-        
-        iCloudKeyStore.set(archivedObject, forKey: "iCloud list of games")
-        iCloudKeyStore.synchronize()
-    }
-    
-    // Reads the game data and returns a Game object
-    func readGameData() -> [Game]? {
-        if let iCloudUnarchivedObject = iCloudKeyStore.object(forKey: "iCloud list of games") as? Data {
-            return NSKeyedUnarchiver.unarchiveObject(with: iCloudUnarchivedObject) as? [Game]
-        } else if let unarchivedObject = defaults.object(forKey:"List of games") as? Data {
-            return NSKeyedUnarchiver.unarchiveObject(with: unarchivedObject) as? [Game]
-        } else {
-          return nil
-        }
-    }
-    
-    // Prints all the games in the array
-    func printGameData() {
-        for i in 0 ..< listOfGames.count {
-            print(listOfGames[i].toString())
-        }
-    }
-    
     // Adds a deck object to the array
     func addDeck (_ newDeck: Deck) {
         listOfDecks.append(newDeck)
         listOfDecks.sort { $0.deckID > $1.deckID }
-        saveDict()
-        saveDeck()
+        synchronizeDecks()
         print("Deck added")
     }
     
-    // Creates a new dict to use with phone
-    func saveDict() {
-        deckListForPhone.removeAll(keepingCapacity: true)
-        // Create an dictionary array so we can read this in the shared app group
-        for i in 0 ..< listOfDecks.count {
-            let dict: NSMutableDictionary = listOfDecks[i].getDict()
-            deckListForPhone.append(dict)
-        }
+    // Deletes a deck from the array and updates the array
+    func deleteDeck(_ id:Int) {
+        listOfDecks.remove(at: id)
+        synchronizeDecks()
     }
     
     // Adds the decks list to UserDefaults
-    func saveDeck () {
+    fileprivate func synchronizeDecks () {
         let archivedObject = NSKeyedArchiver.archivedData(withRootObject: listOfDecks)
         
         groupDefaults?.set(archivedObject, forKey: "List of decks")
-        groupDefaults?.set(deckListForPhone, forKey: "List of decks dictionary")
         groupDefaults?.synchronize()
         
         iCloudKeyStore.set(archivedObject, forKey: "iCloud list of decks")
-        iCloudKeyStore.set(deckListForPhone, forKey: "iCloud List of decks dictionary")
         iCloudKeyStore.synchronize()
+        
+        updateWatchAppContext()
     }
     
     // Reads the deck data and returns a Deck object
-    func readDeckData() -> [Deck]? {
+    fileprivate func readDeckData() -> [Deck]? {
         
         if let iCloudUnarchivedObject = iCloudKeyStore.object(forKey: "iCloud list of decks") as? Data {
             print("iCloud decks loaded")
@@ -176,42 +149,96 @@ public class TrackerData: NSObject {
         
     }
     
-    // Prints all the decks in the array
-    func printDeckData () {
-        for i in 0 ..< listOfDecks.count {
-            print(listOfDecks[i].toString())
-        }
-    }
+    // MARK: Games management
     
-    // Deletes a deck from the array and updates the array
-    func deleteDeck(_ id:Int) {
-        listOfDecks.remove(at: id)
-        saveDeck()
+    // Adds a game object to the array and save the array in UserDefaults
+    func addGame (_ newGame : Game) {
+        newGame.id = listOfGames.count
+        listOfGames.append(newGame)
+        listOfGames.sort { $0.date.compare($1.date) == .orderedDescending }
+        synchronizeGames()
     }
     
     // Deletes a game from the array and updates the array
-    func deleteGame(_ id:Int) {
-        listOfGames.remove(at: id)
-        saveGame()
+    func deleteGame(_ game:Game) {
+        listOfGames = listOfGames.filter{ $0.id != game.id }
+        synchronizeGames()
     }
     
     // Replaces a game from the array
-    func editGame (_ id:Int, newGame:Game) {
-        for i in 0 ..< listOfGames.count {
-            if listOfGames[i].id == id {
-                listOfGames.remove(at: i)
-                listOfGames.insert(newGame, at: i)
-                listOfGames.sort { $0.date.compare($1.date) == .orderedDescending }
-                saveGame()
-            }
+    func editGame(_ game:Game) {
+        guard let index = listOfGames.index(where: { $0.id == game.id }) else {
+            print("can't update game: \(game.description)")
+            return
         }
+        listOfGames[index] = game
+        listOfGames.sort { $0.date.compare($1.date) == .orderedDescending }
+        synchronizeGames()
         print("Game Edited")
     }
     
     // Deletes all games associated with a certain deck
     func deleteAllGamesAssociatedWithADeck( deckName: String) {
         listOfGames = listOfGames.filter { $0.playerDeck?.name != deckName }
-        saveGame()
+        synchronizeGames()
+    }
+    
+    // Saves the games array
+    fileprivate func synchronizeGames() {
+        let archivedObject = NSKeyedArchiver.archivedData(withRootObject: listOfGames as NSArray)
+        defaults.set(archivedObject, forKey: "List of games")
+        defaults.synchronize()
+        
+        iCloudKeyStore.set(archivedObject, forKey: "iCloud list of games")
+        iCloudKeyStore.synchronize()
+    }
+    
+    // Reads the game data and returns a Game object
+    fileprivate  func readGameData() -> [Game]? {
+        if let iCloudUnarchivedObject = iCloudKeyStore.object(forKey: "iCloud list of games") as? Data {
+            return NSKeyedUnarchiver.unarchiveObject(with: iCloudUnarchivedObject) as? [Game]
+        } else if let unarchivedObject = defaults.object(forKey:"List of games") as? Data {
+            return NSKeyedUnarchiver.unarchiveObject(with: unarchivedObject) as? [Game]
+        } else {
+          return nil
+        }
+    }
+    
+    // MARK: Tags management
+    
+    func addTag(_ tag: String) {
+        guard !listOfTags.contains(tag) else {
+            return
+        }
+        listOfTags.append(tag)
+        listOfTags.sort()
+        synchronizeTags()
+    }
+    
+    func deleteTag(_ tag: String) {
+        listOfTags = listOfTags.filter { $0 != tag }
+        synchronizeTags()
+    }
+    
+    fileprivate func synchronizeTags() {
+        groupDefaults?.set(listOfTags, forKey: "All Tags")
+        groupDefaults?.synchronize()
+        
+        iCloudKeyStore.set(listOfTags, forKey: "iCloud All Tags")
+        iCloudKeyStore.synchronize()
+        
+        updateWatchAppContext()
+    }
+    
+    fileprivate func readTags() -> [String]? {
+        if let iCloudTags = iCloudKeyStore.array(forKey: "iCloud All Tags") as? [String] {
+            return iCloudTags
+        } else if let defaultsTags = groupDefaults?.array(forKey: "All Tags") as? [String] {
+            return defaultsTags
+        }
+        else {
+            return nil
+        }
     }
     
     // Calculates the general win rate of the user (all games)
@@ -330,6 +357,7 @@ public class TrackerData: NSObject {
         return filteredGamesByOpponent
     }
 }
+
 extension TrackerData: WatchConnectivityManagerDelegate {
     func connectivityManager(_ manager: WatchConnectivityManager, didUpdateApplicationContext: [String : Any]) {
         
@@ -344,10 +372,11 @@ extension TrackerData: WatchConnectivityManagerDelegate {
         updateWatchAppContext()
     }
     
-    func updateWatchAppContext() {
+    fileprivate func updateWatchAppContext() {
         var context = [String:Any]()
         
         context["decksList"] = NSKeyedArchiver.archivedData(withRootObject: listOfDecks)
+        context["tagsList"] = listOfTags
         if let activeDeck = activeDeck {
             context["activeDeck"] = NSKeyedArchiver.archivedData(withRootObject: activeDeck)
         }
