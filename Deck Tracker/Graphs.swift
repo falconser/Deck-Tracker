@@ -15,7 +15,6 @@ class Graphs: UIViewController {
     @IBOutlet weak var tipLabel: UILabel!
     @IBOutlet weak var graphContainerBottomConstraint: NSLayoutConstraint!
 
-    var total: CGFloat = 100
     var dateIndex = -1
     var deckIndex = -1
     var deckName = ""
@@ -23,23 +22,16 @@ class Graphs: UIViewController {
     let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
     let defaults = UserDefaults.standard
     
-    static let sharedInstance = Graphs()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         getInitialStatus()
     }
     
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         getInitialStatus()
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
+
     // Loads what buttons are pressed
     func getInitialStatus() {
         dateIndex = dateSegment.selectedSegmentIndex
@@ -108,11 +100,5 @@ class Graphs: UIViewController {
         //Notifies the container that a change occured
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "load"), object: nil)
         
-    }
-    
-    func printStatus() {
-        print("Date Index: " + String(dateIndex))
-        print("Deck Index: " + String(deckIndex))
-        print("Deck Name: " + String(deckName))
     }
 }

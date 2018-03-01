@@ -19,7 +19,6 @@ public class TrackerData: NSObject {
     var listOfGames:[Game] = []
     var listOfDecks:[Deck] = []
     var listOfTags = [String]()
-    var deckListForPhone:[NSDictionary] = []
     
     var activeDeck: Deck? {
         didSet {
@@ -27,9 +26,7 @@ public class TrackerData: NSObject {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "DeckSelected"), object: self)
         }
     }
-    // Objects needed to be updated in different functions
-    var filteredGames:[Game] = []
-    
+
     // Save to iCloud
     let iCloudKeyStore: NSUbiquitousKeyValueStore = NSUbiquitousKeyValueStore()
     let groupDefaults = UserDefaults(suiteName: "group.com.falcon.Deck-Tracker.Decks")
@@ -240,52 +237,53 @@ public class TrackerData: NSObject {
         }
     }
     
-    // Calculates the general win rate of the user (all games)
-    func generalWinRate(date:Int, deckName:String) -> Double {
-        
-        var gamesWon = 0
-        var dateArray = getDateArray(date)
-        var selectedDeckName = ""
-        if let iCloudName = iCloudKeyStore.string(forKey:"iCloud Selected Deck Name") {
-            selectedDeckName = iCloudName
-        } else if let defaultsName = groupDefaults?.string(forKey:"Selected Deck Name") {
-            selectedDeckName = defaultsName
-        }
-
-        // If current deck is selected
-        if deckName == selectedDeckName {
-            filteredGames = []
-            for i in 0 ..< dateArray.count {
-                if deckName == dateArray[i].playerDeck?.name {
-                    filteredGames.append(dateArray[i])
-                }
+    func gamesFiltered(byDate startDate: Date? = nil, byDeck decks: [Deck]? = nil, byOpponent opponents:[Class]? = nil) -> [Game] {
+        return listOfGames.filter { game in
+            if let startDate = startDate, startDate.compare(game.date) == .orderedDescending {
+                return false
             }
-        // If all decks are selected
-        } else {
-            filteredGames = dateArray
-        }
-        
-        for i in 0 ..< filteredGames.count {
-            if (filteredGames[i].win == true) {
-                gamesWon += 1
-            }
-        }
-        
-        let totalGames = filteredGames.count
-        var winRate = 0.0
-        if totalGames == 0 {
-            return winRate
-        } else {
-            winRate =  Double(gamesWon) / Double(totalGames) * 100
-            return winRate
-        }
 
+            if let decks = decks, let gameDeck = game.playerDeck, !decks.contains(gameDeck) {
+                return false
+            }
+
+            if let opponents = opponents, !opponents.contains(game.opponentClass) {
+                return false
+            }
+            return true
+        }
+    }
+}
+
+extension TrackerData: WatchConnectivityManagerDelegate {
+    func connectivityManager(_ manager: WatchConnectivityManager, didUpdateApplicationContext: [String : Any]) {
+        
     }
     
-    func generalWinRateCount() -> Int {
-        return filteredGames.count
+    func connectivityManager(_ manager: WatchConnectivityManager, didReceiveGame game: Game) {
+        addGame(game)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "GameAdded"), object: self)
     }
     
+    func connectivityManagerDidActivate(_ manager: WatchConnectivityManager) {
+        updateWatchAppContext()
+    }
+    
+    fileprivate func updateWatchAppContext() {
+        var context = [String:Any]()
+        
+        context["decksList"] = NSKeyedArchiver.archivedData(withRootObject: listOfDecks)
+        context["tagsList"] = listOfTags
+        if let activeDeck = activeDeck {
+            context["activeDeck"] = NSKeyedArchiver.archivedData(withRootObject: activeDeck)
+        }
+        
+        connectivityManager.updateApplicationContext(context)
+    }
+}
+
+// MARK: Legacy
+extension TrackerData {
     
     // Filters the gamesList array based on the date the user selected
     func getDateArray (_ date:Int) -> [Game] {
@@ -320,8 +318,6 @@ public class TrackerData: NSObject {
             return dateArray
         }
     }
-    
-    
     func getStatisticsGamesTotal(date:Int, deck:String, opponent:String) -> [Game] {
         var filteredGamesByDate = getDateArray(date)
         var selectedDeckName = ""
@@ -345,7 +341,7 @@ public class TrackerData: NSObject {
         } else {
             filteredGamesBySelectedDeck = filteredGamesByDate
         }
-
+        
         for game in filteredGamesBySelectedDeck {
             if opponent == "All" {
                 filteredGamesByOpponent = filteredGamesBySelectedDeck
@@ -354,32 +350,5 @@ public class TrackerData: NSObject {
             }
         }
         return filteredGamesByOpponent
-    }
-}
-
-extension TrackerData: WatchConnectivityManagerDelegate {
-    func connectivityManager(_ manager: WatchConnectivityManager, didUpdateApplicationContext: [String : Any]) {
-        
-    }
-    
-    func connectivityManager(_ manager: WatchConnectivityManager, didReceiveGame game: Game) {
-        addGame(game)
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "GameAdded"), object: self)
-    }
-    
-    func connectivityManagerDidActivate(_ manager: WatchConnectivityManager) {
-        updateWatchAppContext()
-    }
-    
-    fileprivate func updateWatchAppContext() {
-        var context = [String:Any]()
-        
-        context["decksList"] = NSKeyedArchiver.archivedData(withRootObject: listOfDecks)
-        context["tagsList"] = listOfTags
-        if let activeDeck = activeDeck {
-            context["activeDeck"] = NSKeyedArchiver.archivedData(withRootObject: activeDeck)
-        }
-        
-        connectivityManager.updateApplicationContext(context)
     }
 }

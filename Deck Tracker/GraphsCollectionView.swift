@@ -12,27 +12,48 @@ private let reuseIdentifier = "GraphsCollectionCell"
 
 @IBDesignable
 class GraphsCollectionView: UICollectionViewController {
+    private enum DateFilterOption: Int {
+        case lastWeek = 0
+        case lastMonth = 1
+        case everyDate = 2
+        
+        var startDate: Date {
+            switch self {
+            case .lastWeek:
+                return Date(timeIntervalSinceNow: -7 * 24 * 60 * 60)
+            case .lastMonth:
+                return Date(timeIntervalSinceNow: -30 * 24 * 60 * 60)
+            case .everyDate:
+                return Date.distantPast
+            }
+        }
+    }
+    private struct StatsItem {
+        let opponentClass: Class?
+        let wins: Int
+        let losses: Int
+        var totalGames: Int { return wins + losses }
+        var winRate: Double {
+            let games = wins + losses
+            guard games > 0 else { return 0.0 }
+            return 100 * Double(wins) / Double(games)
+        }
+    }
     
-    var graphsTitle:[String] = ["All", "Warrior", "Paladin", "Shaman", "Hunter", "Druid", "Rogue", "Mage", "Warlock", "Priest"]
-    var dateIndex = -1
+    private var statisticData: [StatsItem] = []
+    private var dateFilter: DateFilterOption = .lastWeek
+    private var focusedDeck: Deck? = nil
     var deckName = ""
-    var playerDeckLabelArray:[String] = []
-    var playerDeckIcon = ""
-    var opponentClasses = ["GenericSmall", "WarriorSmall", "PaladinSmall", "ShamanSmall", "HunterSmall", "DruidSmall", "RogueSmall", "MageSmall", "WarlockSmall", "PriestSmall"]
-    var winRateArray:[Int] = []
-    var gamesWonArray:[Int] = []
-    var gamesLostArray:[Int] = []
-    var gamesFilteredByOpponent:[[Game]] = []
     
     let defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadData()
         NotificationCenter.default.addObserver(self, selector: #selector(GraphsCollectionView.loadList(notification:)),name:NSNotification.Name(rawValue: "load"), object: nil)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         loadData()
     }
     
@@ -51,110 +72,53 @@ class GraphsCollectionView: UICollectionViewController {
     }
     
     func getDateIndex() {
-        dateIndex = defaults.integer(forKey:"Date Index")
+        dateFilter = DateFilterOption(rawValue: defaults.integer(forKey:"Date Index")) ?? .lastWeek
     }
     
     func getDeckName() {
-        deckName = defaults.string(forKey:"Deck Name") ?? ""
+        let deckName = defaults.string(forKey:"Deck Name") ?? ""
+        focusedDeck = TrackerData.sharedInstance.listOfDecks.first { $0.name == deckName }
     }
     
-    func getStatistics() {
-        
-        winRateArray = []
-        gamesWonArray = []
-        gamesLostArray = []
-        gamesFilteredByOpponent = []
-        
-        let data = ["All", "Warrior", "Paladin", "Shaman", "Hunter", "Druid", "Rogue", "Mage", "Warlock", "Priest"]
-        for opponent in data {
-            getStatisticsVs(opponent: opponent)
-        }
-        
-        // Saves all games in an array filtered by: What the user selected in the buttons + each opponent
-        //print(gamesFilteredByOpponent.count)
-        //print(gamesFilteredByOpponent)
-        //defaults.set(gamesFilteredByOpponent, forKey: "Games Filtered By Opponent")
-        //defaults.synchronize()
+    private func getStatistics() {
+        let opponentClasses: [Class?] = [nil, .Warrior, .Paladin, .Shaman, .Hunter, .Druid, .Rogue, .Mage, .Warlock, .Priest]
+    
+        statisticData = opponentClasses.map { getStatisticsVs(opponent: $0) }
     }
     
-    func getStatisticsVs(opponent:String) {
-        var filteredGames:[Game] = []
-        var totalGames = 0
-        var wonGames = 0
-        var lostGames = 0
+    private func getStatisticsVs(opponent: Class?) -> StatsItem {
+        let filteredGames = TrackerData.sharedInstance.gamesFiltered(byDate: dateFilter.startDate,
+                                                                     byDeck: focusedDeck.flatMap{ [$0] },
+                                                                     byOpponent: opponent.flatMap{ [$0] })
+        let totalGames = filteredGames.count
+        let wonGames = filteredGames.filter { $0.win }.count
+        let lostGames = totalGames - wonGames
         
-        filteredGames = TrackerData.sharedInstance.getStatisticsGamesTotal(date: dateIndex, deck: deckName, opponent: opponent)
-        totalGames = filteredGames.count
-        
-        //gamesFilteredByOpponent.append(filteredGames)
-        
-        
-        for game in filteredGames {
-            if game.win {
-                wonGames += 1
-            } else {
-                lostGames += 1
-            }
-        }
-        
-        var winRateDouble:Double = 0
-        if totalGames != 0 {
-            winRateDouble =  Double(wonGames) / Double(totalGames) * 100
-        }
-        
-        let winRateInt = Int(winRateDouble)
-        
-        winRateArray.append(winRateInt)
-        gamesWonArray.append(wonGames)
-        gamesLostArray.append(lostGames)
-        
+        return StatsItem(opponentClass: opponent, wins: wonGames, losses: lostGames)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // MARK: UICollectionViewDataSource
-
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-
-
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 10
+        return statisticData.count
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! GraphsCollectionCell
         
         // Configure the cell
+        let stats = statisticData[indexPath.row]
         
-        cell.versusLabel.text = "vs. " + graphsTitle[indexPath.row]
-        cell.opponentClassImage.image = UIImage(named: opponentClasses[indexPath.row])
-
-        if gamesWonArray[indexPath.row] == 0 && gamesLostArray[indexPath.row] == 0 {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! GraphsCollectionCell
+        cell.versusLabel.text = "vs. \(stats.opponentClass?.rawValue ?? "All")"
+        cell.opponentClassImage.image = stats.opponentClass?.smallIcon() ?? UIImage(named: "GenericSmall")
+        
+        if stats.totalGames == 0 {
             cell.winInfoLabel.text = "No Data"
         } else {
-            cell.winInfoLabel.text = String(winRateArray[indexPath.row]) + "% : " + "(" + String(gamesWonArray[indexPath.row]) + "-" + String(gamesLostArray[indexPath.row]) + ")"
+            cell.winInfoLabel.text = "\(String(Int(stats.winRate)))% : (\(String(stats.wins))-\(String(stats.losses)))"
         }
         
-        cell.per = CGFloat(winRateArray[indexPath.row])
-
+        cell.per = CGFloat(stats.winRate)
+        
         return cell
     }
     
@@ -169,7 +133,7 @@ class GraphsCollectionView: UICollectionViewController {
         }
         
         return CGSize(width: cellWidth, height: cellWidth)
-            
+        
     }
     
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
