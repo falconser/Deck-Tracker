@@ -50,8 +50,8 @@ class DeckTrackerWatch: WKInterfaceController {
             saveGameButton.setTitle("Opponent Class Needed!")
         }
         
-        if !game.tag.isEmpty {
-            tagsButton.setTitle("Tag: " + game.tag)
+        if !game.tags.isEmpty {
+            tagsButton.setTitle("Tags: " + game.tags.joined(separator: ", "))
         } else {
             tagsButton.setTitle("Add Tag")
         }
@@ -108,9 +108,17 @@ class DeckTrackerWatch: WKInterfaceController {
                 context["tagsList"] = tagsList
             }
             
-            context["selectedTag"] = game.tag
-            context["didSelectBlock"] = { (tag: String) in
-                self.game.tag = tag
+            context["selectedTags"] = game.tags
+            context["didSelectTag"] = { (tag: String) in
+                if !self.game.tags.contains(tag) {
+                    self.game.tags.append(tag)
+                }
+                self.updateInterface()
+            }
+            context["didDeselectTag"] = { (tag: String) in
+                if let index = self.game.tags.index(of: tag) {
+                    self.game.tags.remove(at: index)
+                }
                 self.updateInterface()
             }
         }

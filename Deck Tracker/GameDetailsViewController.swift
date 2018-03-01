@@ -80,7 +80,7 @@ class GameDetailsViewController: UITableViewController, UINavigationBarDelegate 
 
     // Puts the tags on the Tags Label
     func putTagLabel() {
-        tagsLabel?.text = game.tag.isEmpty ? "Add Tags" : ("Tags: " + game.tag)
+        tagsLabel?.text = game.tags.isEmpty ? "Add Tags" : ("Tags: " + game.tags.joined(separator: ", "))
     }
     
     // Gets the selected deck from UserDefaults and puts it on the label
@@ -142,7 +142,7 @@ class GameDetailsViewController: UITableViewController, UINavigationBarDelegate 
                                 "Deck Class": game.playerDeck!.heroClass.rawValue,
                                 "Opponent Class": game.opponentClass.rawValue,
                                 "Win": game.win ? "Win" : "Loss",
-                                "Tag": game.tag.isEmpty ? "No tag" : game.tag,
+                                "Tag": game.tags.isEmpty ? "No tags" : game.tags.joined(separator: ", "),
                                 "Added from": UIDevice.current.model])
         
 
@@ -171,9 +171,14 @@ class GameDetailsViewController: UITableViewController, UINavigationBarDelegate 
             }
         }
         else if let tagsViewController = segue.destination as? SelectTags {
-            tagsViewController.selectedTag = game.tag
-            tagsViewController.didChangeTag = {[weak self] (tag: String) in
-                self?.game.tag = tag
+            tagsViewController.selectedTags = game.tags
+            tagsViewController.didSelectTag = {[weak self] (tag: String) in
+                self?.game.tags.append(tag)
+            }
+            tagsViewController.didDeselectTag = {[weak self] (tag: String) in
+                if let index = self?.game.tags.index(of: tag) {
+                    self?.game.tags.remove(at: index)
+                }
             }
         }
         else if let decksListViewController = segue.destination as? DecksList  {

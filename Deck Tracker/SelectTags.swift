@@ -11,14 +11,9 @@ import UIKit
 class SelectTags: UITableViewController {
     
     var allTags: [String] = []
-    var didChangeTag: ((String) -> Void)?
-    var selectedTag: String = "" {
-        didSet {
-            if let didChangeTag = didChangeTag {
-                didChangeTag(selectedTag)
-            }
-        }
-    }
+    var didSelectTag: ((String) -> Void)?
+    var didDeselectTag: ((String) -> Void)?
+    var selectedTags: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,15 +41,44 @@ class SelectTags: UITableViewController {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
         let tag = allTags[indexPath.row]
         cell.textLabel?.text = tag
-        cell.accessoryType = tag == selectedTag ? .checkmark : .none
+        cell.accessoryType = isSelected(tag: tag) ? .checkmark : .none
         return cell
     }
     
     // Selects the row and saves the info so we can add a checkmark
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let tag = allTags[indexPath.row]
+        
+        if isSelected(tag: tag) {
+            deselectTag(tag)
+        }
+        else {
+            selectTag(tag)
+        }
+        
         let cell = tableView.cellForRow(at: indexPath)
-        selectedTag = cell?.textLabel?.text ?? ""
-        navigationController?.popViewController(animated: true)
+        cell?.accessoryType = isSelected(tag: tag) ? .checkmark : .none
+    }
+    
+    private func isSelected(tag: String) -> Bool {
+        return selectedTags.contains(tag)
+    }
+    
+    private func selectTag(_ tag: String) {
+        guard !isSelected(tag: tag) else { return }
+        selectedTags.append(tag)
+        if let didSelectTag = didSelectTag {
+            didSelectTag(tag)
+        }
+    }
+    
+    private func deselectTag(_ tag: String) {
+        guard let index = selectedTags.index(of: tag) else { return }
+        selectedTags.remove(at: index)
+        if let didDeselectTag = didDeselectTag {
+            didDeselectTag(tag)
+        }
     }
     
     @objc @IBAction func plusButtonPressed(_ sender:UIBarButtonItem) {
@@ -101,6 +125,7 @@ class SelectTags: UITableViewController {
         // Deletes the row
         if editingStyle == .delete {
             let tag = allTags[indexPath.row]
+            deselectTag(tag)
             tableView.deleteRows(at: [indexPath], with: .fade)
             TrackerData.sharedInstance.deleteTag(tag)
         }

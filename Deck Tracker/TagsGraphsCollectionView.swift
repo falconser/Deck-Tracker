@@ -64,16 +64,6 @@ class TagsGraphsCollectionView: UICollectionViewController {
         let opponentSelected = data[indexOfSelectedGraph]
         
         filteredGames = TrackerData.sharedInstance.getStatisticsGamesTotal(date: dateIndex, deck: deckName, opponent: opponentSelected)
-        
-        // Set games without tag as tag:None
-        for game in filteredGames {
-            if game.tag == "" {
-                game.tag = "None"
-            }
-            //print(game.getTag())
-        }
-        
-        //print("Fitered Games: " + String(filteredGames.count))
     }
     
     func getTagName() {
@@ -81,7 +71,7 @@ class TagsGraphsCollectionView: UICollectionViewController {
         var allTags:[String] = []
         
         for game in filteredGames {
-            allTags.append(game.tag)
+            allTags.append(contentsOf: game.tags)
         }
         
         
@@ -102,7 +92,7 @@ class TagsGraphsCollectionView: UICollectionViewController {
             filteredGamesAndTags = []
             
             for game in filteredGames {
-                if filteredTags[i] == game.tag {
+                if game.tags.contains(filteredTags[i])  {
                     filteredGamesAndTags.append(game)
                 }
             }

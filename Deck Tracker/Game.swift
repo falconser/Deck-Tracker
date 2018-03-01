@@ -17,7 +17,7 @@ class Game : NSObject, NSCoding {
     var coin:Bool = false
     var win:Bool = true
     var date:Date = Date()
-    var tag:String = ""
+    var tags:[String] = []
 
     init(with deck: Deck? = nil) {
         playerDeck = deck
@@ -25,14 +25,14 @@ class Game : NSObject, NSCoding {
     }
     
     // Initialize an Game object with the following arguments
-    init (newID:Int, newDate:Date, playerDeck:Deck, opponentClass:Class, newCoin:Bool, newWin:Bool, newTag:String) {
+    init (newID:Int, newDate:Date, playerDeck:Deck, opponentClass:Class, newCoin:Bool, newWin:Bool, tags:[String]) {
         self.id = newID
         self.playerDeck = playerDeck
         self.opponentClass = opponentClass
         self.coin = newCoin
         self.win = newWin
         self.date = newDate
-        self.tag = newTag
+        self.tags = tags
     }
     
     // Encode and decode the object so it can be stored in UserDefaults
@@ -57,7 +57,13 @@ class Game : NSObject, NSCoding {
         coin = aDecoder.decodeBool(forKey: "coin")
         win = aDecoder.decodeBool(forKey: "win")
         date = aDecoder.decodeObject(forKey: "date") as! Date
-        tag = aDecoder.decodeObject(forKey: "tag") as? String ?? "" 
+        if let tags = aDecoder.decodeObject(forKey: "tags") as? [String] {
+            self.tags = tags
+        }
+        else if let tag = aDecoder.decodeObject(forKey: "tag") as? String,
+            !tag.isEmpty {
+            self.tags = [tag]
+        }
     }
     
     
@@ -68,7 +74,7 @@ class Game : NSObject, NSCoding {
         aCoder.encode(coin, forKey: "coin")
         aCoder.encode(win, forKey: "win")
         aCoder.encode(date, forKey: "date")
-        aCoder.encode(tag, forKey: "tag")
+        aCoder.encode(tags, forKey: "tags")
     }
     
     // Returns a string containing all the proprierties of the object
@@ -78,7 +84,7 @@ class Game : NSObject, NSCoding {
         let coinString = String(stringInterpolationSegment: coin)
         let winString = String(stringInterpolationSegment: win)
         let idString = String(id)
-        
-        return ("Game number: " + idString + ", date: " + dateString + ", Player Deck Name: " + String(describing: playerDeck?.name) + ", Opponent Deck: " + opponentClass.rawValue + ", Coin: " + coinString + ", Win: " + winString + ", Tag: " + tag)
+        let tagsString = tags.joined(separator: ", ")
+        return ("Game number: " + idString + ", date: " + dateString + ", Player Deck Name: " + String(describing: playerDeck?.name) + ", Opponent Deck: " + opponentClass.rawValue + ", Coin: " + coinString + ", Win: " + winString + ", Tags: " + tagsString)
     }
 }
