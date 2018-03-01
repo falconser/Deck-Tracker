@@ -51,4 +51,9 @@ class Deck : NSObject, NSCoding {
         dict.setValue(self.deckID, forKey: "deckID")
         return dict
     }
+    
+    override func isEqual(_ object: Any?) -> Bool {
+        guard let otherDeck = object as? Deck else { return false }
+        return name == otherDeck.name && heroClass == otherDeck.heroClass
+    }
 }
