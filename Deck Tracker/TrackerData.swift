@@ -110,12 +110,14 @@ public class TrackerData: NSObject {
         listOfDecks.sort { $0.deckID > $1.deckID }
         synchronizeDecks()
         print("Deck added")
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "DeckAdded"), object: self)
     }
     
     // Deletes a deck from the array and updates the array
     func deleteDeck(_ id:Int) {
         listOfDecks.remove(at: id)
         synchronizeDecks()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "DeckRemoved"), object: self)
     }
     
     // Adds the decks list to UserDefaults
