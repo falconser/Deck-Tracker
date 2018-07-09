@@ -111,6 +111,9 @@ public class TrackerData: NSObject {
         synchronizeDecks()
         print("Deck added")
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "DeckAdded"), object: self)
+        if listOfDecks.count == 1 {
+            activeDeck = newDeck
+        }
     }
     
     // Deletes a deck from the array and updates the array
