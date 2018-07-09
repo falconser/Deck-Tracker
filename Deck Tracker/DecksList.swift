@@ -24,6 +24,8 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Remove table view separators after the last cell
+        decksTable.tableFooterView = UIView.init(frame: .zero)
         
         // Listens for "Deck Selected" and calls refreshData()
         NotificationCenter.default.addObserver(self, selector: #selector(DecksList.refreshData), name: NSNotification.Name(rawValue: "DeckSelected"), object: nil)
