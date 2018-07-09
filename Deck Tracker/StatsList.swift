@@ -81,6 +81,7 @@ class StatsList: UIViewController, UINavigationBarDelegate, UITableViewDelegate,
         
         readData()
         statsTable.reloadData()
+        refreshPlaceholderView()
     }
     
     // Deletes the row
@@ -90,6 +91,7 @@ class StatsList: UIViewController, UINavigationBarDelegate, UITableViewDelegate,
             TrackerData.sharedInstance.deleteGame(game)
             readData()
             self.statsTable.deleteRows(at: [indexPath], with: .fade)
+            refreshPlaceholderView()
         }
     }
     
@@ -113,5 +115,14 @@ class StatsList: UIViewController, UINavigationBarDelegate, UITableViewDelegate,
 
     @objc func updateNewGameButtonState() {
         newGameButton.isEnabled = TrackerData.sharedInstance.listOfDecks.count > 0
+    }
+    
+    fileprivate func refreshPlaceholderView() {
+        if statsTable.numberOfRows(inSection: 0) < 1 {
+            statsTable.backgroundView = PlaceholderView(with: PlaceholderText.noAnyGame)
+        }
+        else {
+            statsTable.backgroundView = nil
+        }
     }
 }

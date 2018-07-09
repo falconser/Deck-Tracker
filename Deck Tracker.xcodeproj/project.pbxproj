@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0938C8AE20F250CA00BCFC6B /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0938C8AD20F250CA00BCFC6B /* PlaceholderView.swift */; };
 		6D5960531AFCB2AD0039EE47 /* SelectDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5960521AFCB2AD0039EE47 /* SelectDate.swift */; };
 		6D5960551AFCD45E0039EE47 /* SelectDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5960541AFCD45E0039EE47 /* SelectDeck.swift */; };
 		6D5960571AFCD7880039EE47 /* SelectOpponentClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5960561AFCD7880039EE47 /* SelectOpponentClass.swift */; };
@@ -132,6 +133,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0938C8AD20F250CA00BCFC6B /* PlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
 		6D5960521AFCB2AD0039EE47 /* SelectDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDate.swift; sourceTree = "<group>"; };
 		6D5960541AFCD45E0039EE47 /* SelectDeck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDeck.swift; sourceTree = "<group>"; };
 		6D5960561AFCD7880039EE47 /* SelectOpponentClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectOpponentClass.swift; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 				8B957C031CAAB2DE0014D86B /* Deck Tracker WatchKit Extension-Bridging-Header.h */,
 				8B957C041CAAB2DE0014D86B /* Deck Tracker-Bridging-Header.h */,
 				6DDD44851AEF87B700A4B5D2 /* Supporting Files */,
+				0938C8AD20F250CA00BCFC6B /* PlaceholderView.swift */,
 			);
 			path = "Deck Tracker";
 			sourceTree = "<group>";
@@ -710,6 +713,7 @@
 				D25F98232044D73C004C939D /* KeyedUnarchiverMapper.swift in Sources */,
 				6DD866691B3D7E0F002E5D82 /* SelectTags.swift in Sources */,
 				6D5960531AFCB2AD0039EE47 /* SelectDate.swift in Sources */,
+				0938C8AE20F250CA00BCFC6B /* PlaceholderView.swift in Sources */,
 				6DDD448C1AEF87B700A4B5D2 /* StatsList.swift in Sources */,
 				D21553A22039A93C000B836C /* Commons.swift in Sources */,
 				6D5960571AFCD7880039EE47 /* SelectOpponentClass.swift in Sources */,
