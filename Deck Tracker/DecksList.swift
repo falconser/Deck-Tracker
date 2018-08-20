@@ -24,6 +24,8 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Remove table view separators after the last cell
+        decksTable.tableFooterView = UIView.init(frame: .zero)
         
         // Listens for "Deck Selected" and calls refreshData()
         NotificationCenter.default.addObserver(self, selector: #selector(DecksList.refreshData), name: NSNotification.Name(rawValue: "DeckSelected"), object: nil)
@@ -97,6 +99,7 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                 TrackerData.sharedInstance.deleteDeck(index)
                 self.readData()
                 self.decksTable.deleteRows(at: [indexPath], with: .fade)
+                self.refreshPlaceholderView()
                 
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
@@ -121,6 +124,17 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         readData()
         selectedDeck = TrackerData.sharedInstance.activeDeck
         decksTable.reloadData()
+        refreshPlaceholderView()
+
+    }
+    
+    fileprivate func refreshPlaceholderView() {
+        if decksTable.numberOfRows(inSection: 0) < 1 {
+            decksTable.backgroundView = PlaceholderView(with: PlaceholderText.noAnyGame)
+        }
+        else {
+            decksTable.backgroundView = nil
+        }
     }
 }
 

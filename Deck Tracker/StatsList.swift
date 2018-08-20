@@ -11,6 +11,8 @@ import UIKit
 class StatsList: UIViewController, UINavigationBarDelegate, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var statsTable: UITableView!
+    @IBOutlet weak var newGameButton: UIBarButtonItem!
+    
     
     var gamesList:[Game] = []
     static let sharedInstance = StatsList()
@@ -24,9 +26,13 @@ class StatsList: UIViewController, UINavigationBarDelegate, UITableViewDelegate,
         
         // Listens for "Game Added" and calls refreshData()
         NotificationCenter.default.addObserver(self, selector: #selector(StatsList.refreshData), name: NSNotification.Name(rawValue: "GameAdded"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(StatsList.updateNewGameButtonState), name: NSNotification.Name(rawValue: "DeckAdded"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(StatsList.updateNewGameButtonState), name: NSNotification.Name(rawValue: "DeckRemoved"), object: nil)
         
         // Removes the empty rows from view
         statsTable.tableFooterView = UIView(frame: CGRect.zero)
+        
+        updateNewGameButtonState()
     }
     
     // Cleans stuff up
@@ -75,6 +81,7 @@ class StatsList: UIViewController, UINavigationBarDelegate, UITableViewDelegate,
         
         readData()
         statsTable.reloadData()
+        refreshPlaceholderView()
     }
     
     // Deletes the row
@@ -84,6 +91,7 @@ class StatsList: UIViewController, UINavigationBarDelegate, UITableViewDelegate,
             TrackerData.sharedInstance.deleteGame(game)
             readData()
             self.statsTable.deleteRows(at: [indexPath], with: .fade)
+            refreshPlaceholderView()
         }
     }
     
@@ -105,4 +113,16 @@ class StatsList: UIViewController, UINavigationBarDelegate, UITableViewDelegate,
         }
     }
 
+    @objc func updateNewGameButtonState() {
+        newGameButton.isEnabled = TrackerData.sharedInstance.listOfDecks.count > 0
+    }
+    
+    fileprivate func refreshPlaceholderView() {
+        if statsTable.numberOfRows(inSection: 0) < 1 {
+            statsTable.backgroundView = PlaceholderView(with: PlaceholderText.noAnyGame)
+        }
+        else {
+            statsTable.backgroundView = nil
+        }
+    }
 }
