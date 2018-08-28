@@ -37,6 +37,11 @@ class DeckTrackerWatch: WKInterfaceController {
         print("Watch app started")
     }
 
+    func reset() {
+        game = Game()
+        updateInterface()
+    }
+    
     func updateInterface() {
         if let deck = game.playerDeck {
             colorCell(classToBeColored: deck.heroClass, button: selectDeckButton, opponent: false, deckName: deck.name)
@@ -62,6 +67,8 @@ class DeckTrackerWatch: WKInterfaceController {
         guard game.opponentClass != .Unknown else { return }
         game.date = Date()
         connectivityManager.saveGame(game)
+        
+        reset()
     }
     
     func colorCell (classToBeColored: Class, button:WKInterfaceButton, opponent:Bool, deckName:String) {
