@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         
         // Crashlytics
-        Fabric.with([Crashlytics()])
+//        Fabric.with([Crashlytics()])
         
         // Show page UI for graphs
         let pageControl = UIPageControl.appearance()

@@ -74,6 +74,7 @@
 		D25F982120436C03004C939D /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D61AA421AF784E20013EB04 /* Game.swift */; };
 		D25F98232044D73C004C939D /* KeyedUnarchiverMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25F98222044D73B004C939D /* KeyedUnarchiverMapper.swift */; };
 		D25F98242044D73C004C939D /* KeyedUnarchiverMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25F98222044D73B004C939D /* KeyedUnarchiverMapper.swift */; };
+		D2E3A913213610E200236DD2 /* DateGroupedGamesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E3A912213610E200236DD2 /* DateGroupedGamesDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -202,6 +203,7 @@
 		D21553A12039A93C000B836C /* Commons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commons.swift; sourceTree = "<group>"; };
 		D25F981E2043037C004C939D /* WatchConnectivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityManager.swift; sourceTree = "<group>"; };
 		D25F98222044D73B004C939D /* KeyedUnarchiverMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyedUnarchiverMapper.swift; sourceTree = "<group>"; };
+		D2E3A912213610E200236DD2 /* DateGroupedGamesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateGroupedGamesDataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -359,9 +361,9 @@
 				6D7C5B531B20273400E18252 /* Deck Tracker.entitlements */,
 				6DDD44871AEF87B700A4B5D2 /* AppDelegate.swift */,
 				6DDD44891AEF87B700A4B5D2 /* DecksList.swift */,
-				6DDD448B1AEF87B700A4B5D2 /* StatsList.swift */,
 				6D9538421B09E22400B4ED66 /* Graphs.swift */,
 				D21553A12039A93C000B836C /* Commons.swift */,
+				D2E3A911213610C600236DD2 /* Games List */,
 				6D2F2B511B4278BD00B267C9 /* Data */,
 				6D2F2B521B4278D300B267C9 /* Decks View */,
 				6D2F2B531B4278E400B267C9 /* Add New Game */,
@@ -455,6 +457,15 @@
 				8BFEA6F11BE0F091005DBC04 /* Info.plist */,
 			);
 			path = "Deck TrackerUITests";
+			sourceTree = "<group>";
+		};
+		D2E3A911213610C600236DD2 /* Games List */ = {
+			isa = PBXGroup;
+			children = (
+				6DDD448B1AEF87B700A4B5D2 /* StatsList.swift */,
+				D2E3A912213610E200236DD2 /* DateGroupedGamesDataSource.swift */,
+			);
+			name = "Games List";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -711,6 +722,7 @@
 				6DD844CB1AF8A86F00CF9C80 /* TrackerData.swift in Sources */,
 				8B634F691BD924B4003B95E5 /* GraphsCollectionCell.swift in Sources */,
 				D25F98232044D73C004C939D /* KeyedUnarchiverMapper.swift in Sources */,
+				D2E3A913213610E200236DD2 /* DateGroupedGamesDataSource.swift in Sources */,
 				6DD866691B3D7E0F002E5D82 /* SelectTags.swift in Sources */,
 				6D5960531AFCB2AD0039EE47 /* SelectDate.swift in Sources */,
 				0938C8AE20F250CA00BCFC6B /* PlaceholderView.swift in Sources */,

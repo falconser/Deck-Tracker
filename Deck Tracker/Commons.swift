@@ -27,4 +27,16 @@ extension Date {
         formatter.dateStyle = .short
         return formatter.string(from: self)
     }
+    
+    var morningDate: Date {
+        var comps = Calendar.current.dateComponents([.day, .month, .year], from: self)
+        comps.minute = 0
+        comps.second = 0
+        comps.hour = 0        
+        return Calendar.current.date(from: comps)!
+    }
+    
+    var dayNumber: Int {
+        return Int((timeIntervalSinceReferenceDate + TimeInterval(TimeZone.current.secondsFromGMT(for: self))) / (24 * 60 * 60))
+    }
 }
