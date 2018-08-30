@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Fabric
-import Crashlytics
 
 class AddDeck: UIViewController, UITextFieldDelegate, UINavigationBarDelegate {
 
@@ -78,13 +76,7 @@ class AddDeck: UIViewController, UITextFieldDelegate, UINavigationBarDelegate {
                 let newDeck = Deck(deckID: deckID, name: deckName, heroClass: deckSelected)
                 //println("Added: " + newDeck.toString())
                 TrackerData.sharedInstance.addDeck(newDeck)
-                self.dismiss(animated:true, completion: {})
-                
-                Answers.logCustomEvent(withName: "New deck added",
-                    customAttributes: [
-                        "Deck Name": deckName,
-                        "Deck Class": deckSelected
-                    ])
+                self.dismiss(animated:true, completion: {})                
             }
 
         } else {

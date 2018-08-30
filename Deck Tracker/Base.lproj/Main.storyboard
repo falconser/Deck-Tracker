@@ -157,11 +157,11 @@
                                             <constraints>
                                                 <constraint firstItem="Noi-et-kkh" firstAttribute="top" secondItem="CcP-rI-PJf" secondAttribute="topMargin" constant="-8" id="1hG-K6-aDP"/>
                                                 <constraint firstItem="iEH-Ok-oHU" firstAttribute="leading" secondItem="CcP-rI-PJf" secondAttribute="leading" id="79p-Dy-uCO"/>
-                                                <constraint firstItem="iEH-Ok-oHU" firstAttribute="leading" secondItem="CcP-rI-PJf" secondAttribute="leading" id="FeT-5d-K8q"/>
                                                 <constraint firstAttribute="bottom" secondItem="iEH-Ok-oHU" secondAttribute="bottom" id="Gjp-q3-BSW"/>
                                                 <constraint firstItem="Noi-et-kkh" firstAttribute="leading" secondItem="iEH-Ok-oHU" secondAttribute="trailing" constant="8" id="JLt-TQ-Ttp"/>
                                                 <constraint firstItem="y6r-7e-Ik2" firstAttribute="leading" secondItem="Iqc-BE-DMh" secondAttribute="trailing" constant="8" id="X2u-oF-AoS"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="y6r-7e-Ik2" secondAttribute="bottom" constant="-8" id="bpk-hi-Hef"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Eu9-cx-80g" secondAttribute="trailing" constant="20" symbolic="YES" id="c5d-Ih-Mfv"/>
                                                 <constraint firstItem="Eu9-cx-80g" firstAttribute="leading" secondItem="y6r-7e-Ik2" secondAttribute="trailing" constant="8" id="cKA-Dn-wCC"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Noi-et-kkh" secondAttribute="bottom" constant="-8" id="gjJ-8R-wPn"/>
                                                 <constraint firstItem="Eu9-cx-80g" firstAttribute="top" secondItem="CcP-rI-PJf" secondAttribute="topMargin" constant="3" id="iNH-lH-fsz"/>

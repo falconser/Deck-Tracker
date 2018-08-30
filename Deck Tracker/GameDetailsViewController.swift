@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Fabric
-import Crashlytics
 
 class GameDetailsViewController: UITableViewController, UINavigationBarDelegate  {
     
@@ -136,16 +134,6 @@ class GameDetailsViewController: UITableViewController, UINavigationBarDelegate 
             TrackerData.sharedInstance.editGame(game)
         }
     
-        Answers.logCustomEvent(withName: isNewGame ? "New game added" : "Game Edited",
-                               customAttributes: [
-                                "Deck Name": game.playerDeck!.name,
-                                "Deck Class": game.playerDeck!.heroClass.rawValue,
-                                "Opponent Class": game.opponentClass.rawValue,
-                                "Win": game.win ? "Win" : "Loss",
-                                "Tag": game.tags.isEmpty ? "No tags" : game.tags.joined(separator: ", "),
-                                "Added from": UIDevice.current.model])
-        
-
         self.performSegue(withIdentifier: "unwind.statList", sender: self)
     }
     
