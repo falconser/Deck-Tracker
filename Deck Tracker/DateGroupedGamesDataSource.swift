@@ -71,7 +71,20 @@ class DateGroupedGamesListDataSource: NSObject, GamesListDataSource {
             }
             
             TrackerData.sharedInstance.deleteGame(game)
+            
+
+            
+            tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .fade)
+            sections[indexPath.section].items.remove(at: indexPath.row)
+            
+            if tableView.numberOfRows(inSection: indexPath.section) == 1 {
+                tableView.deleteSections(IndexSet(integer: indexPath.section), with: .fade)
+                sections.remove(at: indexPath.section)
+            }
+            
+            tableView.endUpdates()
+            
         }
     }
     
