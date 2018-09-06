@@ -69,7 +69,7 @@ enum Class: String {
         }
     }
     
-    func color() -> UIColor {
+    func color() -> UIColor? {
         switch self {
         case .Warrior:
             return .init(rgbValue:0xCC0000)
@@ -90,7 +90,7 @@ enum Class: String {
         case .Priest:
             return .init(rgbValue:0x999999)
         default:
-            return .black
+            return nil
         }
     }
     func smallIcon() -> UIImage? {

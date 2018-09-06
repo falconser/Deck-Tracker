@@ -51,6 +51,7 @@ class DeckTrackerWatch: WKInterfaceController {
             colorCell(classToBeColored: game.opponentClass, button: selectOpponentButton, opponent: true, deckName: "")
             saveGameButton.setTitle("Save Game")
         } else {
+            colorCell(classToBeColored: .Unknown, button: selectOpponentButton, opponent: true, deckName: "")
             selectOpponentButton.setTitle("Select Opponent")
             saveGameButton.setTitle("Opponent Class Needed!")
         }
