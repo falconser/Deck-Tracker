@@ -38,23 +38,35 @@ class DeckTrackerWatch: WKInterfaceController {
     }
 
     func reset() {
-        game = Game()
+        game = Game(with: game.playerDeck)
+        
         updateInterface()
     }
     
     func updateInterface() {
+        var saveGameText: String?
+        
         if let deck = game.playerDeck {
             colorCell(classToBeColored: deck.heroClass, button: selectDeckButton, opponent: false, deckName: deck.name)
         }
+        else {
+            colorCell(classToBeColored: .Unknown, button: selectDeckButton, opponent: false, deckName: "")
+            selectDeckButton.setTitle("Select Deck")
+            saveGameText = saveGameText ?? "Select the deck"
+        }
+
         
         if game.opponentClass != .Unknown {
             colorCell(classToBeColored: game.opponentClass, button: selectOpponentButton, opponent: true, deckName: "")
-            saveGameButton.setTitle("Save Game")
+   
         } else {
             colorCell(classToBeColored: .Unknown, button: selectOpponentButton, opponent: true, deckName: "")
             selectOpponentButton.setTitle("Select Opponent")
-            saveGameButton.setTitle("Opponent Class Needed!")
+            saveGameText = saveGameText ?? "Select opponent's class"
         }
+        
+        saveGameButton.setTitle(saveGameText ?? "Save Game")
+        saveGameButton.setEnabled(true)
         
         if !game.tags.isEmpty {
             tagsButton.setTitle("Tags: " + game.tags.joined(separator: ", "))
@@ -66,10 +78,16 @@ class DeckTrackerWatch: WKInterfaceController {
     @objc @IBAction func saveButtonPressed() {
         guard game.playerDeck != nil else { return }
         guard game.opponentClass != .Unknown else { return }
+        
         game.date = Date()
         connectivityManager.saveGame(game)
         
-        reset()
+        saveGameButton.setTitle("Game Saved")
+        saveGameButton.setEnabled(false)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
+            self.reset()
+        }
     }
     
     func colorCell (classToBeColored: Class, button:WKInterfaceButton, opponent:Bool, deckName:String) {
