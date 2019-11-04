@@ -72,7 +72,7 @@ class StatsList: UIViewController, UINavigationBarDelegate, UITableViewDelegate 
     
     
     @IBAction func unwindToStatList(unwindSegue: UIStoryboardSegue) {
-        
+        refreshData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
