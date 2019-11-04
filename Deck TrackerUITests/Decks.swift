@@ -140,9 +140,9 @@ import XCTest
         addDeck(deckTitle: "Midrange", deckClass: "Druid")
         addDeck(deckTitle: "Midrange", deckClass: "Hunter")
         
-        app.alerts["Deck already exists"].staticTexts["Deck already exists"].exists
-        app.alerts["Deck already exists"].staticTexts["Deck name already exists"].exists
-        app.alerts["Deck already exists"].collectionViews.buttons["OK"].exists
+        XCTAssert(app.alerts["Deck already exists"].staticTexts["Deck already exists"].exists)
+        XCTAssert(app.alerts["Deck already exists"].staticTexts["Deck name already exists"].exists)
+        XCTAssert(app.alerts["Deck already exists"].collectionViews.buttons["OK"].exists)
         app.alerts["Deck already exists"].collectionViews.buttons["OK"].tap()
     }
     

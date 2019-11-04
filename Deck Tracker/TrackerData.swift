@@ -168,7 +168,7 @@ public class TrackerData: NSObject {
     
     // Replaces a game from the array
     func editGame(_ game:Game) {
-        guard let index = listOfGames.index(where: { $0.id == game.id }) else {
+        guard let index = listOfGames.firstIndex(where: { $0.id == game.id }) else {
             print("can't update game: \(game.description)")
             return
         }
@@ -324,7 +324,7 @@ extension TrackerData {
         }
     }
     func getStatisticsGamesTotal(date:Int, deck:String, opponent:String) -> [Game] {
-        var filteredGamesByDate = getDateArray(date)
+        let filteredGamesByDate = getDateArray(date)
         var selectedDeckName = ""
         var filteredGamesBySelectedDeck:[Game] = []
         var filteredGamesByOpponent:[Game] = []

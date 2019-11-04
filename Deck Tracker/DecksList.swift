@@ -57,7 +57,7 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     // Selects the row and saves the info so we can add a checkmark
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
-        cell?.accessoryType = UITableViewCellAccessoryType.checkmark
+        cell?.accessoryType = .checkmark
         let selectedDeck = decksList[indexPath.row]
         TrackerData.sharedInstance.activeDeck = selectedDeck
         navigationController?.popViewController(animated: true)
@@ -66,7 +66,7 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     // Deselects the row if you select another
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
-        cell?.accessoryType = UITableViewCellAccessoryType.none
+        cell?.accessoryType = .none
     }
 
     // Reads the data from Data file
@@ -75,7 +75,7 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     }
     
     // Deletes the row
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
             let index = indexPath.row
@@ -87,7 +87,7 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             let alertController = UIAlertController(title: "Delete games?", message: "Do you want also to delete all the games recorded with this deck ?", preferredStyle: .alert)
             
             // Create the actions
-            let okAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.destructive) {
+            let okAction = UIAlertAction(title: "Yes", style: .destructive) {
                 UIAlertAction in
                 NSLog("Yes Pressed")
                 
@@ -102,7 +102,7 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                 self.refreshPlaceholderView()
                 
             }
-            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {
                 UIAlertAction in
                 NSLog("Cancel Pressed")
                 // Delete the deck

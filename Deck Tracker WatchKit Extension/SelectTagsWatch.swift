@@ -82,7 +82,7 @@ class SelectTagsWatch: WKInterfaceController {
     }
     
     private func deselectTag(_ tag: String) {
-        guard let index = selectedTags.index(of: tag) else { return }
+        guard let index = selectedTags.firstIndex(of: tag) else { return }
         selectedTags.remove(at: index)
         if let didDeselectTag = didDeselectTag {
             didDeselectTag(tag)

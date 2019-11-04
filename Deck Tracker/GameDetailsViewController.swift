@@ -164,7 +164,7 @@ class GameDetailsViewController: UITableViewController, UINavigationBarDelegate 
                 self?.game.tags.append(tag)
             }
             tagsViewController.didDeselectTag = {[weak self] (tag: String) in
-                if let index = self?.game.tags.index(of: tag) {
+                if let index = self?.game.tags.firstIndex(of: tag) {
                     self?.game.tags.remove(at: index)
                 }
             }

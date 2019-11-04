@@ -95,8 +95,8 @@ class DeckTrackerWatch: WKInterfaceController {
         button.setBackgroundColor(classToBeColored.color())
         let text = opponent ? "Versus: \(classToBeColored)" : "Deck: \(deckName)"
         let attributedTitle = NSAttributedString(string: text,
-                                                 attributes: [NSAttributedStringKey.font: UIFont(name: "Helvetica Neue", size: 15.0)!,
-                                                              NSAttributedStringKey.foregroundColor: UIColor.green])
+                                                 attributes: [.font: UIFont(name: "Helvetica Neue", size: 15.0)!,
+                                                              .foregroundColor: UIColor.green])
         button.setAttributedTitle(attributedTitle)
     }
     
@@ -142,7 +142,7 @@ class DeckTrackerWatch: WKInterfaceController {
                 self.updateInterface()
             }
             context["didDeselectTag"] = { (tag: String) in
-                if let index = self.game.tags.index(of: tag) {
+                if let index = self.game.tags.firstIndex(of: tag) {
                     self.game.tags.remove(at: index)
                 }
                 self.updateInterface()

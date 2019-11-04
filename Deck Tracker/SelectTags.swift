@@ -74,7 +74,7 @@ class SelectTags: UITableViewController {
     }
     
     private func deselectTag(_ tag: String) {
-        guard let index = selectedTags.index(of: tag) else { return }
+        guard let index = selectedTags.firstIndex(of: tag) else { return }
         selectedTags.remove(at: index)
         if let didDeselectTag = didDeselectTag {
             didDeselectTag(tag)
@@ -121,7 +121,7 @@ class SelectTags: UITableViewController {
         self.present(alert, animated: true, completion: nil)
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         // Deletes the row
         if editingStyle == .delete {
             let tag = allTags[indexPath.row]

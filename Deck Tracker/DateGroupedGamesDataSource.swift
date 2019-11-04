@@ -64,7 +64,7 @@ class DateGroupedGamesListDataSource: NSObject, GamesListDataSource {
     }
     
     // Deletes the row
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             guard let game = game(at: indexPath) else {
                 return

@@ -79,12 +79,14 @@ class Game : NSObject, NSCoding {
     
     // Returns a string containing all the proprierties of the object
     func toString() -> String {
-        let dateString = date.appStringRepresentation()
-        
-        let coinString = String(stringInterpolationSegment: coin)
-        let winString = String(stringInterpolationSegment: win)
-        let idString = String(id)
-        let tagsString = tags.joined(separator: ", ")
-        return ("Game number: " + idString + ", date: " + dateString + ", Player Deck Name: " + String(describing: playerDeck?.name) + ", Opponent Deck: " + opponentClass.rawValue + ", Coin: " + coinString + ", Win: " + winString + ", Tags: " + tagsString)
+        return """
+        Game number: \(id),
+        date: \(date.appStringRepresentation()),
+        Player Deck Name: \(String(describing: playerDeck?.name)),
+        Opponent Deck: \(opponentClass.rawValue),
+        Coin: \(coin),
+        Win: \(win),
+        Tags: \(tags.joined(separator: ", "))
+        """
     }
 }

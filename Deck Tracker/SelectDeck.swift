@@ -66,7 +66,7 @@ class SelectDeck: UITableViewController {
     }
     
     // Deletes the row
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let index = indexPath.row
             TrackerData.sharedInstance.deleteDeck(index)

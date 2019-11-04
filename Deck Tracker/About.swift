@@ -20,7 +20,7 @@ class About: UIViewController {
     }
 
     @objc @IBAction func emailButtonPressed(_ sender:UIButton) {
-        let email = "raiden007@gmail.com"
+        let email = "falcon@awsmapps.com"
         let url = URL(string: "mailto:\(email)")
         UIApplication.shared.openURL(url!)
     }
