@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="BSa-1b-I34">
-                                <rect key="frame" x="0.0" y="56" width="375" height="541"/>
+                                <rect key="frame" x="0.0" y="56" width="375" height="591"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" restorationIdentifier="Cell" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="30U-Yw-0gy" customClass="CustomCell" customModule="Deck_Tracker" customModuleProvider="target">
@@ -70,7 +70,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="BSa-1b-I34" secondAttribute="trailing" constant="-16" id="0VV-0w-EVE"/>
                             <constraint firstAttribute="bottomMargin" secondItem="BSa-1b-I34" secondAttribute="bottom" constant="16" id="DVx-qw-5e4"/>
                             <constraint firstItem="BSa-1b-I34" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="-16" id="YFz-wx-BGi"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="BSa-1b-I34" secondAttribute="bottom" constant="50" id="YcJ-tX-bQW"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="BSa-1b-I34" secondAttribute="bottom" id="YcJ-tX-bQW"/>
                             <constraint firstItem="BSa-1b-I34" firstAttribute="top" secondItem="tsR-hK-woN" secondAttribute="topMargin" id="avi-Ov-R0Y"/>
                         </constraints>
                         <variation key="default">
