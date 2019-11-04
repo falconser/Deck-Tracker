@@ -95,12 +95,12 @@ class StatsList: UIViewController, UINavigationBarDelegate, UITableViewDelegate 
     }
     
     fileprivate func refreshPlaceholderView() {
-        if statsTable.numberOfSections == 0 {
-            statsTable.backgroundView = PlaceholderView(with: PlaceholderText.noAnyGame)
-        }
-        else {
+        guard statsTable.numberOfSections == 0 else {
             statsTable.backgroundView = nil
+            return;
         }
+        
+        statsTable.backgroundView = PlaceholderView(with: PlaceholderText.noAnyGame)
     }
     func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
         refreshPlaceholderView()
