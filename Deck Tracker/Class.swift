@@ -20,6 +20,7 @@ enum Class: String {
     case Warlock
     case Priest
     case Hunter
+    case DemonHunter
 
     init(_ str: String) {
         if str == "Warrior" {
@@ -40,6 +41,8 @@ enum Class: String {
             self = .Priest
         } else if str == "Hunter" {
             self = .Hunter
+        } else if str == "DemonHunter" {
+            self = .DemonHunter
         } else {
             self = .Unknown
         }
@@ -64,6 +67,8 @@ enum Class: String {
             return "PriestSmall"
         case .Hunter:
             return "HunterSmall"
+        case .DemonHunter:
+            return "DemonHunterSmall"
         default:
             return ""
         }
@@ -72,23 +77,25 @@ enum Class: String {
     func color() -> UIColor? {
         switch self {
         case .Warrior:
-            return .init(rgbValue:0xCC0000)
+            return .init(rgbValue: 0xCC0000)
         case .Paladin:
-            return .init(rgbValue:0xCCC333)
+            return .init(rgbValue: 0xCCC333)
         case .Shaman:
-            return .init(rgbValue:0x3366CC)
+            return .init(rgbValue: 0x3366CC)
         case .Hunter:
-            return .init(rgbValue:0x339933)
+            return .init(rgbValue: 0x339933)
         case .Druid:
-            return .init(rgbValue:0x990000)
+            return .init(rgbValue: 0x990000)
         case .Rogue:
-            return .init(rgbValue:0x666666)
+            return .init(rgbValue: 0x666666)
         case .Warlock:
-            return .init(rgbValue:0x9900CC)
+            return .init(rgbValue: 0x8787ED)
         case .Mage:
-            return .init(rgbValue:0x009999)
+            return .init(rgbValue: 0x009999)
         case .Priest:
-            return .init(rgbValue:0x999999)
+            return .init(rgbValue: 0x999999)
+        case .DemonHunter:
+            return .init(rgbValue: 0xA330C9)
         default:
             return nil
         }

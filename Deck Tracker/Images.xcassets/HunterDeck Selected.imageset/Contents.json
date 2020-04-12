@@ -2,22 +2,21 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "HunterDeck Selected.png"
+      "scale" : "1x"
     },
     {
+      "filename" : "hunter-selected@2x.png",
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "HunterDeck Selected@2x.png"
+      "scale" : "2x"
     },
     {
+      "filename" : "hunter-selected@3x.png",
       "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "HunterDeck Selected@3x.png"
+      "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

@@ -81,7 +81,7 @@ class GraphsCollectionView: UICollectionViewController {
     }
     
     private func getStatistics() {
-        let opponentClasses: [Class?] = [nil, .Warrior, .Paladin, .Shaman, .Hunter, .Druid, .Rogue, .Mage, .Warlock, .Priest]
+        let opponentClasses: [Class?] = [nil, .Warrior, .Paladin, .Shaman, .Hunter, .Druid, .Rogue, .Mage, .Warlock, .Priest, .DemonHunter]
     
         statisticData = opponentClasses.map { getStatisticsVs(opponent: $0) }
     }

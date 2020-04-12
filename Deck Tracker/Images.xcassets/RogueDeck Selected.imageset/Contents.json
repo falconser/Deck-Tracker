@@ -2,22 +2,21 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "RogueDeck Selected.png"
+      "scale" : "1x"
     },
     {
+      "filename" : "rogue-selected@2x.png",
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "RogueDeck Selected@2x.png"
+      "scale" : "2x"
     },
     {
+      "filename" : "rogue-selected@3x.png",
       "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "RogueDeck Selected@3x.png"
+      "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

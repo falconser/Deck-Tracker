@@ -11,18 +11,21 @@ import UIKit
 class AddDeck: UIViewController, UITextFieldDelegate, UINavigationBarDelegate {
 
     @IBOutlet var cancelButton: UIBarButtonItem!
-    @IBOutlet var deck1: UIButton!
     @IBOutlet var saveButton: UIBarButtonItem!
-    @IBOutlet var deck2: UIButton!
-    @IBOutlet var deck3: UIButton!
-    @IBOutlet var deck4: UIButton!
-    @IBOutlet var deck5: UIButton!
-    @IBOutlet var deck6: UIButton!
-    @IBOutlet var deck7: UIButton!
-    @IBOutlet var deck8: UIButton!
-    @IBOutlet var deck9: UIButton!
-    @IBOutlet var deckNameTxtField: UITextField!
+    @IBOutlet var warriorClassButton: UIButton!
+    @IBOutlet var paladinClassButton: UIButton!
+    @IBOutlet var shamanClassButton: UIButton!
+    @IBOutlet var hunterClassButton: UIButton!
+    @IBOutlet var druidClassButton: UIButton!
+    @IBOutlet var rogueClassButton: UIButton!
+    @IBOutlet var mageClassButton: UIButton!
+    @IBOutlet var warlockClassButton: UIButton!
+    @IBOutlet var priestClassButton: UIButton!
+    @IBOutlet var demonHunterClassButton: UIButton!
     
+    @IBOutlet var classButtons: [UIButton]!
+    
+    @IBOutlet var deckNameTxtField: UITextField!
     var deckClass:String = ""
     var deckID = 0
 
@@ -34,12 +37,6 @@ class AddDeck: UIViewController, UITextFieldDelegate, UINavigationBarDelegate {
         // Do any additional setup after loading the view.
         self.deckNameTxtField.delegate = self
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     
     // Cancel button is pressed
     @objc @IBAction func cancelButtonPressed(_ sender:UIBarButtonItem) {
@@ -51,48 +48,44 @@ class AddDeck: UIViewController, UITextFieldDelegate, UINavigationBarDelegate {
         // Get the atributes from the user
         let deckName:String = deckNameTxtField.text!
         let deckSelected = selectedDeck()
+        
+        guard deckSelected != "" && deckName != "" else {
+            let alert = UIAlertController(title: "Error",
+                                                  message: nil,
+                                                  preferredStyle: .alert)
+            alert.addAction(.init(title: "OK", style: .cancel))
+            
+            
+            if deckSelected == "" {
+                alert.message = "Please select the class"
+            }
+            else {
+                alert.message = "Please enter a name"
+            }
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        
         // Loads and increments the deck ID then saves the new ID
         readDeckID()
         deckID += 1
         setDeckID()
         // Create a new Deck object and add it to the deck array
-        if deckName != "" && deckSelected != "" {
-            var deckNameAlreadyExists = false
-            let deckList = TrackerData.sharedInstance.listOfDecks
-            
-            for deck in deckList {
-                if deck.name.lowercased() == deckName.lowercased() {
-                    deckNameAlreadyExists = true
-                }
-            }
-            
-            if deckNameAlreadyExists == true {
-                let alert = UIAlertController(title: "Deck already exists",
-                                              message: "Deck name already exists",
-                                              preferredStyle: .alert)
-                alert.addAction(.init(title: "OK", style: .cancel))
-                present(alert, animated: true, completion: nil)
-            } else {
-                let newDeck = Deck(deckID: deckID, name: deckName, heroClass: deckSelected)
-                //println("Added: " + newDeck.toString())
-                TrackerData.sharedInstance.addDeck(newDeck)
-                self.dismiss(animated:true, completion: {})                
-            }
-
-        } else {
-            let alert = UIAlertController(title: "Error",
-                                          message: nil,
+        let deckList = TrackerData.sharedInstance.listOfDecks
+        guard nil == deckList.first(where:{ $0.name.lowercased() == deckName.lowercased() }) else {
+            let alert = UIAlertController(title: "Deck already exists",
+                                          message: "Deck name already exists",
                                           preferredStyle: .alert)
             alert.addAction(.init(title: "OK", style: .cancel))
-            if deckName == "" && deckSelected == "" {
-                alert.message = "Please enter a name and select a class"
-            } else if deckSelected == "" {
-                alert.message = "No Deck Selected"
-            } else if deckName == "" {
-                alert.message = "Please enter a name"
-            }
             present(alert, animated: true, completion: nil)
+            return
         }
+        
+        let newDeck = Deck(deckID: deckID, name: deckName, heroClass: deckSelected)
+        //println("Added: " + newDeck.toString())
+        TrackerData.sharedInstance.addDeck(newDeck)
+        self.dismiss(animated:true, completion: {})
+        
     }
     
     // Reads the saved Deck ID from iCloud or local storage
@@ -113,87 +106,33 @@ class AddDeck: UIViewController, UITextFieldDelegate, UINavigationBarDelegate {
         iCloudKeyStore.synchronize()
     }
     
-   
-    @objc @IBAction func deck1Pressed(_ sender:UIButton) {
-        self.deselectAll()
-        deck1.isSelected = true
-    }
-    
-    
-    @objc @IBAction func deck2Pressed(_ sender:UIButton) {
-        self.deselectAll()
-        deck2.isSelected = true
-    }
-    
-    @objc @IBAction func deck3Pressed(_ sender:UIButton) {
-        self.deselectAll()
-        deck3.isSelected = true
-    }
-    
-    @objc @IBAction func deck4Pressed(_ sender:UIButton) {
-        self.deselectAll()
-        deck4.isSelected = true
-    }
-    
-    @objc @IBAction func deck5Pressed(_ sender:UIButton) {
-        self.deselectAll()
-        deck5.isSelected = true
-    }
-    
-    @objc @IBAction func deck6Pressed(_ sender:UIButton) {
-        self.deselectAll()
-        deck6.isSelected = true
-    }
-    
-    @objc @IBAction func deck7Pressed(_ sender:UIButton) {
-        self.deselectAll()
-        deck7.isSelected = true
-    }
-    
-    @objc @IBAction func deck8Pressed(_ sender:UIButton) {
-        self.deselectAll()
-        deck8.isSelected = true
-    }
-    
-    @objc @IBAction func deck9Pressed(_ sender:UIButton) {
-        self.deselectAll()
-        deck9.isSelected = true
-    }
-    
-    // Deselects all decks
-    func deselectAll () {
-        deck1.isSelected = false
-        deck2.isSelected = false
-        deck3.isSelected = false
-        deck4.isSelected = false
-        deck5.isSelected = false
-        deck6.isSelected = false
-        deck7.isSelected = false
-        deck8.isSelected = false
-        deck9.isSelected = false
-        
+    @objc @IBAction func classSelected(_ classButton: UIButton) {
+        classButtons.forEach { $0.isSelected = false }
+        classButton.isSelected = true
     }
     
     // Returns the selected deck class
     func selectedDeck() -> String {
-        if deck1.isSelected == true {
+        if warriorClassButton.isSelected == true {
             return "Warrior"
-        } else if deck2.isSelected == true {
+        } else if paladinClassButton.isSelected == true {
             return "Paladin"
-        } else if deck3.isSelected == true {
+        } else if shamanClassButton.isSelected == true {
             return "Shaman"
-        } else if deck4.isSelected == true {
+        } else if hunterClassButton.isSelected == true {
             return "Hunter"
-        } else if deck5.isSelected == true {
+        } else if druidClassButton.isSelected == true {
             return "Druid"
-        } else if deck6.isSelected == true {
+        } else if rogueClassButton.isSelected == true {
             return "Rogue"
-        } else if deck7.isSelected == true {
+        } else if mageClassButton.isSelected == true {
             return "Mage"
-        } else if deck8.isSelected == true {
+        } else if warlockClassButton.isSelected == true {
             return "Warlock"
-        } else if deck9.isSelected == true {
+        } else if priestClassButton.isSelected == true {
             return "Priest"
+        } else if demonHunterClassButton.isSelected == true {
+            return "DemonHunter"
         } else {
             return ""
         }

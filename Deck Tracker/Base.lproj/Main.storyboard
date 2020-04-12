@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -211,7 +211,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Games List" id="1iY-av-n8O">
                         <barButtonItem key="leftBarButtonItem" id="2TH-yN-wX9">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="P3w-Br-9Qo">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="P3w-Br-9Qo">
                                 <rect key="frame" x="16" y="10" width="25" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal">
@@ -280,219 +280,136 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3j1-Yi-Phn" userLabel="Decks1-3">
-                                <rect key="frame" x="16" y="177" width="343" height="62.5"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3j1-Yi-Phn" userLabel="Classes">
+                                <rect key="frame" x="16" y="177" width="343" height="462"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Co6-XH-ltJ" userLabel="Deck1">
-                                        <rect key="frame" x="23" y="0.0" width="62.5" height="62.5"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Co6-XH-ltJ" userLabel="Warrior">
+                                        <rect key="frame" x="22" y="104" width="64" height="64"/>
                                         <state key="normal" image="WarriorSmall">
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <state key="selected" image="WarriorDeck Selected"/>
-                                        <state key="highlighted" image="WarriorDeck Selected"/>
                                         <connections>
-                                            <action selector="deck1Pressed:" destination="3Yx-eb-t7J" eventType="touchUpInside" id="rOY-bd-9yt"/>
+                                            <action selector="classSelected:" destination="3Yx-eb-t7J" eventType="touchUpInside" id="9QD-8v-0Lc"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xt4-2t-TWk" userLabel="Deck3">
-                                        <rect key="frame" x="258" y="0.0" width="62.5" height="62.5"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xt4-2t-TWk" userLabel="Shaman">
+                                        <rect key="frame" x="257" y="104" width="64" height="64"/>
                                         <state key="normal" image="ShamanSmall">
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <state key="selected" image="ShamanDeck Selected"/>
-                                        <state key="highlighted" image="ShamanDeck Selected"/>
                                         <connections>
-                                            <action selector="deck3Pressed:" destination="3Yx-eb-t7J" eventType="touchUpInside" id="ul3-Ub-KB0"/>
+                                            <action selector="classSelected:" destination="3Yx-eb-t7J" eventType="touchUpInside" id="rlS-Lo-vl3"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j7i-ge-HI9" userLabel="Deck2">
-                                        <rect key="frame" x="140.5" y="0.0" width="62.5" height="62.5"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j7i-ge-HI9" userLabel="Paladin">
+                                        <rect key="frame" x="139.5" y="104" width="64" height="64"/>
                                         <state key="normal" image="PaladinSmall">
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <state key="selected" image="PaladinDeck Selected"/>
-                                        <state key="highlighted" image="PaladinDeck Selected"/>
                                         <connections>
-                                            <action selector="deck2Pressed:" destination="3Yx-eb-t7J" eventType="touchUpInside" id="Y8D-R5-dwf"/>
+                                            <action selector="classSelected:" destination="3Yx-eb-t7J" eventType="touchUpInside" id="wdK-F4-rfu"/>
                                         </connections>
                                     </button>
-                                </subviews>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="centerX" secondItem="j7i-ge-HI9" secondAttribute="centerX" id="0ea-H4-QLf"/>
-                                    <constraint firstAttribute="bottom" secondItem="j7i-ge-HI9" secondAttribute="bottom" id="1xT-jX-Cf7"/>
-                                    <constraint firstItem="j7i-ge-HI9" firstAttribute="top" secondItem="Co6-XH-ltJ" secondAttribute="top" id="3PB-tu-gcy"/>
-                                    <constraint firstItem="Co6-XH-ltJ" firstAttribute="leading" secondItem="3j1-Yi-Phn" secondAttribute="leading" id="5R5-qs-Iq3"/>
-                                    <constraint firstAttribute="trailing" secondItem="xt4-2t-TWk" secondAttribute="trailing" id="E7q-IV-sUq"/>
-                                    <constraint firstItem="j7i-ge-HI9" firstAttribute="top" secondItem="3j1-Yi-Phn" secondAttribute="top" id="Fkj-Nk-reh"/>
-                                    <constraint firstItem="j7i-ge-HI9" firstAttribute="top" secondItem="xt4-2t-TWk" secondAttribute="top" id="HSW-Cb-R1l"/>
-                                    <constraint firstItem="Co6-XH-ltJ" firstAttribute="leading" secondItem="3j1-Yi-Phn" secondAttribute="leading" id="Kvx-Tr-WIg"/>
-                                    <constraint firstItem="xt4-2t-TWk" firstAttribute="leading" secondItem="j7i-ge-HI9" secondAttribute="trailing" constant="55" id="LkE-vK-6ia"/>
-                                    <constraint firstItem="Co6-XH-ltJ" firstAttribute="top" secondItem="3j1-Yi-Phn" secondAttribute="top" id="NCU-NU-yEG"/>
-                                    <constraint firstAttribute="bottom" secondItem="j7i-ge-HI9" secondAttribute="bottom" id="NjD-Nu-GYw"/>
-                                    <constraint firstAttribute="bottom" secondItem="xt4-2t-TWk" secondAttribute="bottom" id="PBJ-NM-N9K"/>
-                                    <constraint firstItem="xt4-2t-TWk" firstAttribute="leading" secondItem="j7i-ge-HI9" secondAttribute="trailing" constant="8" symbolic="YES" id="XaC-Mx-Cfe"/>
-                                    <constraint firstItem="j7i-ge-HI9" firstAttribute="leading" secondItem="Co6-XH-ltJ" secondAttribute="trailing" constant="55" id="Y7J-PF-tbP"/>
-                                    <constraint firstItem="j7i-ge-HI9" firstAttribute="top" secondItem="3j1-Yi-Phn" secondAttribute="top" id="YCY-Q0-bd7"/>
-                                    <constraint firstItem="j7i-ge-HI9" firstAttribute="leading" secondItem="Co6-XH-ltJ" secondAttribute="trailing" constant="8" symbolic="YES" id="cEk-cZ-Zod"/>
-                                    <constraint firstAttribute="bottom" secondItem="Co6-XH-ltJ" secondAttribute="bottom" id="lLC-QI-Ntf"/>
-                                    <constraint firstAttribute="trailing" secondItem="xt4-2t-TWk" secondAttribute="trailing" id="mSL-Cq-tvC"/>
-                                    <constraint firstItem="xt4-2t-TWk" firstAttribute="top" secondItem="3j1-Yi-Phn" secondAttribute="top" id="uWQ-rH-lwm"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="5R5-qs-Iq3"/>
-                                        <exclude reference="Kvx-Tr-WIg"/>
-                                        <exclude reference="3PB-tu-gcy"/>
-                                        <exclude reference="Fkj-Nk-reh"/>
-                                        <exclude reference="HSW-Cb-R1l"/>
-                                        <exclude reference="NjD-Nu-GYw"/>
-                                        <exclude reference="cEk-cZ-Zod"/>
-                                        <exclude reference="E7q-IV-sUq"/>
-                                        <exclude reference="XaC-Mx-Cfe"/>
-                                        <exclude reference="mSL-Cq-tvC"/>
-                                    </mask>
-                                </variation>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Okm-0e-dbF" userLabel="Decks4-6">
-                                <rect key="frame" x="16" y="279.5" width="343" height="62.5"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wez-eH-G08" userLabel="Deck4">
-                                        <rect key="frame" x="23" y="0.0" width="62.5" height="62.5"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wez-eH-G08" userLabel="Hunter">
+                                        <rect key="frame" x="257" y="272" width="64" height="64"/>
                                         <state key="normal" image="HunterSmall">
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <state key="selected" image="HunterDeck Selected"/>
-                                        <state key="highlighted" image="HunterDeck Selected"/>
                                         <connections>
-                                            <action selector="deck4Pressed:" destination="3Yx-eb-t7J" eventType="touchUpInside" id="Iga-Mo-aL8"/>
+                                            <action selector="classSelected:" destination="3Yx-eb-t7J" eventType="touchUpInside" id="Vc9-T5-eBn"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ikv-3V-8nN" userLabel="Deck5">
-                                        <rect key="frame" x="140.5" y="0.0" width="62.5" height="62.5"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ikv-3V-8nN" userLabel="Druid">
+                                        <rect key="frame" x="22" y="272" width="64" height="64"/>
                                         <state key="normal" image="DruidSmall">
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <state key="selected" image="DruidDeck Selected"/>
-                                        <state key="highlighted" image="DruidDeck Selected"/>
                                         <connections>
-                                            <action selector="deck5Pressed:" destination="3Yx-eb-t7J" eventType="touchUpInside" id="DMa-HE-Z8a"/>
+                                            <action selector="classSelected:" destination="3Yx-eb-t7J" eventType="touchUpInside" id="NVn-xC-HJV"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ecH-z3-Kad" userLabel="Deck6">
-                                        <rect key="frame" x="258" y="0.0" width="62.5" height="62.5"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ecH-z3-Kad" userLabel="Rogue">
+                                        <rect key="frame" x="139.5" y="272" width="64" height="64"/>
                                         <state key="normal" image="RogueSmall">
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <state key="selected" image="RogueDeck Selected"/>
-                                        <state key="highlighted" image="RogueDeck Selected"/>
                                         <connections>
-                                            <action selector="deck6Pressed:" destination="3Yx-eb-t7J" eventType="touchUpInside" id="ant-XE-Tn1"/>
+                                            <action selector="classSelected:" destination="3Yx-eb-t7J" eventType="touchUpInside" id="4fW-q7-80t"/>
                                         </connections>
                                     </button>
-                                </subviews>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstItem="ecH-z3-Kad" firstAttribute="leading" secondItem="ikv-3V-8nN" secondAttribute="trailing" constant="55" id="8E5-Uc-UCA"/>
-                                    <constraint firstItem="ikv-3V-8nN" firstAttribute="leading" secondItem="Wez-eH-G08" secondAttribute="trailing" constant="55" id="H4b-om-psl"/>
-                                    <constraint firstItem="Wez-eH-G08" firstAttribute="leading" secondItem="Okm-0e-dbF" secondAttribute="leading" id="JIh-U4-Fpl"/>
-                                    <constraint firstItem="ecH-z3-Kad" firstAttribute="top" secondItem="Okm-0e-dbF" secondAttribute="top" id="LLN-DW-V3Z"/>
-                                    <constraint firstItem="ikv-3V-8nN" firstAttribute="top" secondItem="ecH-z3-Kad" secondAttribute="top" id="S5O-No-DWC"/>
-                                    <constraint firstAttribute="bottom" secondItem="Wez-eH-G08" secondAttribute="bottom" id="VE2-Ej-hf4"/>
-                                    <constraint firstItem="ecH-z3-Kad" firstAttribute="leading" secondItem="ikv-3V-8nN" secondAttribute="trailing" constant="8" symbolic="YES" id="Vqc-Sg-JGL"/>
-                                    <constraint firstAttribute="bottom" secondItem="ecH-z3-Kad" secondAttribute="bottom" id="Znb-0z-vjW"/>
-                                    <constraint firstAttribute="centerX" secondItem="ikv-3V-8nN" secondAttribute="centerX" id="aDr-6R-2uz"/>
-                                    <constraint firstItem="ikv-3V-8nN" firstAttribute="top" secondItem="Wez-eH-G08" secondAttribute="top" id="jlv-oc-X4W"/>
-                                    <constraint firstAttribute="bottom" secondItem="ikv-3V-8nN" secondAttribute="bottom" id="lAW-Jd-2uo"/>
-                                    <constraint firstAttribute="bottom" secondItem="ikv-3V-8nN" secondAttribute="bottom" id="nv4-Lp-Ddm"/>
-                                    <constraint firstItem="ikv-3V-8nN" firstAttribute="top" secondItem="Okm-0e-dbF" secondAttribute="top" id="oIL-S0-I85"/>
-                                    <constraint firstItem="ikv-3V-8nN" firstAttribute="leading" secondItem="Wez-eH-G08" secondAttribute="trailing" constant="8" symbolic="YES" id="q3o-bk-2aq"/>
-                                    <constraint firstAttribute="trailing" secondItem="ecH-z3-Kad" secondAttribute="trailing" id="tbe-ej-Ic6"/>
-                                    <constraint firstItem="ikv-3V-8nN" firstAttribute="top" secondItem="Okm-0e-dbF" secondAttribute="top" id="x2b-Mj-0P7"/>
-                                    <constraint firstItem="Wez-eH-G08" firstAttribute="top" secondItem="Okm-0e-dbF" secondAttribute="top" id="y1U-ws-33g"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="JIh-U4-Fpl"/>
-                                        <exclude reference="S5O-No-DWC"/>
-                                        <exclude reference="jlv-oc-X4W"/>
-                                        <exclude reference="nv4-Lp-Ddm"/>
-                                        <exclude reference="q3o-bk-2aq"/>
-                                        <exclude reference="x2b-Mj-0P7"/>
-                                        <exclude reference="Vqc-Sg-JGL"/>
-                                        <exclude reference="tbe-ej-Ic6"/>
-                                    </mask>
-                                </variation>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6zt-lT-XdG" userLabel="Decks7-9">
-                                <rect key="frame" x="16" y="382" width="343" height="62.5"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LLI-Ze-ujl" userLabel="Deck7">
-                                        <rect key="frame" x="23" y="0.0" width="62.5" height="62.5"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LLI-Ze-ujl" userLabel="Mage">
+                                        <rect key="frame" x="22" y="188" width="64" height="64"/>
                                         <state key="normal" image="MageSmall">
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <state key="selected" image="MageDeck Selected"/>
-                                        <state key="highlighted" image="MageDeck Selected"/>
                                         <connections>
-                                            <action selector="deck7Pressed:" destination="3Yx-eb-t7J" eventType="touchUpInside" id="6zX-5X-xZi"/>
+                                            <action selector="classSelected:" destination="3Yx-eb-t7J" eventType="touchUpInside" id="VjX-0i-5MM"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5T1-Td-dcw" userLabel="Deck8">
-                                        <rect key="frame" x="140.5" y="0.0" width="62.5" height="62.5"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5T1-Td-dcw" userLabel="Warlock">
+                                        <rect key="frame" x="257" y="188" width="64" height="64"/>
                                         <state key="normal" image="WarlockSmall">
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <state key="selected" image="WarlockDeck Selected"/>
-                                        <state key="highlighted" image="WarlockDeck Selected"/>
                                         <connections>
-                                            <action selector="deck8Pressed:" destination="3Yx-eb-t7J" eventType="touchUpInside" id="iyF-gk-8We"/>
+                                            <action selector="classSelected:" destination="3Yx-eb-t7J" eventType="touchUpInside" id="47I-Fm-Neg"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eqM-Ct-2vN" userLabel="Deck9">
-                                        <rect key="frame" x="258" y="0.0" width="62.5" height="62.5"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eqM-Ct-2vN" userLabel="Priest">
+                                        <rect key="frame" x="139.5" y="188" width="64" height="64"/>
                                         <state key="normal" image="PriestSmall">
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <state key="selected" image="PriestDeck Selected"/>
-                                        <state key="highlighted" image="PriestDeck Selected"/>
                                         <connections>
-                                            <action selector="deck9Pressed:" destination="3Yx-eb-t7J" eventType="touchUpInside" id="yeD-O9-BhR"/>
+                                            <action selector="classSelected:" destination="3Yx-eb-t7J" eventType="touchUpInside" id="OOo-di-O3r"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hxe-w5-X8c" userLabel="Demon Hunter">
+                                        <rect key="frame" x="139.5" y="20" width="64" height="64"/>
+                                        <state key="normal" image="DemonHunterSmall">
+                                            <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <state key="selected" image="DemonHunterDeck Selected"/>
+                                        <connections>
+                                            <action selector="classSelected:" destination="3Yx-eb-t7J" eventType="touchUpInside" id="FaP-xs-LED"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="5T1-Td-dcw" firstAttribute="top" secondItem="LLI-Ze-ujl" secondAttribute="top" id="2B9-nh-54G"/>
-                                    <constraint firstAttribute="trailing" secondItem="eqM-Ct-2vN" secondAttribute="trailing" id="9lU-f7-IPe"/>
-                                    <constraint firstItem="eqM-Ct-2vN" firstAttribute="leading" secondItem="5T1-Td-dcw" secondAttribute="trailing" constant="55" id="9xe-Sg-ozt"/>
-                                    <constraint firstItem="LLI-Ze-ujl" firstAttribute="leading" secondItem="6zt-lT-XdG" secondAttribute="leading" id="C0w-mM-Kf6"/>
-                                    <constraint firstAttribute="bottom" secondItem="LLI-Ze-ujl" secondAttribute="bottom" id="FqI-Xa-wME"/>
-                                    <constraint firstItem="LLI-Ze-ujl" firstAttribute="top" secondItem="6zt-lT-XdG" secondAttribute="top" id="ITG-1g-pgw"/>
-                                    <constraint firstItem="5T1-Td-dcw" firstAttribute="top" secondItem="6zt-lT-XdG" secondAttribute="top" id="JtE-r1-9SI"/>
-                                    <constraint firstItem="5T1-Td-dcw" firstAttribute="top" secondItem="eqM-Ct-2vN" secondAttribute="top" id="KSt-aR-6u9"/>
-                                    <constraint firstAttribute="bottom" secondItem="5T1-Td-dcw" secondAttribute="bottom" id="N08-oz-gAV"/>
-                                    <constraint firstItem="5T1-Td-dcw" firstAttribute="top" secondItem="6zt-lT-XdG" secondAttribute="top" id="SLU-N3-XYU"/>
-                                    <constraint firstItem="5T1-Td-dcw" firstAttribute="leading" secondItem="LLI-Ze-ujl" secondAttribute="trailing" constant="8" symbolic="YES" id="Sf9-Yw-4Md"/>
-                                    <constraint firstItem="eqM-Ct-2vN" firstAttribute="leading" secondItem="5T1-Td-dcw" secondAttribute="trailing" constant="8" symbolic="YES" id="U1J-la-VYY"/>
-                                    <constraint firstAttribute="centerX" secondItem="5T1-Td-dcw" secondAttribute="centerX" id="VV2-gR-cAR"/>
-                                    <constraint firstAttribute="bottom" secondItem="5T1-Td-dcw" secondAttribute="bottom" id="ja2-Vk-FCn"/>
-                                    <constraint firstAttribute="bottom" secondItem="eqM-Ct-2vN" secondAttribute="bottom" id="jh2-Eo-8tw"/>
-                                    <constraint firstItem="5T1-Td-dcw" firstAttribute="leading" secondItem="LLI-Ze-ujl" secondAttribute="trailing" constant="55" id="jqq-5e-ffF"/>
-                                    <constraint firstItem="eqM-Ct-2vN" firstAttribute="top" secondItem="6zt-lT-XdG" secondAttribute="top" id="kiP-xz-NEu"/>
+                                    <constraint firstItem="hxe-w5-X8c" firstAttribute="top" secondItem="3j1-Yi-Phn" secondAttribute="top" constant="20" id="0n9-05-rEX"/>
+                                    <constraint firstItem="ecH-z3-Kad" firstAttribute="centerY" secondItem="ikv-3V-8nN" secondAttribute="centerY" id="3Oe-O9-7lB"/>
+                                    <constraint firstItem="ecH-z3-Kad" firstAttribute="top" secondItem="eqM-Ct-2vN" secondAttribute="bottom" constant="20" id="5hi-ae-dNK"/>
+                                    <constraint firstItem="j7i-ge-HI9" firstAttribute="centerX" secondItem="hxe-w5-X8c" secondAttribute="centerX" id="79a-1n-sqZ"/>
+                                    <constraint firstItem="j7i-ge-HI9" firstAttribute="top" secondItem="hxe-w5-X8c" secondAttribute="bottom" constant="20" id="B08-pH-xUL"/>
+                                    <constraint firstAttribute="trailing" secondItem="xt4-2t-TWk" secondAttribute="trailing" constant="22" id="CUe-4x-g5Z"/>
+                                    <constraint firstItem="5T1-Td-dcw" firstAttribute="centerX" secondItem="xt4-2t-TWk" secondAttribute="centerX" id="Ic2-EQ-lXZ"/>
+                                    <constraint firstItem="Wez-eH-G08" firstAttribute="centerX" secondItem="xt4-2t-TWk" secondAttribute="centerX" id="LP4-zG-JnU"/>
+                                    <constraint firstItem="eqM-Ct-2vN" firstAttribute="top" secondItem="j7i-ge-HI9" secondAttribute="bottom" constant="20" id="O4c-aM-Cjz"/>
+                                    <constraint firstItem="ecH-z3-Kad" firstAttribute="centerX" secondItem="hxe-w5-X8c" secondAttribute="centerX" id="OPR-yK-IpZ"/>
+                                    <constraint firstItem="j7i-ge-HI9" firstAttribute="top" secondItem="hxe-w5-X8c" secondAttribute="bottom" constant="20" id="OUB-wL-boK"/>
+                                    <constraint firstItem="ikv-3V-8nN" firstAttribute="centerX" secondItem="Co6-XH-ltJ" secondAttribute="centerX" id="Sdy-nT-etn"/>
+                                    <constraint firstItem="Co6-XH-ltJ" firstAttribute="leading" secondItem="3j1-Yi-Phn" secondAttribute="leading" constant="22" id="TTk-iL-PQs"/>
+                                    <constraint firstItem="hxe-w5-X8c" firstAttribute="centerX" secondItem="3j1-Yi-Phn" secondAttribute="centerX" id="TVN-ac-UDI"/>
+                                    <constraint firstItem="eqM-Ct-2vN" firstAttribute="centerY" secondItem="LLI-Ze-ujl" secondAttribute="centerY" id="ZLY-9d-xxY"/>
+                                    <constraint firstItem="eqM-Ct-2vN" firstAttribute="centerX" secondItem="hxe-w5-X8c" secondAttribute="centerX" id="edl-Y3-t2W"/>
+                                    <constraint firstItem="LLI-Ze-ujl" firstAttribute="centerX" secondItem="Co6-XH-ltJ" secondAttribute="centerX" id="gzl-CC-0b2"/>
+                                    <constraint firstItem="j7i-ge-HI9" firstAttribute="centerY" secondItem="Co6-XH-ltJ" secondAttribute="centerY" id="tkA-tG-Fwp"/>
+                                    <constraint firstItem="eqM-Ct-2vN" firstAttribute="top" secondItem="j7i-ge-HI9" secondAttribute="bottom" constant="20" id="uZE-5m-Ici"/>
+                                    <constraint firstItem="hxe-w5-X8c" firstAttribute="top" secondItem="3j1-Yi-Phn" secondAttribute="top" constant="20" id="vK4-yC-s0V"/>
+                                    <constraint firstItem="xt4-2t-TWk" firstAttribute="centerY" secondItem="Co6-XH-ltJ" secondAttribute="centerY" id="x50-cY-62S"/>
+                                    <constraint firstItem="5T1-Td-dcw" firstAttribute="centerY" secondItem="LLI-Ze-ujl" secondAttribute="centerY" id="yap-16-nG3"/>
+                                    <constraint firstItem="Wez-eH-G08" firstAttribute="centerY" secondItem="ikv-3V-8nN" secondAttribute="centerY" id="zsd-cQ-EaZ"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="C0w-mM-Kf6"/>
-                                        <exclude reference="2B9-nh-54G"/>
-                                        <exclude reference="JtE-r1-9SI"/>
-                                        <exclude reference="KSt-aR-6u9"/>
-                                        <exclude reference="Sf9-Yw-4Md"/>
-                                        <exclude reference="ja2-Vk-FCn"/>
-                                        <exclude reference="9lU-f7-IPe"/>
-                                        <exclude reference="U1J-la-VYY"/>
-                                    </mask>
-                                </variation>
                             </view>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YyE-nO-bIx">
                                 <rect key="frame" x="0.0" y="20" width="375" height="56"/>
@@ -518,52 +435,50 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="YyE-nO-bIx" firstAttribute="top" secondItem="ayx-C0-w6I" secondAttribute="topMargin" constant="20" id="5g1-KF-spJ"/>
-                            <constraint firstItem="Okm-0e-dbF" firstAttribute="leading" secondItem="3j1-Yi-Phn" secondAttribute="leading" id="AvP-vO-nL1"/>
                             <constraint firstItem="4eY-Rk-VYX" firstAttribute="trailing" secondItem="ayx-C0-w6I" secondAttribute="trailingMargin" id="CNY-r5-71S"/>
                             <constraint firstAttribute="centerX" secondItem="3j1-Yi-Phn" secondAttribute="centerX" id="ENI-vC-dJS"/>
                             <constraint firstItem="3j1-Yi-Phn" firstAttribute="top" secondItem="KHb-zZ-K0P" secondAttribute="bottom" constant="8" id="FK1-gt-crj"/>
-                            <constraint firstItem="6zt-lT-XdG" firstAttribute="top" secondItem="Okm-0e-dbF" secondAttribute="bottom" constant="40" id="G0L-UI-qVg"/>
-                            <constraint firstItem="6zt-lT-XdG" firstAttribute="leading" secondItem="ayx-C0-w6I" secondAttribute="leadingMargin" id="HuH-VH-hpy"/>
+                            <constraint firstItem="57j-2f-Dye" firstAttribute="top" secondItem="3j1-Yi-Phn" secondAttribute="bottom" constant="8" id="GLo-mC-vib"/>
                             <constraint firstItem="4eY-Rk-VYX" firstAttribute="top" secondItem="YyE-nO-bIx" secondAttribute="bottom" constant="30" id="JAG-WH-QWD"/>
-                            <constraint firstItem="6zt-lT-XdG" firstAttribute="trailing" secondItem="ayx-C0-w6I" secondAttribute="trailingMargin" id="Jpf-gQ-fMF"/>
-                            <constraint firstItem="Okm-0e-dbF" firstAttribute="leading" secondItem="ayx-C0-w6I" secondAttribute="leadingMargin" id="P7j-wr-dM4"/>
-                            <constraint firstItem="Okm-0e-dbF" firstAttribute="top" secondItem="3j1-Yi-Phn" secondAttribute="bottom" constant="40" id="SFz-TA-z4x"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YyE-nO-bIx" secondAttribute="trailing" constant="-16" id="Tjg-ax-rw9"/>
-                            <constraint firstItem="6zt-lT-XdG" firstAttribute="leading" secondItem="Okm-0e-dbF" secondAttribute="leading" id="Yuh-kR-Xgg"/>
                             <constraint firstAttribute="centerX" secondItem="KHb-zZ-K0P" secondAttribute="centerX" id="b3K-K5-EeD"/>
                             <constraint firstItem="3j1-Yi-Phn" firstAttribute="leading" secondItem="ayx-C0-w6I" secondAttribute="leadingMargin" id="jNd-WL-n3d"/>
                             <constraint firstItem="4eY-Rk-VYX" firstAttribute="leading" secondItem="ayx-C0-w6I" secondAttribute="leadingMargin" id="oCb-Yt-RFL"/>
                             <constraint firstItem="KHb-zZ-K0P" firstAttribute="top" secondItem="4eY-Rk-VYX" secondAttribute="bottom" constant="8" id="oeQ-3u-ag5"/>
                             <constraint firstItem="3j1-Yi-Phn" firstAttribute="trailing" secondItem="ayx-C0-w6I" secondAttribute="trailingMargin" id="qWN-88-8Ne"/>
                             <constraint firstItem="YyE-nO-bIx" firstAttribute="leading" secondItem="ayx-C0-w6I" secondAttribute="leadingMargin" constant="-16" id="uSp-ye-6pc"/>
-                            <constraint firstItem="Okm-0e-dbF" firstAttribute="trailing" secondItem="ayx-C0-w6I" secondAttribute="trailingMargin" id="wCf-63-sub"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="AvP-vO-nL1"/>
-                                <exclude reference="Yuh-kR-Xgg"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="cIk-sg-7sU"/>
                     <connections>
                         <outlet property="cancelButton" destination="HfK-Bn-iEN" id="C7n-FR-NyE"/>
-                        <outlet property="deck1" destination="Co6-XH-ltJ" id="TkZ-ek-rqE"/>
-                        <outlet property="deck2" destination="j7i-ge-HI9" id="aQ4-u9-E8a"/>
-                        <outlet property="deck3" destination="xt4-2t-TWk" id="5fx-aD-KiH"/>
-                        <outlet property="deck4" destination="Wez-eH-G08" id="HYE-nP-8f7"/>
-                        <outlet property="deck5" destination="ikv-3V-8nN" id="7NV-qa-df3"/>
-                        <outlet property="deck6" destination="ecH-z3-Kad" id="zMZ-qc-q7d"/>
-                        <outlet property="deck7" destination="LLI-Ze-ujl" id="qhe-9b-bFj"/>
-                        <outlet property="deck8" destination="5T1-Td-dcw" id="oEv-RW-orb"/>
-                        <outlet property="deck9" destination="eqM-Ct-2vN" id="9PX-jh-zdI"/>
                         <outlet property="deckNameTxtField" destination="4eY-Rk-VYX" id="MFY-Ms-b4G"/>
+                        <outlet property="demonHunterClassButton" destination="hxe-w5-X8c" id="d8j-E3-hiw"/>
+                        <outlet property="druidClassButton" destination="ikv-3V-8nN" id="Mz4-v7-Eaa"/>
+                        <outlet property="hunterClassButton" destination="Wez-eH-G08" id="V89-pC-dVC"/>
+                        <outlet property="mageClassButton" destination="LLI-Ze-ujl" id="DPh-sG-WoP"/>
+                        <outlet property="paladinClassButton" destination="j7i-ge-HI9" id="x8m-cd-Lj8"/>
+                        <outlet property="priestClassButton" destination="eqM-Ct-2vN" id="VhN-aS-Wgz"/>
+                        <outlet property="rogueClassButton" destination="ecH-z3-Kad" id="3W1-za-oWb"/>
                         <outlet property="saveButton" destination="EFi-C2-Du6" id="BeW-tO-k4e"/>
+                        <outlet property="shamanClassButton" destination="xt4-2t-TWk" id="5NM-ac-QsM"/>
+                        <outlet property="warlockClassButton" destination="5T1-Td-dcw" id="fWn-SC-CmW"/>
+                        <outlet property="warriorClassButton" destination="Co6-XH-ltJ" id="ttL-8i-s4c"/>
+                        <outletCollection property="classButtons" destination="hxe-w5-X8c" collectionClass="NSMutableArray" id="Yob-KW-17I"/>
+                        <outletCollection property="classButtons" destination="xt4-2t-TWk" collectionClass="NSMutableArray" id="7Oh-gm-i2O"/>
+                        <outletCollection property="classButtons" destination="Co6-XH-ltJ" collectionClass="NSMutableArray" id="ibC-eI-Qnx"/>
+                        <outletCollection property="classButtons" destination="j7i-ge-HI9" collectionClass="NSMutableArray" id="Xmj-M6-6wr"/>
+                        <outletCollection property="classButtons" destination="LLI-Ze-ujl" collectionClass="NSMutableArray" id="OpP-xq-LA9"/>
+                        <outletCollection property="classButtons" destination="eqM-Ct-2vN" collectionClass="NSMutableArray" id="eFy-RZ-q8P"/>
+                        <outletCollection property="classButtons" destination="5T1-Td-dcw" collectionClass="NSMutableArray" id="hbX-b5-gcx"/>
+                        <outletCollection property="classButtons" destination="ikv-3V-8nN" collectionClass="NSMutableArray" id="slK-Bz-moF"/>
+                        <outletCollection property="classButtons" destination="ecH-z3-Kad" collectionClass="NSMutableArray" id="f6I-jc-k6E"/>
+                        <outletCollection property="classButtons" destination="Wez-eH-G08" collectionClass="NSMutableArray" id="BDr-R5-FRp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sc1-eo-qI1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2490" y="-688"/>
+            <point key="canvasLocation" x="2488.8000000000002" y="-688.60569715142435"/>
         </scene>
         <!--Add New Game-->
         <scene sceneID="YVc-kO-Lfy">
@@ -1237,22 +1152,22 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Hearthstone About" translatesAutoresizingMaskIntoConstraints="NO" id="dpW-CS-YNF">
-                                <rect key="frame" x="16" y="52" width="343" height="384"/>
+                                <rect key="frame" x="16" y="52" width="343" height="192"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version: 1.0.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TcA-5A-UIm">
-                                <rect key="frame" x="16" y="444" width="343" height="21"/>
+                                <rect key="frame" x="16" y="252" width="343" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Created by: Andrei Joghiu" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vac-4q-hQt">
-                                <rect key="frame" x="16" y="473" width="343" height="21"/>
+                                <rect key="frame" x="16" y="281" width="343" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PYC-7m-SVI">
-                                <rect key="frame" x="16" y="502" width="343" height="30"/>
+                                <rect key="frame" x="16" y="310" width="343" height="30"/>
                                 <state key="normal" title="raiden007@gmail.com">
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -1349,32 +1264,34 @@
             <point key="canvasLocation" x="-282" y="1044"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="DeckIcon" width="25" height="21"/>
-        <image name="DruidDeck Selected" width="62.5" height="62.5"/>
-        <image name="DruidSmall" width="62.5" height="62.5"/>
-        <image name="GraphsIcon" width="25" height="24.5"/>
-        <image name="Hearthstone About" width="192" height="192"/>
-        <image name="HunterDeck Selected" width="62.5" height="62.5"/>
-        <image name="HunterSmall" width="62.5" height="62.5"/>
-        <image name="MageDeck Selected" width="62.5" height="62.5"/>
-        <image name="MageSmall" width="62.5" height="62.5"/>
-        <image name="PaladinDeck Selected" width="62.5" height="62.5"/>
-        <image name="PaladinSmall" width="62.5" height="62.5"/>
-        <image name="PriestDeck Selected" width="62.5" height="62.5"/>
-        <image name="PriestSmall" width="62.5" height="62.5"/>
-        <image name="RogueDeck Selected" width="62.5" height="62.5"/>
-        <image name="RogueSmall" width="62.5" height="62.5"/>
-        <image name="ShamanDeck Selected" width="62.5" height="62.5"/>
-        <image name="ShamanSmall" width="62.5" height="62.5"/>
-        <image name="StatsIcon" width="20" height="18"/>
-        <image name="WarlockDeck Selected" width="62.5" height="62.5"/>
-        <image name="WarlockSmall" width="62.5" height="62.5"/>
-        <image name="WarriorDeck Selected" width="62.5" height="62.5"/>
-        <image name="WarriorSmall" width="62.5" height="62.5"/>
-    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="eDm-Jd-RwB"/>
         <segue reference="TOQ-ST-0j3"/>
     </inferredMetricsTieBreakers>
+    <resources>
+        <image name="DeckIcon" width="25" height="21"/>
+        <image name="DemonHunterDeck Selected" width="64" height="64"/>
+        <image name="DemonHunterSmall" width="64" height="64"/>
+        <image name="DruidDeck Selected" width="64" height="64"/>
+        <image name="DruidSmall" width="64" height="64"/>
+        <image name="GraphsIcon" width="25" height="24.5"/>
+        <image name="Hearthstone About" width="192" height="192"/>
+        <image name="HunterDeck Selected" width="32" height="32"/>
+        <image name="HunterSmall" width="64" height="64"/>
+        <image name="MageDeck Selected" width="32" height="32"/>
+        <image name="MageSmall" width="64" height="64"/>
+        <image name="PaladinDeck Selected" width="32" height="32"/>
+        <image name="PaladinSmall" width="64" height="64"/>
+        <image name="PriestDeck Selected" width="32" height="32"/>
+        <image name="PriestSmall" width="64" height="64"/>
+        <image name="RogueDeck Selected" width="32" height="32"/>
+        <image name="RogueSmall" width="64" height="64"/>
+        <image name="ShamanDeck Selected" width="32" height="32"/>
+        <image name="ShamanSmall" width="64" height="64"/>
+        <image name="StatsIcon" width="20" height="18"/>
+        <image name="WarlockDeck Selected" width="32" height="32"/>
+        <image name="WarlockSmall" width="64" height="64"/>
+        <image name="WarriorDeck Selected" width="32" height="32"/>
+        <image name="WarriorSmall" width="64" height="64"/>
+    </resources>
 </document>

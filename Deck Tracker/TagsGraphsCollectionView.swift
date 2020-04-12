@@ -16,7 +16,7 @@ class TagsGraphsCollectionView: UICollectionViewController {
     var dateIndex = -1
     var deckName = ""
     
-    let data = ["All", "Warrior", "Paladin", "Shaman", "Hunter", "Druid", "Rogue", "Mage", "Warlock", "Priest"]
+    let data = ["All", "Warrior", "Paladin", "Shaman", "Hunter", "Druid", "Rogue", "Mage", "Warlock", "Priest", "DemonHunter"]
     // Array of decks filtered by Date / Deck name / Opponent
     var filteredGames:[Game] = []
     // Array of tags sorted alphabetically

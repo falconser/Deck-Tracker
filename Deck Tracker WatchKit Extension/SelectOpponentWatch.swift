@@ -21,7 +21,8 @@ class SelectOpponentWatch: WKInterfaceController {
     @IBOutlet var warlockButton: WKInterfaceButton!
     @IBOutlet var mageButton: WKInterfaceButton!
     @IBOutlet var priestButton: WKInterfaceButton!
-    
+    @IBOutlet var demonHunterButton: WKInterfaceButton!
+
     var didSelectBlock: ((Class) -> ())?
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
@@ -82,4 +83,10 @@ class SelectOpponentWatch: WKInterfaceController {
         setClass(.Priest)
         self.pop()
     }
+    
+    @objc @IBAction func demonHunterButtonPressed() {
+        setClass(.DemonHunter)
+        self.pop()
+    }
+
 }

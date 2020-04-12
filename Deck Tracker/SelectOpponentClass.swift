@@ -12,7 +12,7 @@ class SelectOpponentClass: UITableViewController {
     
     @IBOutlet var opponentClasses: UITableView!
     
-    let classes: [Class] = [.Warrior, .Paladin, .Shaman, .Hunter, .Druid, .Rogue, .Mage, .Warlock, .Priest]
+    let classes: [Class] = [.Warrior, .Paladin, .Shaman, .Hunter, .Druid, .Rogue, .Mage, .Warlock, .Priest, .DemonHunter]
     var onSelectionUpdate: ((Class?) -> Void)?
     
     var selectedClass: Class? {

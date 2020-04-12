@@ -2,22 +2,21 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "DruidSmall.png",
       "scale" : "1x"
     },
     {
+      "filename" : "druid@2x.png",
       "idiom" : "universal",
-      "filename" : "DruidSmall@2x.png",
       "scale" : "2x"
     },
     {
+      "filename" : "druid@3x.png",
       "idiom" : "universal",
-      "filename" : "DruidSmall@3x.png",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

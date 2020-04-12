@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="13771" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
-    <device id="watch38" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="16096" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+    <device id="watch38"/>
     <dependencies>
         <deployment identifier="watchOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="13756"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="16012"/>
     </dependencies>
     <scenes>
         <!--Deck Tracker-->
@@ -136,7 +134,7 @@
                         </button>
                         <button width="1" alignment="left" title="Warlock" id="0It-sW-xtO">
                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <color key="backgroundColor" red="0.59999999999999998" green="0.0" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="0.52941176470588236" green="0.52941176470588236" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="warlockButtonPressed" destination="4oD-Qa-rEF" id="c5o-oF-9RT"/>
                             </connections>
@@ -155,8 +153,16 @@
                                 <action selector="priestButtonPressed" destination="4oD-Qa-rEF" id="rK4-Ov-pJY"/>
                             </connections>
                         </button>
+                        <button width="1" alignment="left" title="Demon Hunter" id="EsB-fA-1Y2" userLabel="DemonHunter Button">
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="0.63921568627450975" green="0.18823529411764706" blue="0.78823529411764703" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="demonHunterButtonPressed" destination="4oD-Qa-rEF" id="7JW-AV-Tfy"/>
+                            </connections>
+                        </button>
                     </items>
                     <connections>
+                        <outlet property="demonHunterButton" destination="EsB-fA-1Y2" id="HXo-cD-cxT"/>
                         <outlet property="druidButton" destination="LYj-fN-5Pa" id="Ulv-xh-e5z"/>
                         <outlet property="hunterButton" destination="xES-6B-LTx" id="1TS-Nz-Iha"/>
                         <outlet property="mageButton" destination="cmw-9f-Jhs" id="fDy-Zq-4An"/>
