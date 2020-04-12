@@ -27,8 +27,9 @@ class DecksList: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         // Remove table view separators after the last cell
         decksTable.tableFooterView = UIView.init(frame: .zero)
         
-        // Listens for "Deck Selected" and calls refreshData()
+        // Listens for decks changes and calls refreshData()
         NotificationCenter.default.addObserver(self, selector: #selector(DecksList.refreshData), name: NSNotification.Name(rawValue: "DeckSelected"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(DecksList.refreshData), name: NSNotification.Name(rawValue: "DeckAdded"), object: nil)
     }
     
     // Refreshes the view after adding a deck
