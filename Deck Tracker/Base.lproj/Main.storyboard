@@ -16,11 +16,11 @@
                         <viewControllerLayoutGuide type="bottom" id="4ug-Mw-9AY"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="tsR-hK-woN">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="BSa-1b-I34">
-                                <rect key="frame" x="0.0" y="56" width="375" height="591"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="574"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" restorationIdentifier="Cell" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="30U-Yw-0gy" customClass="CustomCell" customModule="Deck_Tracker" customModuleProvider="target">
@@ -126,10 +126,10 @@
                                                     </constraints>
                                                 </view>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Noi-et-kkh">
-                                                    <rect key="frame" x="14" y="3" width="43" height="43"/>
+                                                    <rect key="frame" x="14" y="0.0" width="44" height="44"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="43" id="aCR-oc-qJR"/>
-                                                        <constraint firstAttribute="width" constant="43" id="oez-Kd-9Fk"/>
+                                                        <constraint firstAttribute="height" constant="44" id="aCR-oc-qJR"/>
+                                                        <constraint firstAttribute="width" constant="44" id="oez-Kd-9Fk"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="vs" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iqc-BE-DMh">
@@ -139,33 +139,36 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="y6r-7e-Ik2">
-                                                    <rect key="frame" x="91" y="3" width="43" height="43"/>
+                                                    <rect key="frame" x="91" y="0.0" width="44" height="44"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="43" id="aLc-Ol-v4g"/>
-                                                        <constraint firstAttribute="width" constant="43" id="yfI-wp-AQN"/>
+                                                        <constraint firstAttribute="width" constant="44" id="yfI-wp-AQN"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eu9-cx-80g">
-                                                    <rect key="frame" x="142" y="14" width="42" height="16"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eu9-cx-80g">
+                                                    <rect key="frame" x="142" y="12" width="42" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Noi-et-kkh" firstAttribute="top" secondItem="CcP-rI-PJf" secondAttribute="topMargin" constant="-8" id="1hG-K6-aDP"/>
+                                                <constraint firstItem="Noi-et-kkh" firstAttribute="top" secondItem="CcP-rI-PJf" secondAttribute="topMargin" constant="-11" id="1hG-K6-aDP"/>
                                                 <constraint firstItem="iEH-Ok-oHU" firstAttribute="leading" secondItem="CcP-rI-PJf" secondAttribute="leading" id="79p-Dy-uCO"/>
+                                                <constraint firstItem="y6r-7e-Ik2" firstAttribute="centerY" secondItem="Noi-et-kkh" secondAttribute="centerY" id="85y-ug-606"/>
+                                                <constraint firstItem="Eu9-cx-80g" firstAttribute="centerY" secondItem="Noi-et-kkh" secondAttribute="centerY" id="BIY-YY-ZC4"/>
                                                 <constraint firstAttribute="bottom" secondItem="iEH-Ok-oHU" secondAttribute="bottom" id="Gjp-q3-BSW"/>
                                                 <constraint firstItem="Noi-et-kkh" firstAttribute="leading" secondItem="iEH-Ok-oHU" secondAttribute="trailing" constant="8" id="JLt-TQ-Ttp"/>
+                                                <constraint firstItem="Iqc-BE-DMh" firstAttribute="centerY" secondItem="Noi-et-kkh" secondAttribute="centerY" id="LJg-eu-hCD"/>
+                                                <constraint firstItem="Eu9-cx-80g" firstAttribute="centerY" secondItem="CcP-rI-PJf" secondAttribute="centerY" id="MaL-Ao-hYn"/>
                                                 <constraint firstItem="y6r-7e-Ik2" firstAttribute="leading" secondItem="Iqc-BE-DMh" secondAttribute="trailing" constant="8" id="X2u-oF-AoS"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="y6r-7e-Ik2" secondAttribute="bottom" constant="-8" id="bpk-hi-Hef"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Eu9-cx-80g" secondAttribute="trailing" constant="20" symbolic="YES" id="c5d-Ih-Mfv"/>
-                                                <constraint firstItem="Eu9-cx-80g" firstAttribute="leading" secondItem="y6r-7e-Ik2" secondAttribute="trailing" constant="8" id="cKA-Dn-wCC"/>
+                                                <constraint firstItem="Eu9-cx-80g" firstAttribute="leading" secondItem="y6r-7e-Ik2" secondAttribute="trailing" constant="7" id="cKA-Dn-wCC"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Noi-et-kkh" secondAttribute="bottom" constant="-8" id="gjJ-8R-wPn"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Iqc-BE-DMh" secondAttribute="bottom" constant="3" id="mXP-rR-k61"/>
-                                                <constraint firstItem="y6r-7e-Ik2" firstAttribute="top" secondItem="CcP-rI-PJf" secondAttribute="topMargin" constant="-8" id="sAN-Xq-DFR"/>
+                                                <constraint firstItem="y6r-7e-Ik2" firstAttribute="top" secondItem="CcP-rI-PJf" secondAttribute="topMargin" constant="-11" id="sAN-Xq-DFR"/>
                                                 <constraint firstItem="Iqc-BE-DMh" firstAttribute="top" secondItem="CcP-rI-PJf" secondAttribute="topMargin" constant="3" id="t7I-Ep-MWH"/>
-                                                <constraint firstItem="Iqc-BE-DMh" firstAttribute="leading" secondItem="Noi-et-kkh" secondAttribute="trailing" constant="8" id="vYt-s3-xfz"/>
+                                                <constraint firstItem="Iqc-BE-DMh" firstAttribute="leading" secondItem="Noi-et-kkh" secondAttribute="trailing" constant="7" id="vYt-s3-xfz"/>
                                                 <constraint firstItem="iEH-Ok-oHU" firstAttribute="top" secondItem="CcP-rI-PJf" secondAttribute="top" id="wjq-ld-dVP"/>
                                             </constraints>
                                             <variation key="default">
@@ -485,7 +488,7 @@
             <objects>
                 <tableViewController id="ydo-7B-D84" customClass="GameDetailsViewController" customModule="Deck_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="kLE-bL-P6q">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
@@ -700,11 +703,11 @@
                         <viewControllerLayoutGuide type="bottom" id="zd3-sB-yXa"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Sn4-K0-Z6p">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="F4z-yv-LJC">
-                                <rect key="frame" x="27.5" y="215.5" width="320" height="216"/>
+                                <rect key="frame" x="27.5" y="225.5" width="320" height="216"/>
                                 <connections>
                                     <action selector="datePickerChanged:" destination="WcB-bD-0iF" eventType="valueChanged" id="haI-9R-Czr"/>
                                 </connections>
@@ -980,7 +983,7 @@
             <objects>
                 <tableViewController id="qox-Th-m3R" customClass="SelectOpponentClass" customModule="Deck_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="GSS-kA-VSX">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
@@ -1013,7 +1016,7 @@
             <objects>
                 <tableViewController id="rkA-YN-m9y" customClass="SelectTags" customModule="Deck_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="y3u-aJ-Urp">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
@@ -1265,7 +1268,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="eDm-Jd-RwB"/>
+        <segue reference="eBC-Vu-cd8"/>
         <segue reference="TOQ-ST-0j3"/>
     </inferredMetricsTieBreakers>
     <resources>
